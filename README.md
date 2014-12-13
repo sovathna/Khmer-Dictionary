@@ -10,4 +10,3 @@ Here are some screenshots
 ![screenshot](https://raw.githubusercontent.com/sovathna/Khmer-Dictionary/master/screenshots/device-2014-12-13-220602.png)
 ![screenshot](https://raw.githubusercontent.com/sovathna/Khmer-Dictionary/master/screenshots/device-2014-12-13-220705.png)
 ![screenshot](https://raw.githubusercontent.com/sovathna/Khmer-Dictionary/master/screenshots/device-2014-12-13-220651.png)
-img[alt=screenshot] { width: 50%; }
