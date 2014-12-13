@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Khmer Dictionary</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="font_path_main">fonts/akbalthomkhmerler.ttf</string>
+    <string name="app_name_kh">វចនានុក្រមខ្មែរ (ជួនណាត)</string>
+
+    <string-array name="navigation">
+        <item>ពាក្យធ្លាប់មើល</item>
+        <item>ការកំណត់</item>
+        <item>ផ្សេងៗ</item>
+    </string-array>
+
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="downloading">កំពុងទាញយកទិន្នន័យ…</string>
+    <string name="extracting">កំពុងផ្ទុកទិន្នន័យ…</string>
+    <string name="retry">ព្យាយាមម្ដងទៀត</string>
+    <string name="cancel">បញ្ចប់</string>
+    <string name="error_occur">បញ្ហាបានកើតឡើង!</string>
+    <string name="error_occur_message">សូមឆែកមើលការតភ្ជាប់របស់លោកអ្នក រួចចុច ព្យាយាមម្ដងទៀត ដើម្បីទាញយកទិន្នន័យជាលើកដំបូង</string>
+    <string name="alphabets">កខគឃងចឆជឈញដឋឌឍណតថទធនបផពភមយរលវសហឡអឥឦឧឪឫឬឭឮឯឰឱឳ</string>
+    <string name="search">Search</string>
+    <string name="search_kh">ស្វែងរកពាក្យ</string>
+    <string name="options">ជម្រើស</string>
+    <string name="history">ពាក្យធ្លាប់មើល</string>
+    <string name="settings">ការកំណត់</string>
+    <string name="other">ផ្សេងៗ</string>
+    <string name="action_clear">Clear</string>
+    <string name="empty">បញ្ជីទទេ</string>
+    <string name="title_activity_history">HistoryActivity</string>
+
+    <string name="back_button_label">Back</string>
+    <string name="next_button_label">Next</string>
+    <string name="skip_button_label">Skip</string>
+
+    <string name="akbalthom">ពុម្ពអក្សរប្រើ: អាក្បាលធំខ្មែរលើ</string>
+    <string name="buddhistInstitute">ពុទ្ធសាសនបណ្ឌិត្យ</string>
+    <string name="otherdes">ទិន្នន័យ​វចនានុក្រម​នេះ​ បាន​មក​ពី​វិទ្យាស្ថាន​ពុទ្ធសាសនបណ្ឌិត្យ។  វា​ត្រូវ​បាន​ទទួល​បាន​អាជ្ញាប័ណ្ណ​ក្រោម​អាជ្ញាប័ណ្ណ LGPL ដែល​អនុញ្ញាត​ឱ្យ​ប្រើប្រាស់​ដោយ​ឥត​គិត​ថ្លៃ​ចម្លង​និង​ចែកចាយ។\nសម្រាប់ព័ត៌មានបន្ថែមទាក់ទងនឹង វិទ្យាស្ថានពុទ្ធសាសនបណ្ឌិត្យ សូមមើលនៅខាងក្រោម។</string>
+    <string name="buddhistContact">Buddhist Institute\n\nNew building : Adjacent to Hun Sen\'s Park, Sangkat Tonle Basak, khan Chamkamon, Phnom Penh city P.O.Box: 1047\n\nFax:(855) 23 216 779\nTel: (855) 23 212 046\nWebsite: http://www.budinst.gov.kh/</string>
+</resources>
