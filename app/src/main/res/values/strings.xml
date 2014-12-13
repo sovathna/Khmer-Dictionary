@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="fb_appId">705319959563413</string>
     <string name="app_name">Khmer Dictionary</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -14,7 +14,8 @@
     </string-array>
 
     <string name="title_activity_splash">SplashActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="description">វចនានុក្រមខ្មែរ ដែលងាយស្រួលក្នុងការឆែកមើលពាក្យ។ រៀនសរសេរពាក្យឲ្យបានត្រឹមត្រូវ ដើម្បីលើកស្ទួយអក្សរសាស្ត្រជាតិយើង។</string>
+    <string name="caption">ចុចទីនេះដើម្បីទាញយកពី Google Play Store សម្រាប់ទូរស័ព្ទអេនដ្រ័យ</string>
     <string name="downloading">កំពុងទាញយកទិន្នន័យ…</string>
     <string name="extracting">កំពុងផ្ទុកទិន្នន័យ…</string>
     <string name="retry">ព្យាយាមម្ដងទៀត</string>
@@ -35,6 +36,11 @@
     <string name="back_button_label">Back</string>
     <string name="next_button_label">Next</string>
     <string name="skip_button_label">Skip</string>
+
+    <string name="share_title">ការយល់ព្រមចែករំលែក!</string>
+    <string name="share_text">តើអ្នកពិតជាចង់ចែករំលែកពាក្យនេះ ទៅលើបណ្ដាញ ហ្វេសប៊ុក មែនទេ?</string>
+    <string name="share_confirm">ចែករំលែក</string>
+    <string name="share_cancel">ទេ!</string>
 
     <string name="akbalthom">ពុម្ពអក្សរប្រើ: អាក្បាលធំខ្មែរលើ</string>
     <string name="buddhistInstitute">ពុទ្ធសាសនបណ្ឌិត្យ</string>

@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,8 @@ import android.widget.Toast;
 import com.indiev.chuonnathkhmerdictionary.R;
 import com.indiev.chuonnathkhmerdictionary.SplashActivity;
 import com.indiev.chuonnathkhmerdictionary.activity.DefinitionActivity;
+import com.indiev.chuonnathkhmerdictionary.dialog.ShareFBConfirmDialog;
+import com.indiev.chuonnathkhmerdictionary.fb.Facebook;
 import com.indiev.chuonnathkhmerdictionary.listview.IndexableListView;
 import com.indiev.chuonnathkhmerdictionary.listview.StringMatcher;
 import com.indiev.chuonnathkhmerdictionary.sqlitehelper.MyDB;
@@ -37,7 +40,7 @@ import java.util.Collections;
 /**
  * Created by sovathna on 11/17/14.
  */
-public class MainListFragment extends Fragment {
+public class MainListFragment extends Fragment implements ShareFBConfirmDialog.OnOptionClick{
 
     MyLocalDB localDB;
     private IndexableListView mRecyclerView;
@@ -52,10 +55,14 @@ public class MainListFragment extends Fragment {
     private String query;
     private boolean isRestore;
 
+    private ImageView fbShare;
+    private Facebook fb;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        fb = new Facebook(getActivity(),savedInstanceState);
     }
 
     @Override
@@ -111,11 +118,22 @@ public class MainListFragment extends Fragment {
         return view;
     }
 
+    private ShareFBConfirmDialog shareFBConfirmDialog;
+
+    private void showFBConfirmDialog(){
+        shareFBConfirmDialog = new ShareFBConfirmDialog();
+        Bundle args = new Bundle();
+        args.putBoolean("ISMAIN",true);
+        shareFBConfirmDialog.setArguments(args);
+        shareFBConfirmDialog.show(getActivity().getSupportFragmentManager(),"FBCONFIRM");
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         textViewDef = (TextView) getActivity().findViewById(R.id.textViewDef);
         textViewWord = (TextView) getActivity().findViewById(R.id.textViewWord);
+        fbShare = (ImageView) getActivity().findViewById(R.id.fbShare);
         if (textViewDef != null) {
             textViewWord.setTypeface(SplashActivity.typeface);
             textViewDef.setTypeface(SplashActivity.typeface);
@@ -124,6 +142,12 @@ public class MainListFragment extends Fragment {
                 def = def.replace("/a", "");
                 textViewDef.setText(Html.fromHtml(def));
                 textViewWord.setText(mWords.get(pos));
+                fbShare.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showFBConfirmDialog();
+                    }
+                });
             }
         }
 
@@ -132,6 +156,7 @@ public class MainListFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        fb.onSaveInstanceState(outState);
         outState.putStringArrayList("WORDS", origins);
         outState.putInt("POSITION", pos);
         if (MenuItemCompat.isActionViewExpanded(itemSearch) && query.length() > 0) {
@@ -147,8 +172,26 @@ public class MainListFragment extends Fragment {
     public void onDestroy() {
         if (db != null)
             db.close();
-
+        fb.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fb.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        fb.onPause();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        fb.onActivityResult(requestCode,resultCode,data);
     }
 
     @Override
@@ -190,6 +233,17 @@ public class MainListFragment extends Fragment {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.buttonRetry){
+            fb.getSession(
+                    textViewWord.getText().toString(),
+                    textViewDef.getText().toString()
+            );
+        }
+        shareFBConfirmDialog.dismiss();
     }
 
     private class MainListAdapter extends BaseAdapter implements SectionIndexer, Filterable {
