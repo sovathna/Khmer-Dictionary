@@ -66,6 +66,7 @@ public class HistoryActivity extends ActionBarActivity implements AdapterView.On
                 if (savedInstanceState != null) {
                     String def = localDB.getDefByWord("history", mWords.get(pos));
                     def = def.replace("/a", "");
+                    def = def.replace("\\n","<br/>");
                     textViewDef.setText(Html.fromHtml(def));
                     textViewWord.setText(mWords.get(pos));
                 }

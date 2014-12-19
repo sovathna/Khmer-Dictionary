@@ -20,7 +20,6 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
-import com.indiev.chuonnathkhmerdictionary.Constant;
 import com.indiev.chuonnathkhmerdictionary.R;
 
 import org.json.JSONException;
@@ -84,8 +83,8 @@ public class Facebook {
         uiHelper.trackPendingDialogCall(facebookDialog.present());
     }
 
-    public void getSession(final String word, final String def){
-        Session.openActiveSession(getActivity(),true,new Session.StatusCallback(){
+    public void getSession(final String word, final String def) {
+        Session.openActiveSession(getActivity(), true, new Session.StatusCallback() {
             @Override
             public void call(Session session, SessionState state, Exception exception) {
                 shareWord(word, def);
@@ -95,10 +94,10 @@ public class Facebook {
 
     public void shareWord(String word, String def) {
         Session session = Session.getActiveSession();
-        if(session != null){
-            if(session.getPermissions().contains(PUBLISH_PERMISSION)){
+        if (session != null) {
+            if (session.getPermissions().contains(PUBLISH_PERMISSION)) {
                 prepareShareWord(word, def);
-            }else if( session.isOpened() ){
+            } else if (session.isOpened()) {
                 session.requestNewPublishPermissions(
                         new Session.NewPermissionsRequest(
                                 getActivity(),
@@ -118,30 +117,34 @@ public class Facebook {
         params.putString("description",
                 getActivity().getResources().getString(R.string.description));
         params.putString("link",
-                "https://play.google.com/store/apps/details?id="+getActivity().getPackageName());
+                "https://play.google.com/store/apps/details?id=" + getActivity().getPackageName());
         //params.putString("picture", Constant.PICTURE_URL);
-        params.putString("message", word+": "+def);
+        params.putString("message", word + ": " + def);
         Request.Callback callback = new Request.Callback() {
-
             @Override
             public void onCompleted(Response response) {
-                JSONObject graphResponse = response.getGraphObject()
-                        .getInnerJSONObject();
-                String postId = null;
-                try {
-                    postId = graphResponse.getString("id");
-                } catch (JSONException e) {
-                    Log.i("Vathna", "JSON error " + e.getMessage());
+                FacebookRequestError error = response.getError();
+                if(error==null) {
+                    JSONObject graphResponse = response.getGraphObject()
+                            .getInnerJSONObject();
+                    String postId = null;
+                    try {
+                        postId = graphResponse.getString("id");
+                    } catch (JSONException e) {
+                        Log.i("Vathna", "JSON error " + e.getMessage());
+                    }
+                    if (postId != null) {
+                        Toast.makeText(getActivity(), "Share completed!", Toast.LENGTH_LONG).show();
+                        Log.d("Sovathna", "Post Successful!");
+                    } else {
+                        Toast.makeText(getActivity(), "Share failed! An error has occurred!", Toast.LENGTH_LONG).show();
+                        Log.d("Sovathna", "Post Fail!");
+                    }
+                }else{
+                    Toast.makeText(getActivity(), "Share failed! An error has occurred!", Toast.LENGTH_LONG).show();
                 }
-                if(postId!=null) {
-                    Toast.makeText(getActivity(),"Share completed!",Toast.LENGTH_LONG).show();
-                    Log.d("Sovathna", "Post Successful!");
-                }
-                else {
-                    Toast.makeText(getActivity(),"Share failed! An error has occurred!",Toast.LENGTH_LONG).show();
-                    Log.d("Sovathna", "Post Fail!");
-                }
-                //FacebookRequestError error = response.getError();
+
+
 
             }
         };

@@ -46,6 +46,7 @@ public class DefinitionActivity extends ActionBarActivity  implements ShareFBCon
         db = new MyDB(this);
         def = db.getDeftByWord(word);
         def = def.replace("/a", "");
+        def = def.replace("\\n","<br/>");
 
         textViewDef.setText(Html.fromHtml(def));
 

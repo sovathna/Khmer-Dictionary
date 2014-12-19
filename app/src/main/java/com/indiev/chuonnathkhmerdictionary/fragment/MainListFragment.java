@@ -103,6 +103,7 @@ public class MainListFragment extends Fragment implements ShareFBConfirmDialog.O
                     if (textViewDef != null) {
                         String def = db.getDeftByWord(mWords.get(position));
                         def = def.replace("/a", "");
+                        def = def.replace("\\n","<br/>");
                         textViewDef.setText(Html.fromHtml(def));
                         textViewWord.setText(mWords.get(position));
                     }
