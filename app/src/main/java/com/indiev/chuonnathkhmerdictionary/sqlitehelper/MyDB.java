@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by sovathna on 12/7/14.
@@ -54,6 +55,20 @@ public class MyDB extends SQLiteOpenHelper {
         cursor.close();
 
         return def;
+    }
+
+    public String getWordOfTheDay() {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT word, definition FROM dict WHERE _id = " + genId(), null);
+        cursor.moveToFirst();
+        String res = cursor.getString(0) + "\n" + cursor.getString(1);
+        cursor.close();
+        return res;
+    }
+
+    private int genId() {
+        Random random = new Random();
+        return random.nextInt(17329) + 1;
     }
 
     @Override

@@ -1,8 +1,14 @@
 package com.indiev.chuonnathkhmerdictionary.activity;
 
+import android.content.ComponentName;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference;
+import android.preference.PreferenceScreen;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -11,6 +17,7 @@ import android.widget.TextView;
 
 import com.indiev.chuonnathkhmerdictionary.R;
 import com.indiev.chuonnathkhmerdictionary.SplashActivity;
+import com.indiev.chuonnathkhmerdictionary.notification.TimeReceiver;
 import com.indiev.chuonnathkhmerdictionary.preferences.PreferenceFragment;
 
 public class SettingsActivity extends ActionBarActivity {
@@ -54,11 +61,7 @@ public class SettingsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static class SettingFragment extends PreferenceFragment {
-
-        public SettingFragment() {
-
-        }
+    public static class SettingFragment extends PreferenceFragment{
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -67,5 +70,28 @@ public class SettingsActivity extends ActionBarActivity {
             addPreferencesFromResource(R.xml.setting);
         }
 
+        @Override
+        public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+            Log.i("Vathna", "PrefKey: "+preference.getKey());
+            if (preference.getKey().equals("notification")) {
+                CheckBoxPreference checkBoxPreference = (CheckBoxPreference) preference;
+                if(checkBoxPreference.isChecked()){
+                   Log.i("Vathna","True");
+                    PackageManager pm  = getActivity().getPackageManager();
+                    ComponentName componentName = new ComponentName(getActivity(), TimeReceiver.class);
+                    pm.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                            PackageManager.DONT_KILL_APP);
+                }else {
+                    Log.i("Vathna", "False");
+                    PackageManager pm  = getActivity().getPackageManager();
+                    ComponentName componentName = new ComponentName(getActivity(), TimeReceiver.class);
+                    pm.setComponentEnabledSetting(componentName,PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                            PackageManager.DONT_KILL_APP);
+                }
+            }
+            return super.onPreferenceTreeClick(preferenceScreen, preference);
+        }
+
     }
+
 }

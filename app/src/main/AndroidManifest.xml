@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -51,6 +52,10 @@
         <activity
             android:name=".activity.OtherActivity"
             android:theme="@style/AppTheme.Info"></activity>
+
+        <receiver
+            android:name=".notification.TimeReceiver"
+            android:process=":remote"></receiver>
     </application>
 
 </manifest>
