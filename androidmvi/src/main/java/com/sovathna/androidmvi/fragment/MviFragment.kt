@@ -14,28 +14,32 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 abstract class MviFragment<I : MviIntent, S : MviState, VM : BaseViewModel<I, S>>(
-    @LayoutRes private val layoutRes: Int
+  @LayoutRes private val layoutRes: Int
 ) : DaggerFragment() {
-    @Inject
-    protected lateinit var viewModel: VM
 
-    abstract fun intents(): Observable<I>
+  @Inject
+  protected lateinit var viewModel: VM
 
-    abstract fun render(state: S)
+  abstract fun intents(): Observable<I>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+  abstract fun render(state: S)
 
-        viewModel.init(intents())
-        viewModel.stateLiveData.observe(viewLifecycleOwner, Observer(this::render))
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-    }
+    viewModel.init(intents())
+  }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(layoutRes, container, false)
-    }
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    viewModel.stateLiveData.observe(viewLifecycleOwner, Observer(this::render))
+  }
+
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    return inflater.inflate(layoutRes, container, false)
+  }
 }

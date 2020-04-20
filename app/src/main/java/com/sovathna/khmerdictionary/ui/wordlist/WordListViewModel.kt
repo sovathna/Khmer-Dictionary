@@ -11,23 +11,23 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.functions.BiFunction
 
 class WordListViewModel(
-    private val interactor: WordListInteractor
+  private val interactor: WordListInteractor
 ) : MviViewModel<WordListIntent, WordListResult, WordListState>() {
 
-    override val reducer =
-        BiFunction<WordListState, WordListResult, WordListState> { state, result ->
-            when (result) {
-                is WordListResult.Success -> state
-            }
-        }
+  override val reducer =
+    BiFunction<WordListState, WordListResult, WordListState> { state, result ->
+      when (result) {
+        is WordListResult.Success -> state
+      }
+    }
 
-    override val stateLiveData: LiveData<WordListState> =
-        MutableLiveData<WordListState>().apply {
-            val disposable = intents.compose(interactor.intentsProcessor)
-                .scan(WordListState(), reducer)
-                .distinctUntilChanged()
-                .toFlowable(BackpressureStrategy.BUFFER)
-                .subscribe(::setValue)
-            disposables.add(disposable)
-        }
+  override val stateLiveData: LiveData<WordListState> =
+    MutableLiveData<WordListState>().apply {
+      val disposable = intents.compose(interactor.intentsProcessor)
+        .scan(WordListState(), reducer)
+        .distinctUntilChanged()
+        .toFlowable(BackpressureStrategy.BUFFER)
+        .subscribe(::setValue)
+      disposables.add(disposable)
+    }
 }

@@ -12,8 +12,8 @@ import javax.inject.Singleton
     ]
 )
 @Singleton
-interface AppComponent : AndroidInjector<DictApp> {
+interface AppComponent : AndroidInjector<AndroidApp> {
 
     @Component.Factory
-    interface Factory : AndroidInjector.Factory<DictApp>
+    interface Factory : AndroidInjector.Factory<AndroidApp>
 }

@@ -7,11 +7,11 @@ import io.reactivex.ObservableTransformer
 
 abstract class WordListInteractor : MviInteractor<WordListIntent, WordListResult>() {
 
-    abstract fun getWordList(): ObservableTransformer<WordListIntent.Get, WordListResult>
+  abstract fun getWordList(): ObservableTransformer<WordListIntent.Get, WordListResult>
 
-    override val intentsProcessor = ObservableTransformer<WordListIntent, WordListResult> {
-        it.publish { intent ->
-            intent.ofType(WordListIntent.Get::class.java).compose(getWordList())
-        }
+  override val intentsProcessor = ObservableTransformer<WordListIntent, WordListResult> {
+    it.publish { intent ->
+      intent.ofType(WordListIntent.Get::class.java).compose(getWordList())
     }
+  }
 }

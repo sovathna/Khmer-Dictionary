@@ -9,22 +9,22 @@ import javax.inject.Singleton
 @Suppress("UNCHECKED_CAST")
 @Singleton
 class ViewModelFactory @Inject constructor(
-    private val providers: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
+  private val providers: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        requireNotNull(getProvider(modelClass).get()) {
-            "Provider for $modelClass returned null"
-        }
+  override fun <T : ViewModel> create(modelClass: Class<T>): T =
+    requireNotNull(getProvider(modelClass).get()) {
+      "Provider for $modelClass returned null"
+    }
 
-    @Suppress("UNCHECKED_CAST")
-    private fun <T : ViewModel> getProvider(modelClass: Class<T>): Provider<T> =
-        try {
-            requireNotNull(providers[modelClass] as Provider<T>) {
-                "No ViewModel provider is bound for class $modelClass"
-            }
-        } catch (cce: ClassCastException) {
-            error("Wrong provider type registered for ViewModel type $modelClass")
-        }
+  @Suppress("UNCHECKED_CAST")
+  private fun <T : ViewModel> getProvider(modelClass: Class<T>): Provider<T> =
+    try {
+      requireNotNull(providers[modelClass] as Provider<T>) {
+        "No ViewModel provider is bound for class $modelClass"
+      }
+    } catch (cce: ClassCastException) {
+      error("Wrong provider type registered for ViewModel type $modelClass")
+    }
 
 }
