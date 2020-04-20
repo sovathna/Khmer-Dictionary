@@ -1,61 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.indiev.chuonnathkhmerdictionary">
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    package="com.sovathna.khmerdictionary">
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        tools:replace="android:theme,android:icon">
-
-        <!--FB-->
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/fb_appId" />
-
-        <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:name=".activity.DefinitionActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="com.facebook.LoginActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <activity
-            android:name=".activity.HistoryActivity"
-            android:theme="@style/AppTheme.History" />
-        <activity
-            android:name=".activity.SettingsActivity"
-            android:theme="@style/AppTheme.Settings"></activity>
-        <activity
-            android:name=".activity.OtherActivity"
-            android:theme="@style/AppTheme.Info"></activity>
-
-        <receiver
-            android:name=".notification.TimeReceiver"
-            android:process=":remote"></receiver>
     </application>
 
 </manifest>

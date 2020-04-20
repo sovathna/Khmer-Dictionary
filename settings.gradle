@@ -1,1 +1,3 @@
-include ':app', ':FacebookSDK'
+rootProject.name='Khmer Dictionary'
+include ':app'
+include ':androidmvi'

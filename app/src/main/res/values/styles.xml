@@ -2,39 +2,10 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionBarStyle">@style/ActionBarStyle</item>
-    </style>
-
-    <style name="ActionBarStyle" parent="Widget.AppCompat.ActionBar">
-        <item name="background">@color/indigo</item>
-        <!--<item name="elevation">0dp</item>-->
-    </style>
-
-    <style name="AppTheme.History" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionBarStyle">@style/ActionBarStyle.History</item>
-    </style>
-
-    <style name="ActionBarStyle.History" parent="Widget.AppCompat.ActionBar">
-        <item name="background">@color/blue</item>
-        <!--<item name="elevation">0dp</item>-->
-    </style>
-
-    <style name="AppTheme.Settings" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionBarStyle">@style/ActionBarStyle.Settings</item>
-    </style>
-
-    <style name="ActionBarStyle.Settings" parent="Widget.AppCompat.ActionBar">
-        <item name="background">@color/light_blue</item>
-        <!--<item name="elevation">0dp</item>-->
-    </style>
-
-    <style name="AppTheme.Info" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionBarStyle">@style/ActionBarStyle.Info</item>
-    </style>
-
-    <style name="ActionBarStyle.Info" parent="Widget.AppCompat.ActionBar">
-        <item name="background">@color/cyan</item>
-        <!--<item name="elevation">0dp</item>-->
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
 </resources>
