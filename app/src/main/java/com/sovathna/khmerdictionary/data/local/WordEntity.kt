@@ -11,6 +11,6 @@ data class WordEntity(
   @ColumnInfo(name = "definition")
   val definition: String,
   @PrimaryKey(autoGenerate = true)
-  @ColumnInfo(name = "_id")
-  val id: Int = 0
+  @ColumnInfo(name = "id")
+  val id: Long = 0
 )

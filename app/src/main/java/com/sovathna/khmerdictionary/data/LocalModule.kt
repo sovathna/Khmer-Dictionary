@@ -14,7 +14,7 @@ class LocalModule {
   @Singleton
   fun appDatabase(context: Context): AppDatabase =
     Room.databaseBuilder(context, AppDatabase::class.java, "dict.db")
-      .createFromAsset("databases/dictdb")
+      .fallbackToDestructiveMigration()
       .build()
 
 }

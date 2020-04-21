@@ -1,6 +1,7 @@
 package com.sovathna.khmerdictionary.data.local
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.sovathna.khmerdictionary.Const
 import io.reactivex.Single
@@ -11,5 +12,9 @@ interface WordDao {
   fun getWordList(offset: Int): Single<List<WordEntity>>
 
   @Query("SELECT * FROM dict WHERE word LIKE :filter LIMIT :offset, ${Const.PAGE_SIZE}")
-  fun getFilterWordList(filter:String,offset: Int): Single<List<WordEntity>>
+  fun getFilterWordList(filter: String, offset: Int): Single<List<WordEntity>>
+
+  @Insert
+  fun inserts(words: List<WordEntity>): Single<List<Long>>
+
 }
