@@ -5,5 +5,5 @@ import com.sovathna.androidmvi.result.MviResult
 sealed class SplashResult : MviResult {
   object Progress : SplashResult()
   data class Fail(val throwable: Throwable) : SplashResult()
-  object Success : SplashResult()
+  data class CheckDatabase(val exists: Boolean) : SplashResult()
 }

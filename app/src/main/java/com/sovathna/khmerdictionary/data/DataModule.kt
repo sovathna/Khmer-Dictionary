@@ -6,7 +6,8 @@ import dagger.Module
   includes = [
     RepositoryModule::class,
     LocalModule::class,
-    InteractorModule::class
+    InteractorModule::class,
+    RemoteModule::class
   ]
 )
 class DataModule

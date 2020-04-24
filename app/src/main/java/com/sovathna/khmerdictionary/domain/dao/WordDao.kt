@@ -1,9 +1,10 @@
-package com.sovathna.khmerdictionary.data.local
+package com.sovathna.khmerdictionary.domain.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.sovathna.khmerdictionary.Const
+import com.sovathna.khmerdictionary.domain.model.WordEntity
 import io.reactivex.Single
 
 @Dao

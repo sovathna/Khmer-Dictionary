@@ -4,6 +4,7 @@ import com.sovathna.androidmvi.fragment.MviFragment
 import com.sovathna.khmerdictionary.R
 import com.sovathna.khmerdictionary.domain.model.intent.WordListIntent
 import com.sovathna.khmerdictionary.domain.model.state.WordListState
+import com.sovathna.khmerdictionary.util.LogUtil
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
@@ -22,8 +23,9 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
       .cast(WordListIntent::class.java)
 
   override fun render(state: WordListState) {
+    LogUtil.i("state: $state")
     with(state) {
-      if (isInit) getWordListIntent.onNext(WordListIntent.Get(null,0))
+      if (isInit) getWordListIntent.onNext(WordListIntent.Get(null, 0))
     }
   }
 }

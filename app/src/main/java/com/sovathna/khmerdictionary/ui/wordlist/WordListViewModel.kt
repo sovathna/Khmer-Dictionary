@@ -8,6 +8,7 @@ import com.sovathna.khmerdictionary.domain.model.intent.WordListIntent
 import com.sovathna.khmerdictionary.domain.model.result.WordListResult
 import com.sovathna.khmerdictionary.domain.model.state.WordListState
 import io.reactivex.BackpressureStrategy
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 
 class WordListViewModel(
@@ -17,7 +18,7 @@ class WordListViewModel(
   override val reducer =
     BiFunction<WordListState, WordListResult, WordListState> { state, result ->
       when (result) {
-        is WordListResult.Success -> state
+        is WordListResult.Success -> state.copy(wordList = result.wordList)
       }
     }
 
@@ -27,6 +28,7 @@ class WordListViewModel(
         .scan(WordListState(), reducer)
         .distinctUntilChanged()
         .toFlowable(BackpressureStrategy.BUFFER)
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(::setValue)
       disposables.add(disposable)
     }

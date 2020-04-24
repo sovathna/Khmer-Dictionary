@@ -3,6 +3,8 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="com.sovathna.khmerdictionary">
 
+  <uses-permission android:name="android.permission.INTERNET" />
+
   <application
     android:name=".app.AndroidApp"
     android:allowBackup="true"

@@ -1,4 +1,4 @@
-package com.sovathna.khmerdictionary.data.local
+package com.sovathna.khmerdictionary.domain.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
