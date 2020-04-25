@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Khmer Dictionary.iml" filepath="$PROJECT_DIR$/Khmer Dictionary.iml" group="Khmer Dictionary" />
-      <module fileurl="file://$PROJECT_DIR$/androidmvi/androidmvi.iml" filepath="$PROJECT_DIR$/androidmvi/androidmvi.iml" group="Khmer Dictionary/androidmvi" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Khmer Dictionary/app" />
+      <module fileurl="file://$PROJECT_DIR$/KhmerDictionary.iml" filepath="$PROJECT_DIR$/KhmerDictionary.iml" group="KhmerDictionary" />
+      <module fileurl="file://$PROJECT_DIR$/androidmvi/androidmvi.iml" filepath="$PROJECT_DIR$/androidmvi/androidmvi.iml" group="KhmerDictionary/androidmvi" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="KhmerDictionary/app" />
     </modules>
   </component>
 </project>
