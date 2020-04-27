@@ -9,7 +9,6 @@ abstract class SplashInteractor : MviInteractor<SplashIntent, SplashResult>() {
 
   abstract val checkDatabase: ObservableTransformer<SplashIntent.CheckDatabase, SplashResult>
 
-
   override val intentsProcessor = ObservableTransformer<SplashIntent, SplashResult> {
     it.publish { intent ->
       intent.ofType(SplashIntent.CheckDatabase::class.java).compose(checkDatabase)

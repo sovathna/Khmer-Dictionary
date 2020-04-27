@@ -55,16 +55,20 @@ class DownloadFragment : MviDialogFragment<DownloadIntent, DownloadState, Downlo
 
       if (download == total) {
         if (total == 0L) {
-          tv_title.text = "កំពុងរៀបចំទាញយកទិន្នន័យ"
+          tv_title.text = "រៀបចំទាញយកទិន្នន័យ"
+          tv_sub_title.text = "កំពុងដំណើរការ..."
         } else {
-          tv_title.text = "កំពុងរក្សាទុកទិន្នន័យ"
+          tv_title.text = "ពន្លា និងរក្សាទុកទិន្នន័យ"
+          tv_sub_title.text = String.format(
+            "ទំហំ %s",
+            getFileSize(total)
+          )
         }
-        tv_sub_title.text = "កំពុងដំណើរការ..."
       } else {
-        tv_title.text = "កំពុងទាញយកទិន្នន័យ"
+        tv_title.text = "ទាញយកទិន្នន័យ"
         tv_sub_title.text =
           String.format(
-            "%s នៃ %s",
+            "ទំហំ %s នៃ %s",
             getFileSize(download),
             getFileSize(total)
           )

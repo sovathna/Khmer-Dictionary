@@ -37,11 +37,6 @@ class DownloadInteractorImpl @Inject constructor(
     }
   }
 
-  override val progress = ObservableTransformer<DownloadIntent.Progress, DownloadResult> {
-    it.map { i -> DownloadResult.Progress(i.download, i.total) }
-      .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-      .cast(DownloadResult::class.java)
-  }
 
   private fun saveZip(
     body: ResponseBody
@@ -77,15 +72,12 @@ class DownloadInteractorImpl @Inject constructor(
         inStream = ZipInputStream(tmp.inputStream())
 
         inStream.nextEntry?.let {
+          emitter.onNext(DownloadResult.Progress(it.size, it.size))
           outStream = FileOutputStream(file)
-          var totalRead = 0L
           while (!emitter.isDisposed) {
             val read = inStream.read(tmpReader)
             if (read == -1) break
             outStream?.write(tmpReader, 0, read)
-            totalRead += read
-//            LogUtil.i("extract $totalRead ${it.size}")
-            emitter.onNext(DownloadResult.Progress(totalRead, it.size, true))
           }
           inStream.closeEntry()
           outStream?.flush()
