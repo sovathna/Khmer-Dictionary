@@ -22,14 +22,12 @@ class DownloadViewModel(
         state.copy(
           error = result.throwable.message ?: "An error has occurred!"
         )
-      is DownloadResult.DownloadProgress ->
+      is DownloadResult.Progress ->
         state.copy(
           isInit = false,
           download = result.download,
           total = result.total
         )
-      is DownloadResult.Saving ->
-        state.copy(download = state.total)
       is DownloadResult.Success ->
         state.copy(successEvent = Event(Unit))
     }
@@ -37,12 +35,12 @@ class DownloadViewModel(
 
   override val stateLiveData: LiveData<DownloadState> =
     MutableLiveData<DownloadState>().apply {
-      val disposable = intents.compose(interactor.intentsProcessor)
+      intents.compose(interactor.intentsProcessor)
+        .doOnSubscribe { disposables.add(it) }
         .scan(DownloadState(), reducer)
         .distinctUntilChanged()
-        .doOnSubscribe { disposables.add(it) }
+        .toFlowable(BackpressureStrategy.BUFFER)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(::setValue)
-//      disposables.add(disposable)
     }
 }

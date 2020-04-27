@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDialogFragment
 import com.sovathna.androidmvi.fragment.MviDialogFragment
 import com.sovathna.khmerdictionary.R
 import com.sovathna.khmerdictionary.domain.model.intent.DownloadIntent
@@ -23,23 +22,17 @@ class DownloadFragment : MviDialogFragment<DownloadIntent, DownloadState, Downlo
   @Inject
   lateinit var downloadIntent: PublishSubject<DownloadIntent.Download>
 
-  @Inject
-  lateinit var progressIntent: PublishSubject<DownloadIntent.Progress>
-
   override fun onStart() {
     super.onStart()
+    dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
     dialog?.window?.setLayout(
       ViewGroup.LayoutParams.MATCH_PARENT,
-      ViewGroup.LayoutParams.MATCH_PARENT
+      ViewGroup.LayoutParams.WRAP_CONTENT
     )
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setStyle(
-      AppCompatDialogFragment.STYLE_NORMAL,
-      R.style.AppTheme
-    )
     isCancelable = false
   }
 
@@ -51,7 +44,7 @@ class DownloadFragment : MviDialogFragment<DownloadIntent, DownloadState, Downlo
   }
 
   override fun intents(): Observable<DownloadIntent> =
-    Observable.merge(downloadIntent, progressIntent)
+    downloadIntent.cast(DownloadIntent::class.java)
 
   override fun render(state: DownloadState) {
     LogUtil.i("state: $state")
