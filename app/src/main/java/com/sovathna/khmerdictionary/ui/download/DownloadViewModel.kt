@@ -9,6 +9,7 @@ import com.sovathna.khmerdictionary.domain.model.intent.DownloadIntent
 import com.sovathna.khmerdictionary.domain.model.result.DownloadResult
 import com.sovathna.khmerdictionary.domain.model.state.DownloadState
 import io.reactivex.BackpressureStrategy
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 
 class DownloadViewModel(
@@ -17,21 +18,31 @@ class DownloadViewModel(
 
   override val reducer = BiFunction<DownloadState, DownloadResult, DownloadState> { state, result ->
     when (result) {
-      is DownloadResult.Progress -> DownloadState().copy(isInit = false, isProgress = true)
-      is DownloadResult.Fail -> state.copy(isProgress = false, error = "Error")
-      is DownloadResult.DownloadProgress -> state.copy(download = result.download, total = result.total)
-      is DownloadResult.Saving -> state.copy(download = state.total)
-      is DownloadResult.Success -> state.copy(successEvent = Event(true))
+      is DownloadResult.Fail ->
+        state.copy(
+          error = result.throwable.message ?: "An error has occurred!"
+        )
+      is DownloadResult.DownloadProgress ->
+        state.copy(
+          isInit = false,
+          download = result.download,
+          total = result.total
+        )
+      is DownloadResult.Saving ->
+        state.copy(download = state.total)
+      is DownloadResult.Success ->
+        state.copy(successEvent = Event(Unit))
     }
   }
 
   override val stateLiveData: LiveData<DownloadState> =
     MutableLiveData<DownloadState>().apply {
-      intents.compose(interactor.intentsProcessor)
-        .doOnSubscribe { disposables.add(it) }
+      val disposable = intents.compose(interactor.intentsProcessor)
         .scan(DownloadState(), reducer)
         .distinctUntilChanged()
-        .toFlowable(BackpressureStrategy.BUFFER)
+        .doOnSubscribe { disposables.add(it) }
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(::setValue)
+//      disposables.add(disposable)
     }
 }

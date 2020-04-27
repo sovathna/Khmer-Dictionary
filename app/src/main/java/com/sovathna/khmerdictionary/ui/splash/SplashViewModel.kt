@@ -19,8 +19,6 @@ class SplashViewModel(
   override val reducer = BiFunction<SplashState, SplashResult, SplashState> { state, result ->
     when (result) {
       is SplashResult.CheckDatabase -> state.copy(isInit = false, exists = Event(result.exists))
-      is SplashResult.Progress -> TODO()
-      is SplashResult.Fail -> TODO()
     }
   }
 

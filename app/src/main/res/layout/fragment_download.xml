@@ -1,65 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:id="@+id/root"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:padding="16dp">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:padding="16dp">
 
 
   <androidx.cardview.widget.CardView
-    android:id="@+id/cv"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+      android:id="@+id/cv"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-      android:id="@+id/cv_root"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-      <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_title"
+        android:id="@+id/cv_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="ទាញយកទិន្នន័យ"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintBottom_toTopOf="@id/pb"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="16dp">
+
+      <androidx.appcompat.widget.AppCompatTextView
+          android:id="@+id/tv_title"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal"
+          android:text="ទាញយកទិន្នន័យ"
+          android:textAppearance="@style/TextAppearance.AppCompat.Title"
+          app:fontFamily="@font/kantumruy"
+          app:layout_constraintBottom_toTopOf="@id/pb"
+          app:layout_constraintTop_toTopOf="parent" />
 
       <ProgressBar
-        android:id="@+id/pb"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:indeterminate="true"
-        app:layout_constraintBottom_toTopOf="@id/tv_sub_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+          android:id="@+id/pb"
+          style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:indeterminate="true"
+          app:layout_constraintBottom_toTopOf="@id/tv_sub_title"
+          app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
       <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_sub_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:gravity="end"
-        android:text="កំពុងទាញយក... ១០០MB នៃ ២០០MB"
-        app:layout_constraintBottom_toTopOf="@id/btn_cancel"
-        app:layout_constraintTop_toBottomOf="@id/pb" />
+          android:id="@+id/tv_sub_title"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
+          android:gravity="end"
+          android:text="កំពុងទាញយក... ១០០MB នៃ ២០០MB"
+          app:fontFamily="@font/kantumruy"
+          app:layout_constraintBottom_toTopOf="@id/btn_cancel"
+          app:layout_constraintTop_toBottomOf="@id/pb" />
 
       <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_cancel"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="បោះបង់"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_sub_title" />
+          android:id="@+id/btn_cancel"
+          style="@style/Widget.AppCompat.Button.Borderless.Colored"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:text="បោះបង់"
+          app:fontFamily="@font/kantumruy"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/tv_sub_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.cardview.widget.CardView>

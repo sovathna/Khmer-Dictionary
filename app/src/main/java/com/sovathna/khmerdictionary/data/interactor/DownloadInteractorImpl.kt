@@ -6,6 +6,7 @@ import com.sovathna.khmerdictionary.domain.interactor.DownloadInteractor
 import com.sovathna.khmerdictionary.domain.model.intent.DownloadIntent
 import com.sovathna.khmerdictionary.domain.model.result.DownloadResult
 import com.sovathna.khmerdictionary.domain.service.DownloadService
+import com.sovathna.khmerdictionary.util.LogUtil
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,10 +28,9 @@ class DownloadInteractorImpl @Inject constructor(
       service.download(Const.RAW_DB_URL)
         .flatMap(::unzipAndSave)
         .doOnError(Timber::e)
-        .startWith(DownloadResult.Progress)
+        .startWith(DownloadResult.DownloadProgress(0, 0))
         .onErrorReturn(DownloadResult::Fail)
         .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
     }
   }
 
@@ -43,7 +43,10 @@ class DownloadInteractorImpl @Inject constructor(
   private fun unzipAndSave(
     body: ResponseBody
   ): Observable<DownloadResult> {
+    LogUtil.i("saved flatmap")
     return Observable.fromCallable {
+
+      LogUtil.i("saved read")
       val file = context.getDatabasePath(Const.DB_NAME)
       val reader = ByteArray(1024)
 
@@ -54,6 +57,7 @@ class DownloadInteractorImpl @Inject constructor(
           val read = zInStream.read(reader)
           if (read == -1) break
           outStream.write(reader, 0, read)
+          LogUtil.i("saved read data: $read, ${body.contentLength()}")
         }
         outStream.flush()
         outStream.close()
