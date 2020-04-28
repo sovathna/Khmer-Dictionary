@@ -3,12 +3,13 @@ package com.sovathna.khmerdictionary.ui.wordlist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sovathna.androidmvi.viewmodel.MviViewModel
+import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.domain.interactor.WordListInteractor
 import com.sovathna.khmerdictionary.domain.model.intent.WordListIntent
 import com.sovathna.khmerdictionary.domain.model.result.WordListResult
 import com.sovathna.khmerdictionary.domain.model.state.WordListState
+import com.sovathna.khmerdictionary.util.LogUtil
 import io.reactivex.BackpressureStrategy
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 
 class WordListViewModel(
@@ -18,18 +19,37 @@ class WordListViewModel(
   override val reducer =
     BiFunction<WordListState, WordListResult, WordListState> { state, result ->
       when (result) {
-        is WordListResult.Success -> state.copy(wordList = result.wordList)
+        is WordListResult.Success -> state.copy(
+          isInit = false,
+          words = if (result.isMore) state.words?.toMutableList()
+            ?.apply { addAll(result.words.map { WordItem(it) }) }
+          else result.words.map { WordItem(it) },
+          isMore = result.words.size == Const.PAGE_SIZE
+        )
+        is WordListResult.Select -> {
+          LogUtil.i("state: $state")
+          state.copy(
+            words = state.words?.toMutableList()?.apply {
+              state.last?.let {
+                this[it] = this[it].copy(isSelected = false)
+              }
+              result.current?.let {
+                this[it] = this[it].copy(isSelected = true)
+              }
+            },
+            last = result.current
+          )
+        }
       }
     }
 
   override val stateLiveData: LiveData<WordListState> =
     MutableLiveData<WordListState>().apply {
-      val disposable = intents.compose(interactor.intentsProcessor)
+      intents.compose(interactor.intentsProcessor)
+        .doOnSubscribe { disposables.add(it) }
+        .toFlowable(BackpressureStrategy.BUFFER)
         .scan(WordListState(), reducer)
         .distinctUntilChanged()
-        .toFlowable(BackpressureStrategy.BUFFER)
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(::setValue)
-      disposables.add(disposable)
+        .subscribe(::postValue)
     }
 }

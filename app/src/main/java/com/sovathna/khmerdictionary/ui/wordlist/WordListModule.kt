@@ -1,8 +1,10 @@
 package com.sovathna.khmerdictionary.ui.wordlist
 
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sovathna.khmerdictionary.domain.model.intent.WordListIntent
+import com.sovathna.khmerdictionary.ui.main.MainActivity
 import dagger.Module
 import dagger.Provides
 import io.reactivex.subjects.PublishSubject
@@ -15,8 +17,10 @@ class WordListModule {
     ViewModelProvider(fragment, factory)[WordListViewModel::class.java]
 
   @Provides
-  fun getWordListIntent() = PublishSubject.create<WordListIntent.Get>().also {
-    Log.d("===", "Init intent")
-  }
+  fun getWordListIntent() = PublishSubject.create<WordListIntent.Get>()
+
+  @Provides
+  fun layoutManager(activity: MainActivity): RecyclerView.LayoutManager =
+    LinearLayoutManager(activity)
 
 }

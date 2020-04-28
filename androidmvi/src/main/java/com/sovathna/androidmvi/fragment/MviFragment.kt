@@ -30,8 +30,13 @@ abstract class MviFragment<I : MviIntent, S : MviState, VM : BaseViewModel<I, S>
     viewModel.init(intents())
   }
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
+//  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//    super.onViewCreated(view, savedInstanceState)
+//    viewModel.stateLiveData.observe(viewLifecycleOwner, Observer(this::render))
+//  }
+
+  override fun onResume() {
+    super.onResume()
     viewModel.stateLiveData.observe(viewLifecycleOwner, Observer(this::render))
   }
 

@@ -13,7 +13,6 @@ import okhttp3.ResponseBody
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
-import java.util.concurrent.TimeUnit
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
 
@@ -25,7 +24,6 @@ class SplashInteractorImpl @Inject constructor(
   override val checkDatabase = ObservableTransformer<SplashIntent.CheckDatabase, SplashResult> {
     it.flatMap {
       Observable.just(context.getDatabasePath(Const.DB_NAME).exists())
-        .delaySubscription(1, TimeUnit.SECONDS)
         .flatMap { exists ->
           if (exists) Observable.just(SplashResult.Success)
           else downloadService.download(Const.RAW_DB_URL)
@@ -101,8 +99,8 @@ class SplashInteractorImpl @Inject constructor(
       if (file.exists()) file.delete()
     }
       .doOnDispose {
-      if (tmp.exists()) tmp.delete()
-      if (file.exists()) file.delete()
-    }.subscribeOn(Schedulers.io())
+        if (tmp.exists()) tmp.delete()
+        if (file.exists()) file.delete()
+      }.subscribeOn(Schedulers.io())
   }
 }

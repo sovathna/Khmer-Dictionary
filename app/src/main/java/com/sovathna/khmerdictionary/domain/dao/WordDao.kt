@@ -15,6 +15,9 @@ interface WordDao {
   @Query("SELECT * FROM dict WHERE word LIKE :filter LIMIT :offset, ${Const.PAGE_SIZE}")
   fun getFilterWordList(filter: String, offset: Int): Single<List<WordEntity>>
 
+  @Query("SELECT * FROM dict WHERE id = :id")
+  fun getDefinition(id: Long): Single<WordEntity>
+
   @Insert
   fun inserts(words: List<WordEntity>): Single<List<Long>>
 

@@ -5,8 +5,6 @@ import com.sovathna.khmerdictionary.domain.model.intent.WordListIntent
 import com.sovathna.khmerdictionary.domain.model.result.WordListResult
 import com.sovathna.khmerdictionary.domain.repository.AppRepository
 import io.reactivex.ObservableTransformer
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -18,8 +16,14 @@ class WordListInteractorImpl @Inject constructor(
     it.flatMap { intent ->
       repository.getWordList(intent.filter, intent.offset)
         .toObservable()
-        .map(WordListResult::Success)
+        .map { words -> WordListResult.Success(words, intent.offset != 0) }
         .subscribeOn(Schedulers.io())
+    }
+  }
+
+  override val select = ObservableTransformer<WordListIntent.Select, WordListResult> {
+    it.map { intent ->
+      WordListResult.Select(intent.current)
     }
   }
 }
