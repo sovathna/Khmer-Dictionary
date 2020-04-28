@@ -15,8 +15,8 @@ class AppRepositoryImpl @Inject constructor(db: AppDatabase) : AppRepository {
 
   override fun getWordList(filter: String?, offset: Int): Single<List<Word>> {
     return when {
-      filter != null -> wordDao.getFilterWordList(filter, offset)
-      else -> wordDao.getWordList(offset)
+      filter.isNullOrEmpty() -> wordDao.getWordList(offset)
+      else -> wordDao.getFilterWordList("$filter%", offset)
     }.map { it.map { tmp -> Word(tmp.id, tmp.word) } }
   }
 

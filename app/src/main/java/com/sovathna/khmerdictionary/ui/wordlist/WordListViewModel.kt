@@ -27,7 +27,6 @@ class WordListViewModel(
           isMore = result.words.size == Const.PAGE_SIZE
         )
         is WordListResult.Select -> {
-          LogUtil.i("state: $state")
           state.copy(
             words = state.words?.toMutableList()?.apply {
               state.last?.let {

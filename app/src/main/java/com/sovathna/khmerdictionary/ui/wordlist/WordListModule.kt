@@ -8,6 +8,7 @@ import com.sovathna.khmerdictionary.ui.main.MainActivity
 import dagger.Module
 import dagger.Provides
 import io.reactivex.subjects.PublishSubject
+import javax.inject.Named
 
 @Module
 class WordListModule {
@@ -17,6 +18,7 @@ class WordListModule {
     ViewModelProvider(fragment, factory)[WordListViewModel::class.java]
 
   @Provides
+  @Named("word_list")
   fun getWordListIntent() = PublishSubject.create<WordListIntent.Get>()
 
   @Provides

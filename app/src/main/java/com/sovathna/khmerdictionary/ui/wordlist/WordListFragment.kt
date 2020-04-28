@@ -11,12 +11,14 @@ import com.sovathna.khmerdictionary.R
 import com.sovathna.khmerdictionary.domain.model.intent.WordListIntent
 import com.sovathna.khmerdictionary.domain.model.state.WordListState
 import com.sovathna.khmerdictionary.ui.definition.DefinitionFragment
+import com.sovathna.khmerdictionary.ui.main.MainActivity
 import com.sovathna.khmerdictionary.util.LogUtil
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_word_list.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Provider
 
 class WordListFragment : MviFragment<WordListIntent, WordListState, WordListViewModel>(
@@ -24,7 +26,11 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
 ) {
 
   @Inject
+  @Named("word_list")
   lateinit var getWordListIntent: PublishSubject<WordListIntent.Get>
+
+  @Inject
+  lateinit var filterIntent: PublishSubject<WordListIntent.Get>
 
   @Inject
   lateinit var selectIntent: PublishSubject<WordListIntent.Select>
@@ -35,9 +41,13 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
   @Inject
   lateinit var layoutManager: Provider<RecyclerView.LayoutManager>
 
+  @Inject
+  lateinit var mActivity:MainActivity
+
   private var scrollChanged: ViewTreeObserver.OnScrollChangedListener? = null
 
   private fun replaceDefinitionFragment(id: Long) {
+    mActivity.searchItem?.isVisible = false
     requireActivity().supportFragmentManager.beginTransaction().replace(
       R.id.definition_container,
       DefinitionFragment().apply {
@@ -60,7 +70,8 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
     Observable.merge(
       getWordListIntent
         .throttleFirst(500, TimeUnit.MILLISECONDS),
-      selectIntent
+      selectIntent,
+      filterIntent.throttleLast(500, TimeUnit.MILLISECONDS)
     )
 
   override fun render(state: WordListState) {
@@ -97,8 +108,8 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
       }
 
       adapter.submitList(words)
-
-
+      if(words?.size?:0<=Const.PAGE_SIZE)
+      rv.smoothScrollToPosition(0)
     }
 
   }
