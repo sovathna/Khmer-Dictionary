@@ -19,7 +19,7 @@ class MainActivity : DaggerAppCompatActivity() {
   lateinit var selectIntent: PublishSubject<WordListIntent.Select>
 
   @Inject
-  lateinit var filterIntent: PublishSubject<WordListIntent.Get>
+  lateinit var filterIntent: PublishSubject<WordListIntent.Filter>
 
   var searchItem: MenuItem? = null
 
@@ -38,7 +38,6 @@ class MainActivity : DaggerAppCompatActivity() {
         .commit()
     }
   }
-
 
   override fun onBackPressed() {
     if (supportFragmentManager.backStackEntryCount > 0) {
@@ -63,14 +62,17 @@ class MainActivity : DaggerAppCompatActivity() {
       override fun onQueryTextChange(newText: String?): Boolean {
         LogUtil.i("query text changed: $newText")
         val searchTerm = newText?.trim()
-        filterIntent.onNext(WordListIntent.Get(searchTerm, 0))
+        filterIntent.onNext(
+          WordListIntent.Filter(searchTerm, 0)
+        )
         return true
       }
 
       override fun onQueryTextSubmit(query: String?): Boolean {
         val searchTerm = query?.trim()
-        filterIntent.onNext(WordListIntent.Get(searchTerm, 0))
-        searchItem?.collapseActionView()
+        filterIntent.onNext(
+          WordListIntent.Filter(searchTerm, 0)
+        )
         return true
       }
     })

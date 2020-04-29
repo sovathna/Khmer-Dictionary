@@ -13,10 +13,10 @@ class AppRepositoryImpl @Inject constructor(db: AppDatabase) : AppRepository {
 
   private val wordDao = db.wordDao()
 
-  override fun getWordList(filter: String?, offset: Int): Single<List<Word>> {
+  override fun filterWordList(filter: String?, offset: Int, pageSize: Int): Single<List<Word>> {
     return when {
-      filter.isNullOrEmpty() -> wordDao.getWordList(offset)
-      else -> wordDao.getFilterWordList("$filter%", offset)
+      filter.isNullOrEmpty() -> wordDao.getWordList(offset, pageSize)
+      else -> wordDao.getFilterWordList("$filter%", offset, pageSize)
     }.map { it.map { tmp -> Word(tmp.id, tmp.word) } }
   }
 

@@ -19,7 +19,7 @@ class WordListModule {
 
   @Provides
   @Named("word_list")
-  fun getWordListIntent() = PublishSubject.create<WordListIntent.Get>()
+  fun getWordListIntent() = PublishSubject.create<WordListIntent.Filter>()
 
   @Provides
   fun layoutManager(activity: MainActivity): RecyclerView.LayoutManager =

@@ -14,5 +14,5 @@ class MainModule {
 
   @Provides
   @MainScope
-  fun filterIntent() = PublishSubject.create<WordListIntent.Get>()
+  fun filterIntent() = PublishSubject.create<WordListIntent.Filter>()
 }

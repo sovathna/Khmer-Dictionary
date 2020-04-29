@@ -27,10 +27,10 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
 
   @Inject
   @Named("word_list")
-  lateinit var getWordListIntent: PublishSubject<WordListIntent.Get>
+  lateinit var filterWordListIntent: PublishSubject<WordListIntent.Filter>
 
   @Inject
-  lateinit var filterIntent: PublishSubject<WordListIntent.Get>
+  lateinit var filterIntent: PublishSubject<WordListIntent.Filter>
 
   @Inject
   lateinit var selectIntent: PublishSubject<WordListIntent.Select>
@@ -42,7 +42,7 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
   lateinit var layoutManager: Provider<RecyclerView.LayoutManager>
 
   @Inject
-  lateinit var mActivity:MainActivity
+  lateinit var mActivity: MainActivity
 
   private var scrollChanged: ViewTreeObserver.OnScrollChangedListener? = null
 
@@ -68,10 +68,10 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
 
   override fun intents(): Observable<WordListIntent> =
     Observable.merge(
-      getWordListIntent
+      filterWordListIntent
         .throttleFirst(500, TimeUnit.MILLISECONDS),
       selectIntent,
-      filterIntent.throttleLast(500, TimeUnit.MILLISECONDS)
+      filterIntent.throttleLast(1000, TimeUnit.MILLISECONDS)
     )
 
   override fun render(state: WordListState) {
@@ -80,7 +80,7 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
 
       LogUtil.i("size: ${words?.size}")
 
-      if (isInit) getWordListIntent.onNext(WordListIntent.Get(null, 0))
+      if (isInit) filterWordListIntent.onNext(WordListIntent.Filter(null, 0))
 
 
       if (isMore) {
@@ -108,8 +108,12 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
       }
 
       adapter.submitList(words)
-      if(words?.size?:0<=Const.PAGE_SIZE)
-      rv.smoothScrollToPosition(0)
+
+      resetEvent?.getContentIfNotHandled()?.let {
+        rv.layoutManager?.postOnAnimation {
+          rv.scrollToPosition(0)
+        }
+      }
     }
 
   }
@@ -120,7 +124,7 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
       val tmp = rv.layoutManager
       if (tmp is LinearLayoutManager) {
         if (tmp.findLastVisibleItemPosition() + Const.LOAD_MORE_THRESHOLD >= itemCount) {
-          getWordListIntent.onNext(WordListIntent.Get(null, itemCount))
+          filterWordListIntent.onNext(WordListIntent.Filter(null, itemCount))
           LogUtil.i("load more")
           removeScrollChangedListener()
         }

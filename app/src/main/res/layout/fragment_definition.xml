@@ -11,9 +11,9 @@
       android:id="@+id/tv_name"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:paddingStart="32dp"
+      android:paddingStart="16dp"
       android:paddingTop="16dp"
-      android:paddingEnd="32dp"
+      android:paddingEnd="16dp"
       android:textAppearance="@style/TextAppearance.AppCompat.Title"
       app:fontFamily="@font/kantumruy"
       app:layout_constraintTop_toTopOf="parent" />
@@ -30,8 +30,11 @@
         android:id="@+id/tv_definition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autoLink="none"
         android:padding="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColorLink="#000000"
+        android:textIsSelectable="true"
         app:fontFamily="@font/kantumruy" />
   </androidx.core.widget.NestedScrollView>
 

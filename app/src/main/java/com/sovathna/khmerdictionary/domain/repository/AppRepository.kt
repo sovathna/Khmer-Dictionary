@@ -5,7 +5,7 @@ import com.sovathna.khmerdictionary.domain.model.Word
 import io.reactivex.Single
 
 interface AppRepository {
-  fun getWordList(filter: String?, offset: Int): Single<List<Word>>
+  fun filterWordList(filter: String?, offset: Int, pageSize: Int): Single<List<Word>>
 
   fun getDefinition(id: Long): Single<Definition>
 }

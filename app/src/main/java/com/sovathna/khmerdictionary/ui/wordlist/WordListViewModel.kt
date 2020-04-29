@@ -2,13 +2,13 @@ package com.sovathna.khmerdictionary.ui.wordlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.sovathna.androidmvi.Event
 import com.sovathna.androidmvi.viewmodel.MviViewModel
 import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.domain.interactor.WordListInteractor
 import com.sovathna.khmerdictionary.domain.model.intent.WordListIntent
 import com.sovathna.khmerdictionary.domain.model.result.WordListResult
 import com.sovathna.khmerdictionary.domain.model.state.WordListState
-import com.sovathna.khmerdictionary.util.LogUtil
 import io.reactivex.BackpressureStrategy
 import io.reactivex.functions.BiFunction
 
@@ -21,10 +21,11 @@ class WordListViewModel(
       when (result) {
         is WordListResult.Success -> state.copy(
           isInit = false,
-          words = if (result.isMore) state.words?.toMutableList()
+          words = if (result.isMore && !result.isReset) state.words?.toMutableList()
             ?.apply { addAll(result.words.map { WordItem(it) }) }
           else result.words.map { WordItem(it) },
-          isMore = result.words.size == Const.PAGE_SIZE
+          isMore = result.words.size >= Const.PAGE_SIZE,
+          resetEvent = if (result.isReset) Event(Unit) else null
         )
         is WordListResult.Select -> {
           state.copy(

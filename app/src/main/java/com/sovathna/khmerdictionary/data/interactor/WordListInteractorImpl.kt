@@ -1,5 +1,6 @@
 package com.sovathna.khmerdictionary.data.interactor
 
+import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.domain.interactor.WordListInteractor
 import com.sovathna.khmerdictionary.domain.model.intent.WordListIntent
 import com.sovathna.khmerdictionary.domain.model.result.WordListResult
@@ -12,11 +13,17 @@ class WordListInteractorImpl @Inject constructor(
   private val repository: AppRepository
 ) : WordListInteractor() {
 
-  override val getWordList = ObservableTransformer<WordListIntent.Get, WordListResult> {
+  override val filterWordList = ObservableTransformer<WordListIntent.Filter, WordListResult> {
     it.flatMap { intent ->
-      repository.getWordList(intent.filter, intent.offset)
+      repository.filterWordList(intent.filter, intent.offset, Const.PAGE_SIZE)
         .toObservable()
-        .map { words -> WordListResult.Success(words, intent.offset != 0) }
+        .map { words ->
+          WordListResult.Success(
+            words,
+            intent.offset != 0,
+            intent.offset == 0
+          )
+        }
         .subscribeOn(Schedulers.io())
     }
   }
