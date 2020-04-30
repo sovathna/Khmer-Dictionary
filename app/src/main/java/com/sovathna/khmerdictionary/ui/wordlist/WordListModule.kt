@@ -18,8 +18,15 @@ class WordListModule {
     ViewModelProvider(fragment, factory)[WordListViewModel::class.java]
 
   @Provides
-  @Named("word_list")
-  fun getWordListIntent() = PublishSubject.create<WordListIntent.Filter>()
+  @Named("filter")
+  fun filterIntent() = PublishSubject.create<WordListIntent.Filter>()
+
+  @Provides
+  @Named("search")
+  fun searchIntent() = PublishSubject.create<WordListIntent.Filter>()
+
+  @Provides
+  fun selectIntent() = PublishSubject.create<WordListIntent.Select>()
 
   @Provides
   fun layoutManager(activity: MainActivity): RecyclerView.LayoutManager =

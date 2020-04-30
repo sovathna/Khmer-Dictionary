@@ -2,26 +2,14 @@ package com.sovathna.khmerdictionary.ui.main
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import androidx.appcompat.widget.SearchView
+import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.R
-import com.sovathna.khmerdictionary.domain.model.intent.WordListIntent
+import com.sovathna.khmerdictionary.ui.definition.DefinitionFragment
 import com.sovathna.khmerdictionary.ui.wordlist.WordListFragment
-import com.sovathna.khmerdictionary.util.LogUtil
 import dagger.android.support.DaggerAppCompatActivity
-import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : DaggerAppCompatActivity() {
-
-  @Inject
-  lateinit var selectIntent: PublishSubject<WordListIntent.Select>
-
-  @Inject
-  lateinit var filterIntent: PublishSubject<WordListIntent.Filter>
-
-  var searchItem: MenuItem? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -31,53 +19,66 @@ class MainActivity : DaggerAppCompatActivity() {
 //    if(db.exists())
 //      Log.i("===","exists")
 //    else Log.i("===","not exists")
-
     if (savedInstanceState == null) {
       supportFragmentManager.beginTransaction()
-        .replace(R.id.fragment_container, WordListFragment(), "word_list_fragment")
+        .replace(R.id.word_list_container, WordListFragment(), Const.WORD_LIST_FRAGMENT_TAG)
+        .commit()
+    } else {
+      val fragment =
+        supportFragmentManager.findFragmentByTag(Const.DEFINITION_FRAGMENT_TAG) as DefinitionFragment?
+      fragment?.let {
+        if (supportFragmentManager.backStackEntryCount > 0)
+          supportFragmentManager.popBackStackImmediate()
+
+        supportFragmentManager.beginTransaction().replace(
+          if (definition_container != null) R.id.definition_container else R.id.word_list_container,
+          fragment,
+          Const.DEFINITION_FRAGMENT_TAG
+        ).addToBackStack(null)
+          .commit()
+      }
+
+    }
+  }
+
+  fun onItemClick(id: Long) {
+    definition_container?.let {
+      val fragment =
+        supportFragmentManager.findFragmentByTag(Const.DEFINITION_FRAGMENT_TAG) as DefinitionFragment?
+
+      if (supportFragmentManager.backStackEntryCount > 0)
+        supportFragmentManager.popBackStackImmediate()
+
+      supportFragmentManager.beginTransaction().replace(
+        R.id.definition_container,
+        (fragment ?: DefinitionFragment()).apply {
+          arguments = Bundle().apply {
+            putLong("id", id)
+          }
+        },
+        Const.DEFINITION_FRAGMENT_TAG
+      ).addToBackStack(null)
+        .commit()
+    } ?: kotlin.run {
+      val fragment =
+        supportFragmentManager.findFragmentByTag(Const.DEFINITION_FRAGMENT_TAG) as DefinitionFragment?
+
+      if (supportFragmentManager.backStackEntryCount > 0)
+        supportFragmentManager.popBackStackImmediate()
+
+      supportFragmentManager.beginTransaction().replace(
+        R.id.word_list_container,
+        (fragment ?: DefinitionFragment()).apply {
+          arguments = Bundle().apply {
+            putLong("id", id)
+          }
+        },
+        Const.DEFINITION_FRAGMENT_TAG
+      ).addToBackStack(null)
         .commit()
     }
   }
 
-  override fun onBackPressed() {
-    if (supportFragmentManager.backStackEntryCount > 0) {
-      selectIntent.onNext(WordListIntent.Select(null))
-      searchItem?.isVisible = true
-    }
-    super.onBackPressed()
-  }
-
-  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    menuInflater.inflate(R.menu.main, menu)
-    searchItem = menu.findItem(R.id.action_search)
-    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-      searchItem?.isVisible = supportFragmentManager.backStackEntryCount <= 0
-    } else {
-      searchItem?.isVisible = true
-    }
-
-    val searchView = searchItem!!.actionView as SearchView
-    searchView.queryHint = "ស្វែងរកពាក្យ"
-    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-      override fun onQueryTextChange(newText: String?): Boolean {
-        LogUtil.i("query text changed: $newText")
-        val searchTerm = newText?.trim()
-        filterIntent.onNext(
-          WordListIntent.Filter(searchTerm, 0)
-        )
-        return true
-      }
-
-      override fun onQueryTextSubmit(query: String?): Boolean {
-        val searchTerm = query?.trim()
-        filterIntent.onNext(
-          WordListIntent.Filter(searchTerm, 0)
-        )
-        return true
-      }
-    })
-    return true
-  }
 }
 
 //@JsonClass(generateAdapter = true)

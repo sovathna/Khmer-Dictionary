@@ -8,4 +8,7 @@ object Const {
     "https://github.com/sovathna/Khmer-Dictionary/raw/master/db/room_sqlite.zip"
 
   const val LOAD_MORE_THRESHOLD = 30
+
+  const val WORD_LIST_FRAGMENT_TAG = "word_list_fragment_tag"
+  const val DEFINITION_FRAGMENT_TAG = "definition_fragment_tag"
 }

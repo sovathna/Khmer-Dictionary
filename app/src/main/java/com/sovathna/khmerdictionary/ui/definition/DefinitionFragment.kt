@@ -13,6 +13,7 @@ import com.sovathna.androidmvi.fragment.MviFragment
 import com.sovathna.khmerdictionary.R
 import com.sovathna.khmerdictionary.domain.model.intent.DefinitionIntent
 import com.sovathna.khmerdictionary.domain.model.state.DefinitionState
+import com.sovathna.khmerdictionary.ui.main.MainActivity
 import com.sovathna.khmerdictionary.util.LogUtil
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -25,6 +26,9 @@ class DefinitionFragment : MviFragment<DefinitionIntent, DefinitionState, Defini
 
   @Inject
   lateinit var getDefinitionIntent: PublishSubject<DefinitionIntent.Get>
+
+  @Inject
+  lateinit var mActivity: MainActivity
 
   private var id: Long = 0
 
