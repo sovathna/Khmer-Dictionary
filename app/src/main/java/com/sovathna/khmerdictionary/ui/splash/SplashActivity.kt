@@ -2,6 +2,7 @@ package com.sovathna.khmerdictionary.ui.splash
 
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import com.sovathna.androidmvi.activity.MviActivity
 import com.sovathna.khmerdictionary.R
 import com.sovathna.khmerdictionary.domain.model.intent.SplashIntent
@@ -110,5 +111,9 @@ class SplashActivity : MviActivity<SplashIntent, SplashState, SplashViewModel>(
       else -> String.format("%d %s", value, if (value == 1L) "Byte" else "Bytes")
 
     }
+  }
+
+  override fun onBackPressed() {
+    Toast.makeText(this,"ចាំតិចទៅថី? បានអីមកវិញហ្នុង",Toast.LENGTH_SHORT).show()
   }
 }

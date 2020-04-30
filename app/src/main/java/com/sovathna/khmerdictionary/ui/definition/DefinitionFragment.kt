@@ -1,5 +1,6 @@
 package com.sovathna.khmerdictionary.ui.definition
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
@@ -7,8 +8,10 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.URLSpan
 import android.view.View
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
+import androidx.core.widget.PopupWindowCompat
 import com.sovathna.androidmvi.fragment.MviFragment
 import com.sovathna.khmerdictionary.R
 import com.sovathna.khmerdictionary.domain.model.intent.DefinitionIntent
@@ -39,6 +42,24 @@ class DefinitionFragment : MviFragment<DefinitionIntent, DefinitionState, Defini
     }
   }
 
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+      mActivity.title = "ពន្យល់ន័យ"
+    } else {
+      mActivity.title = getString(R.string.app_name_kh)
+    }
+    mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+
+  }
+
+  override fun onDestroyView() {
+    super.onDestroyView()
+    mActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    mActivity.title = getString(R.string.app_name_kh)
+    PopupWindow()
+  }
+
   override fun intents(): Observable<DefinitionIntent> =
     getDefinitionIntent.cast(DefinitionIntent::class.java)
 
@@ -52,12 +73,12 @@ class DefinitionFragment : MviFragment<DefinitionIntent, DefinitionState, Defini
           .replace("/a", "</a>")
           .replace("\\n", "<br><br>")
           .replace(" : ", " : ឧ. ")
-          .replace("ន.", "<span style=\"color:#D50000\">នាមសព្ទ</span>")
-          .replace("កិ. វិ.", "<span style=\"color:#D50000\">កិរិយាវិសេសន៍</span>")
-          .replace("កិ.វិ.", "<span style=\"color:#D50000\">កិរិយាវិសេសន៍</span>")
-          .replace("កិ.", "<span style=\"color:#D50000\">កិរិយាសព្ទ</span>")
-          .replace("និ.", "<span style=\"color:#D50000\">និបាតសព្ទ</span>")
-          .replace("គុ.", "<span style=\"color:#D50000\">គុណសព្ទ</span>")
+          .replace("ន.", "<span style=\"color:#D50000\">ន.</span>")
+          .replace("កិ. វិ.", "<span style=\"color:#D50000\">កិ. វិ.</span>")
+          .replace("កិ.វិ.", "<span style=\"color:#D50000\">កិ.វិ.</span>")
+          .replace("កិ.", "<span style=\"color:#D50000\">កិ.</span>")
+          .replace("និ.", "<span style=\"color:#D50000\">និ.</span>")
+          .replace("គុ.", "<span style=\"color:#D50000\">គុ.</span>")
         setTextViewHTML(tv_definition, tmp)
 //        tv_definition.text = definition.definition
       }
@@ -71,7 +92,7 @@ class DefinitionFragment : MviFragment<DefinitionIntent, DefinitionState, Defini
     val start = strBuilder.getSpanStart(span)
     val end = strBuilder.getSpanEnd(span)
     val flags = strBuilder.getSpanFlags(span)
-    val clickable: ClickableSpan = object : ClickableSpan() {
+    val clickable = object : ClickableSpan() {
       override fun updateDrawState(ds: TextPaint) {
         ds.isUnderlineText = false
       }

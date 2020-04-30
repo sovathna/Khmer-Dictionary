@@ -7,7 +7,7 @@ import com.sovathna.khmerdictionary.ui.wordlist.WordItem
 data class WordListState(
   val isInit: Boolean = true,
   val isMore: Boolean = false,
-  val last: Int? = null,
+  val selected: Long? = null,
   val words: List<WordItem>? = null,
   val resetEvent: Event<Unit>? = null
 ) : MviState

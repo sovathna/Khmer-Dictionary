@@ -8,5 +8,5 @@ sealed class WordListIntent : MviIntent {
     val offset: Int
   ) : WordListIntent()
 
-  data class Select(val current: Int?) : WordListIntent()
+  data class Select(val current: Long?) : WordListIntent()
 }

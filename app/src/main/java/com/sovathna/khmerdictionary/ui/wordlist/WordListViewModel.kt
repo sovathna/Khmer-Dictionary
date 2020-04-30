@@ -23,21 +23,23 @@ class WordListViewModel(
           isInit = false,
           words = if (result.isMore && !result.isReset) state.words?.toMutableList()
             ?.apply { addAll(result.words.map { WordItem(it) }) }
-          else result.words.map { WordItem(it) },
+          else result.words.map { WordItem(it, state.selected == it.id) },
           isMore = result.words.size >= Const.PAGE_SIZE,
           resetEvent = if (result.isReset) Event(Unit) else null
         )
         is WordListResult.Select -> {
           state.copy(
             words = state.words?.toMutableList()?.apply {
-              state.last?.let {
-                this[it] = this[it].copy(isSelected = false)
+              find { tmp -> tmp.isSelected }?.let {
+                this[indexOf(it)] = it.copy(isSelected = false)
               }
               result.current?.let {
-                this[it] = this[it].copy(isSelected = true)
+                find { tmp -> tmp.word.id == it }?.let {
+                  this[indexOf(it)] = it.copy(isSelected = true)
+                }
               }
             },
-            last = result.current
+            selected = result.current
           )
         }
       }

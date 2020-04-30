@@ -10,5 +10,5 @@ sealed class WordListResult : MviResult {
     val isReset: Boolean
   ) : WordListResult()
 
-  data class Select(val current: Int?) : WordListResult()
+  data class Select(val current: Long?) : WordListResult()
 }

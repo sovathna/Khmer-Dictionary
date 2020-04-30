@@ -3,7 +3,9 @@ package com.sovathna.khmerdictionary.ui.wordlist
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sovathna.androidmvi.fragment.MviFragment
@@ -69,12 +71,10 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
     layoutManager = layoutManagerProvider.get() as LinearLayoutManager
     rv.layoutManager = layoutManager
     rv.adapter = adapter
-    LogUtil.i("onViewCreated")
   }
 
   override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
-    LogUtil.i("onSaveInstanceState")
     outState.putString("old_term", oldTerm)
     outState.putBoolean("search_item_state", searchItemState)
   }
@@ -88,14 +88,11 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
     Observable.merge(
       filterIntent,
       selectIntent,
-      searchIntent.throttleLast(1000, TimeUnit.MILLISECONDS)
+      searchIntent.debounce(200, TimeUnit.MILLISECONDS)
     )
 
   override fun render(state: WordListState) {
     with(state) {
-//      LogUtil.i("state: $this")
-
-      LogUtil.i("size: ${words?.size}")
 
       if (isInit) filterIntent.onNext(WordListIntent.Filter(null, 0))
 
@@ -113,6 +110,7 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
               (searchItem?.actionView as? SearchView)?.setOnQueryTextListener(null)
 //            searchItemState = searchItem?.isActionViewExpanded == true
             mActivity.onItemClick(adapter.currentList[index].word.id)
+
           }
         }
       } else {
@@ -121,10 +119,17 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
 
       adapter.submitList(words)
 
+      if (words?.isEmpty() == true) {
+        vs_empty?.inflate()
+        view?.findViewById<View>(R.id.layout_empty)?.visibility = View.VISIBLE
+      } else {
+        view?.findViewById<View>(R.id.layout_empty)?.visibility = View.GONE
+      }
+
       resetEvent?.getContentIfNotHandled()?.let {
         rv.postDelayed({
           rv.smoothScrollToPosition(0)
-        }, 200)
+        }, 100)
       }
 
     }
@@ -135,8 +140,8 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
     removeScrollChangedListener()
     scrollChanged = ViewTreeObserver.OnScrollChangedListener {
       if (layoutManager.findLastVisibleItemPosition() + Const.LOAD_MORE_THRESHOLD >= itemCount) {
-        filterIntent.onNext(WordListIntent.Filter(null, itemCount))
-        LogUtil.i("load more")
+        filterIntent.onNext(WordListIntent.Filter(oldTerm, itemCount))
+        LogUtil.i("load more. count: $itemCount")
         removeScrollChangedListener()
       }
     }
@@ -156,6 +161,10 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
     if (searchItemState) searchItem?.expandActionView()
     val searchView = searchItem!!.actionView as SearchView
     searchView.queryHint = "ស្វែងរកពាក្យ"
+    searchView.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)?.apply {
+      textSize = 14.0F
+      typeface = ResourcesCompat.getFont(requireContext(), R.font.kantumruy)
+    }
     searchView.setQuery(oldTerm, false)
     searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
       override fun onQueryTextChange(newText: String?): Boolean {
@@ -164,7 +173,7 @@ class WordListFragment : MviFragment<WordListIntent, WordListState, WordListView
         if (searchTerm != oldTerm) {
           LogUtil.i("search: $searchTerm")
           oldTerm = searchTerm
-          filterIntent.onNext(
+          searchIntent.onNext(
             WordListIntent.Filter(searchTerm, 0)
           )
           return true

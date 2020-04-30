@@ -25,8 +25,6 @@ class WordListModule {
   @Named("search")
   fun searchIntent() = PublishSubject.create<WordListIntent.Filter>()
 
-  @Provides
-  fun selectIntent() = PublishSubject.create<WordListIntent.Select>()
 
   @Provides
   fun layoutManager(activity: MainActivity): RecyclerView.LayoutManager =
