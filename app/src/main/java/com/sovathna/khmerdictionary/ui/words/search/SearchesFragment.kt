@@ -2,6 +2,7 @@ package com.sovathna.khmerdictionary.ui.words.search
 
 import androidx.core.view.postDelayed
 import androidx.fragment.app.viewModels
+import com.sovathna.androidmvi.Logger
 import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.khmerdictionary.model.intent.SearchesIntent
 import com.sovathna.khmerdictionary.model.intent.WordsIntent
@@ -36,11 +37,7 @@ class SearchesFragment :
     super.render(state)
     with(state) {
       if (isInit) {
-        getWordsIntent.onNext(
-          SearchesIntent.GetWords(
-            ""
-          )
-        )
+        getWordsIntent.onNext(SearchesIntent.GetWords(""))
       }
       loadSuccess?.getContentIfNotHandled()?.let {
         selectWordIntent.value?.word?.let {

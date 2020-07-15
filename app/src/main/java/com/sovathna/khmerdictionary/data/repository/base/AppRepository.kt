@@ -3,7 +3,7 @@ package com.sovathna.khmerdictionary.data.repository.base
 import androidx.paging.Pager
 import com.sovathna.khmerdictionary.model.Definition
 import com.sovathna.khmerdictionary.model.Word
-import com.sovathna.khmerdictionary.model.entity.BookmarkEntity
+import com.sovathna.khmerdictionary.model.entity.BookmarkUI
 import com.sovathna.khmerdictionary.model.entity.HistoryUI
 import com.sovathna.khmerdictionary.model.entity.SearchUI
 import com.sovathna.khmerdictionary.model.entity.WordUI
@@ -21,10 +21,7 @@ interface AppRepository {
 
   fun getHistoriesPager(): Observable<Pager<Int, HistoryUI>>
 
-  fun getBookmarks(
-    offset: Int,
-    pageSize: Int
-  ): Observable<List<Word>>
+  fun getBookmarksPager(): Observable<Pager<Int, BookmarkUI>>
 
   fun getDefinition(
     id: Long
@@ -33,14 +30,6 @@ interface AppRepository {
   fun checkBookmark(
     id: Long
   ): Observable<Boolean>
-
-  fun addBookmark(
-    entity: BookmarkEntity
-  ): Observable<Long>
-
-  fun deleteBookmark(
-    id: Long
-  ): Observable<Int>
 
   fun clearHistories(): Observable<Int>
 
@@ -54,5 +43,9 @@ interface AppRepository {
 
   fun selectHistory(word: Word?): Observable<Int>
 
+  fun selectBookmark(id: Long?): Observable<Int>
+
   fun getSearchesPager(searchTerm: String): Observable<Pager<Int, SearchUI>>
+
+  fun addDeleteBookmark(word: Word): Observable<Boolean>
 }

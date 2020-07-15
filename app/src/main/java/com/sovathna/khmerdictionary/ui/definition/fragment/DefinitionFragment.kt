@@ -26,7 +26,6 @@ import com.sovathna.khmerdictionary.R
 import com.sovathna.khmerdictionary.data.local.pref.AppPreferences
 import com.sovathna.khmerdictionary.model.Definition
 import com.sovathna.khmerdictionary.model.Word
-import com.sovathna.khmerdictionary.model.intent.BookmarksIntent
 import com.sovathna.khmerdictionary.model.intent.DefinitionIntent
 import com.sovathna.khmerdictionary.model.state.DefinitionState
 import dagger.Lazy
@@ -53,10 +52,6 @@ class DefinitionFragment :
     PublishSubject.create<DefinitionIntent.AddDeleteBookmark>()
 
   @Inject
-  lateinit var bookmarkMenuItemClickIntent:
-      PublishSubject<BookmarksIntent.UpdateBookmark>
-
-  @Inject
   lateinit var fabVisibilitySubject: Lazy<PublishSubject<Boolean>>
 
   @Inject
@@ -69,6 +64,8 @@ class DefinitionFragment :
   lateinit var appPref: AppPreferences
 
   private lateinit var word: Word
+
+  private var isSet = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -133,16 +130,16 @@ class DefinitionFragment :
       if (isInit) {
         getDefinitionIntent.onNext(DefinitionIntent.GetDefinition(word))
       }
-
       definition?.let {
-        tv_name.text = definition.word
-        setTextViewHTML(tv_definition, definition.definition)
+        if (!isSet) {
+          isSet = true
+          tv_name.text = definition.word
+          setTextViewHTML(tv_definition, definition.definition)
+        }
       }
+
       isBookmark?.let {
         bookmarkedLiveData.value = it
-      }
-      isBookmarkEvent?.getContentIfNotHandled()?.let {
-        bookmarkMenuItemClickIntent.onNext(BookmarksIntent.UpdateBookmark(word, it))
       }
 
       quickDef?.getContentIfNotHandled()?.let {

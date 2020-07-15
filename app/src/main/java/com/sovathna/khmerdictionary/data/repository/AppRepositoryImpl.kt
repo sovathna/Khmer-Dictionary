@@ -3,6 +3,7 @@ package com.sovathna.khmerdictionary.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.sovathna.khmerdictionary.Const
+import com.sovathna.khmerdictionary.data.interactor.BookmarksRemoteMediator
 import com.sovathna.khmerdictionary.data.interactor.HistoriesRemoteMediator
 import com.sovathna.khmerdictionary.data.interactor.SearchesRemoteMediator
 import com.sovathna.khmerdictionary.data.interactor.WordsRemoteMediator
@@ -11,7 +12,10 @@ import com.sovathna.khmerdictionary.data.local.db.LocalDatabase
 import com.sovathna.khmerdictionary.data.repository.base.AppRepository
 import com.sovathna.khmerdictionary.model.Definition
 import com.sovathna.khmerdictionary.model.Word
-import com.sovathna.khmerdictionary.model.entity.*
+import com.sovathna.khmerdictionary.model.entity.BookmarkUI
+import com.sovathna.khmerdictionary.model.entity.HistoryUI
+import com.sovathna.khmerdictionary.model.entity.SearchUI
+import com.sovathna.khmerdictionary.model.entity.WordUI
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,6 +32,7 @@ class AppRepositoryImpl @Inject constructor(
   private val wordUIDao = local.wordUIDao()
   private val historyUIDao = local.historyUIDao()
   private val searchUIDao = local.searchUIDao()
+  private val bookmarkUIDao = local.bookmarkUIDao()
 
   override fun getWords(offset: Int, pageSize: Int): Observable<List<Word>> {
     return wordDao
@@ -40,7 +45,7 @@ class AppRepositoryImpl @Inject constructor(
 
   override fun addHistory(word: Word): Observable<Long> {
     return historyDao
-      .add(HistoryEntity(word.name, word.id))
+      .add(word.toHistoryEntity())
       .toObservable()
   }
 
@@ -50,15 +55,6 @@ class AppRepositoryImpl @Inject constructor(
       remoteMediator = HistoriesRemoteMediator(local),
       pagingSourceFactory = { local.historyUIDao().get() }
     ))
-  }
-
-  override fun getBookmarks(offset: Int, pageSize: Int): Observable<List<Word>> {
-    return bookmarkDao
-      .get(offset, pageSize)
-      .map { entities ->
-        entities.map { entity -> entity.toWord() }
-      }
-      .toObservable()
   }
 
   override fun getDefinition(id: Long): Observable<Definition> =
@@ -88,16 +84,6 @@ class AppRepositoryImpl @Inject constructor(
       .onErrorReturn { false }
       .toObservable()
 
-  override fun addBookmark(entity: BookmarkEntity): Observable<Long> =
-    bookmarkDao
-      .add(entity)
-      .toObservable()
-
-  override fun deleteBookmark(id: Long): Observable<Int> =
-    bookmarkDao
-      .delete(id)
-      .toObservable()
-
   override fun clearHistories(): Observable<Int> =
     historyDao
       .clear()
@@ -121,6 +107,14 @@ class AppRepositoryImpl @Inject constructor(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
       remoteMediator = SearchesRemoteMediator("$searchTerm%", db, local),
       pagingSourceFactory = { local.searchUIDao().get() }
+    ))
+  }
+
+  override fun getBookmarksPager(): Observable<Pager<Int, BookmarkUI>> {
+    return Observable.just(Pager(
+      config = PagingConfig(pageSize = Const.PAGE_SIZE),
+      remoteMediator = BookmarksRemoteMediator(local),
+      pagingSourceFactory = { local.bookmarkUIDao().get() }
     ))
   }
 
@@ -154,11 +148,46 @@ class AppRepositoryImpl @Inject constructor(
         .deselectAll()
         .flatMap {
           historyUIDao
-            .add(HistoryUI(word.id, word.name, isSelected = true))
+            .add(word.toHistoryUI(true))
             .map { 1 }
         }
     } else {
       historyUIDao.deselectAll()
     }.toObservable()
+  }
+
+  override fun selectBookmark(id: Long?): Observable<Int> {
+    return if (id != null) {
+      bookmarkUIDao
+        .deselectAll()
+        .flatMap {
+          bookmarkUIDao
+            .updateSelected(id, true)
+        }
+    } else {
+      bookmarkUIDao.deselectAll()
+    }.toObservable()
+  }
+
+  override fun addDeleteBookmark(word: Word): Observable<Boolean> {
+    return bookmarkDao
+      .get(word.id).map { true }
+      .onErrorReturn { false }
+      .flatMap {
+        if (it) {
+          bookmarkDao
+            .delete(word.id)
+            .flatMap {
+              bookmarkUIDao
+                .delete(word.id)
+            }
+            .map { false }
+        } else {
+          bookmarkDao
+            .add(word.toBookmarkEntity())
+            .flatMap { bookmarkUIDao.add(word.toBookmarkUI()) }
+            .map { true }
+        }
+      }.toObservable()
   }
 }

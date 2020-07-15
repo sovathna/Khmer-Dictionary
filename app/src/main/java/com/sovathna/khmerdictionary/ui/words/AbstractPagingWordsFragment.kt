@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sovathna.androidmvi.Logger
 import com.sovathna.androidmvi.fragment.MviFragment
 import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.androidmvi.livedata.Event
@@ -67,9 +68,12 @@ abstract class AbstractPagingWordsFragment<I : MviIntent, S : MviState, VM : Bas
   }
 
   override fun render(state: S) {
+    Logger.d("render state: ${state.javaClass.simpleName}")
     with(state) {
       if (this is AbstractPagingWordsState) {
+        wordsLiveData?.removeObservers(viewLifecycleOwner)
         wordsLiveData?.observe(viewLifecycleOwner, Observer {
+          Logger.d("render: ${state.javaClass.simpleName}")
           pagingAdapter.submitData(lifecycle, it)
         })
       }

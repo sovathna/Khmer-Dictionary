@@ -16,26 +16,21 @@ class BookmarksInteractorImpl @Inject constructor(
     ObservableTransformer<BookmarksIntent.GetWords, BookmarksResult> {
       it.flatMap { intent ->
         repository
-          .getBookmarks(intent.offset, intent.pageSize)
+          .getBookmarksPager()
           .subscribeOn(Schedulers.io())
-          .map { words ->
-            BookmarksResult.Success(
-              words,
-              words.size >= intent.pageSize
-            )
-          }
+          .map { BookmarksResult.Success(it) }
           .subscribeOn(Schedulers.computation())
       }
     }
 
   override val selectWord =
     ObservableTransformer<WordsIntent.SelectWord, BookmarksResult> {
-      it.map { intent -> BookmarksResult.SelectWordSuccess }
-    }
-
-  override val updateBookmark =
-    ObservableTransformer<BookmarksIntent.UpdateBookmark, BookmarksResult> {
-      it.map { intent -> BookmarksResult.UpdateBookmarkSuccess(intent.word, intent.isBookmark) }
+      it.flatMap { intent ->
+        repository
+          .selectBookmark(intent.word?.id)
+          .subscribeOn(Schedulers.io())
+          .map { BookmarksResult.SelectWordSuccess }
+      }
     }
 
   override val clearBookmark =

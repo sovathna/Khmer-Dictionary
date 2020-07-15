@@ -2,18 +2,19 @@ package com.sovathna.khmerdictionary.ui.words.bookmark
 
 import androidx.fragment.app.viewModels
 import com.sovathna.androidmvi.intent.MviIntent
-import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.model.intent.BookmarksIntent
+import com.sovathna.khmerdictionary.model.intent.WordsIntent
 import com.sovathna.khmerdictionary.model.state.BookmarksState
-import com.sovathna.khmerdictionary.ui.words.AbstractWordsFragment
+import com.sovathna.khmerdictionary.ui.words.AbstractPagingWordsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.fragment_word_list.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookmarksFragment :
-  AbstractWordsFragment<MviIntent, BookmarksState, BookmarksViewModel>() {
+  AbstractPagingWordsFragment<MviIntent, BookmarksState, BookmarksViewModel>() {
 
   override val viewModel: BookmarksViewModel by viewModels()
 
@@ -22,39 +23,28 @@ class BookmarksFragment :
   @Inject
   lateinit var clearBookmarksIntent: PublishSubject<BookmarksIntent.ClearBookmarks>
 
-  @Inject
-  lateinit var bookmarkMenuItemClickIntent: PublishSubject<BookmarksIntent.UpdateBookmark>
-
   override fun intents(): Observable<MviIntent> =
     Observable.merge(
       getBookmarksIntent,
       selectWordIntent,
-      clearBookmarksIntent,
-      bookmarkMenuItemClickIntent
+      clearBookmarksIntent
     )
 
   override fun render(state: BookmarksState) {
     super.render(state)
     with(state) {
       if (isInit) {
-        getBookmarksIntent.onNext(
-          BookmarksIntent.GetWords(
-            0,
-            Const.PAGE_SIZE
-          )
-        )
+        getBookmarksIntent.onNext(BookmarksIntent.GetWords)
       }
-      clearMenuItemLiveData.value = words?.isNotEmpty() == true
+      loadSuccess?.getContentIfNotHandled()?.let {
+        selectWordIntent.value?.word?.let {
+          rv.post {
+            selectWordIntent.onNext(WordsIntent.SelectWord(it))
+          }
+        }
+      }
+//      clearMenuItemLiveData.value = words?.isNotEmpty() == true
     }
-  }
-
-  override fun onLoadMore(offset: Int, pageSize: Int) {
-    getBookmarksIntent.onNext(
-      BookmarksIntent.GetWords(
-        offset,
-        Const.PAGE_SIZE
-      )
-    )
   }
 
 }

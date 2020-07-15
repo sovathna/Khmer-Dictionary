@@ -3,6 +3,7 @@ package com.sovathna.khmerdictionary.data.local.db.dao
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sovathna.khmerdictionary.model.entity.SearchUI
 import io.reactivex.Single
@@ -12,10 +13,10 @@ interface SearchUIDao {
   @Query("SELECT * FROM searches_ui ORDER BY name")
   fun get(): PagingSource<Int, SearchUI>
 
-  @Insert
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun add(words: List<SearchUI>): Single<List<Long>>
 
-  @Query("DELETE FROM searches_ui")
+  @Query("DELETE FROM searches_ui WHERE 1")
   fun deleteAll(): Single<Int>
 
   @Query("UPDATE searches_ui SET isSelected = 0 WHERE isSelected = 1")

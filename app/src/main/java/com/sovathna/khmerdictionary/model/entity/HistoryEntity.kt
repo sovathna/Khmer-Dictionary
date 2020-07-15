@@ -8,10 +8,10 @@ import com.sovathna.khmerdictionary.model.Word
 
 @Entity(tableName = "history", indices = [Index(value = ["id"], unique = true)])
 data class HistoryEntity(
-  @ColumnInfo(name = "word")
-  val word: String,
   @ColumnInfo(name = "id")
   val id: Long,
+  @ColumnInfo(name = "word")
+  val word: String,
   @PrimaryKey(autoGenerate = true)
   @ColumnInfo(name = "uid")
   val uid: Long = 0

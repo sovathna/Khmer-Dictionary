@@ -19,10 +19,12 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.postDelayed
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.android.material.navigation.NavigationView
+import com.sovathna.androidmvi.Logger
 import com.sovathna.androidmvi.livedata.Event
 import com.sovathna.androidmvi.livedata.EventObserver
 import com.sovathna.khmerdictionary.Const
@@ -409,9 +411,9 @@ class MainActivity : AppCompatActivity() {
 
     searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
       override fun onQueryTextChange(newText: String?): Boolean {
-
         val searchTerm = newText?.trim() ?: ""
         if (searchTerm != viewModel.searchTerm) {
+          Logger.d("query text change $searchTerm")
           viewModel.searchTerm = searchTerm
           searchesIntent.onNext(
             SearchesIntent.GetWords(
@@ -432,6 +434,11 @@ class MainActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     if (item.itemId == R.id.action_bookmark) {
       menuItemClickLiveData.value = Event("bookmark")
+      selectWordSubject.value?.word?.let {
+        drawer_layout.postDelayed(400) {
+          selectWordSubject.onNext(WordsIntent.SelectWord(it))
+        }
+      }
     } else if (item.itemId == R.id.action_zoom_in) {
       menuItemClickLiveData.value = Event("zoom_in")
     } else if (item.itemId == R.id.action_zoom_out) {

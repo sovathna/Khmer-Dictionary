@@ -3,13 +3,16 @@ package com.sovathna.khmerdictionary.ui.words.bookmark
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
+import androidx.paging.liveData
 import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.androidmvi.livedata.Event
 import com.sovathna.androidmvi.viewmodel.MviViewModel
 import com.sovathna.khmerdictionary.data.interactor.base.BookmarksInteractor
 import com.sovathna.khmerdictionary.model.result.BookmarksResult
 import com.sovathna.khmerdictionary.model.state.BookmarksState
-import com.sovathna.khmerdictionary.ui.words.WordItem
 import io.reactivex.BackpressureStrategy
 import io.reactivex.functions.BiFunction
 
@@ -23,31 +26,13 @@ class BookmarksViewModel @ViewModelInject constructor(
         is BookmarksResult.Success ->
           state.copy(
             isInit = false,
-            words =
-            if (state.words == null) {
-              result.words.map { WordItem(it) }
-            } else {
-              state.words.toMutableList().apply {
-                addAll(result.words.map { WordItem(it) })
-              }
-            },
-            isMore = result.isMore,
+            wordsLiveData = result.bookmarksPager.liveData
+              .map { it.map { it.toWordItem() } }
+              .cachedIn(viewModelScope),
             loadSuccess = Event(Unit)
           )
         is BookmarksResult.SelectWordSuccess -> state
-        is BookmarksResult.UpdateBookmarkSuccess ->
-          state.copy(
-            words = state.words?.toMutableList()?.apply {
-              find { it.word.id == result.word.id }?.let { remove(it) }
-              if (result.isBookmark) {
-                add(0, WordItem(result.word, true))
-              }
-            }
-          )
-        is BookmarksResult.ClearBookmarkSuccess ->
-          state.copy(
-            words = emptyList()
-          )
+        is BookmarksResult.ClearBookmarkSuccess -> state
       }
     }
 

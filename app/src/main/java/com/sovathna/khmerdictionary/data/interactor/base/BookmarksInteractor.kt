@@ -17,9 +17,6 @@ abstract class BookmarksInteractor :
   protected abstract val selectWord:
       ObservableTransformer<WordsIntent.SelectWord, BookmarksResult>
 
-  protected abstract val updateBookmark:
-      ObservableTransformer<BookmarksIntent.UpdateBookmark, BookmarksResult>
-
   protected abstract val clearBookmark:
       ObservableTransformer<BookmarksIntent.ClearBookmarks, BookmarksResult>
 
@@ -33,9 +30,6 @@ abstract class BookmarksInteractor :
           intent
             .ofType(WordsIntent.SelectWord::class.java)
             .compose(selectWord),
-          intent
-            .ofType(BookmarksIntent.UpdateBookmark::class.java)
-            .compose(updateBookmark),
           intent
             .ofType(BookmarksIntent.ClearBookmarks::class.java)
             .compose(clearBookmark)
