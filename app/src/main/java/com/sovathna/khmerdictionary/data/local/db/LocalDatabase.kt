@@ -11,7 +11,8 @@ import com.sovathna.khmerdictionary.model.entity.*
     HistoryEntity::class,
     WordUI::class,
     BookmarkUI::class,
-    HistoryUI::class
+    HistoryUI::class,
+    SearchUI::class
   ],
   version = 3,
   exportSchema = false
@@ -20,6 +21,7 @@ abstract class LocalDatabase : RoomDatabase() {
   abstract fun bookmarkDao(): BookmarkDao
   abstract fun historyDao(): HistoryDao
   abstract fun wordUIDao(): WordUIDao
+  abstract fun searchUIDao(): SearchUIDao
   abstract fun bookmarkUIDao(): BookmarkUIDao
   abstract fun historyUIDao(): HistoryUIDao
 }

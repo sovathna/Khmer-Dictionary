@@ -17,4 +17,5 @@ data class WordEntity(
 ) {
   fun toWord() = Word(id, word)
   fun toWordUI() = WordUI(id, word)
+  fun toSearchUI() = SearchUI(id, word)
 }

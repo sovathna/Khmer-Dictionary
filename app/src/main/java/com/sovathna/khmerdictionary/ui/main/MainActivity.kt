@@ -415,10 +415,7 @@ class MainActivity : AppCompatActivity() {
           viewModel.searchTerm = searchTerm
           searchesIntent.onNext(
             SearchesIntent.GetWords(
-              viewModel.searchTerm,
-              0,
-              Const.PAGE_SIZE,
-              true
+              viewModel.searchTerm
             )
           )
         }

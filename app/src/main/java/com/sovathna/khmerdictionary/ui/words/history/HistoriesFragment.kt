@@ -4,11 +4,14 @@ import androidx.fragment.app.viewModels
 import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.model.intent.HistoriesIntent
+import com.sovathna.khmerdictionary.model.intent.WordsIntent
 import com.sovathna.khmerdictionary.model.state.HistoriesState
 import com.sovathna.khmerdictionary.ui.words.AbstractPagingWordsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.fragment_word_list.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -39,6 +42,13 @@ class HistoriesFragment :
             Const.PAGE_SIZE
           )
         )
+      }
+      loadSuccess?.getContentIfNotHandled()?.let {
+        selectWordIntent.value?.word?.let {
+          rv.post {
+            selectWordIntent.onNext(WordsIntent.SelectWord(it))
+          }
+        }
       }
 //      words?.let {
 //        clearMenuItemLiveData.value = it.isNotEmpty()

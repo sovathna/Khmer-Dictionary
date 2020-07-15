@@ -16,20 +16,18 @@ class SearchesInteractorImpl @Inject constructor(
     ObservableTransformer<SearchesIntent.GetWords, SearchesResult> {
       it.flatMap { intent ->
         repository
-          .getSearches(intent.searchTerm, intent.offset, intent.pageSize)
+          .getSearchesPager(intent.searchTerm)
           .subscribeOn(Schedulers.io())
-          .map { words ->
-            SearchesResult.Success(
-              words,
-              words.size >= intent.pageSize,
-              intent.isReset
-            )
-          }
-          .subscribeOn(Schedulers.computation())
+          .map(SearchesResult::Success)
       }
     }
   override val selectWord =
     ObservableTransformer<WordsIntent.SelectWord, SearchesResult> {
-      it.map { intent -> SearchesResult.SelectWordSuccess }
+      it.flatMap { intent ->
+        repository
+          .selectSearch(intent.word?.id)
+          .subscribeOn(Schedulers.io())
+          .map { SearchesResult.SelectWordSuccess }
+      }
     }
 }

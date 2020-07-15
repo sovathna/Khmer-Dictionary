@@ -13,14 +13,14 @@ interface WordUIDao {
   fun get(): PagingSource<Int, WordUI>
 
   @Insert
-  fun addAll(words: List<WordUI>): Single<List<Long>>
+  fun add(words: List<WordUI>): Single<List<Long>>
 
   @Query("DELETE FROM words_ui")
   fun deleteAll(): Single<Int>
 
-  @Query("SELECT id FROM words_ui WHERE isSelected = 1")
-  fun getSelected(): Single<Long>
+  @Query("UPDATE words_ui SET isSelected = 0 WHERE isSelected = 1")
+  fun deselectAll(): Single<Int>
 
   @Query("UPDATE words_ui SET isSelected = :isSelected WHERE id = :id")
-  fun updateSelected(id:Long,isSelected: Boolean): Single<Int>
+  fun updateSelected(id: Long, isSelected: Boolean): Single<Int>
 }

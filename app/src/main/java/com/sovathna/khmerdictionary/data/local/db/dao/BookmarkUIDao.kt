@@ -13,7 +13,7 @@ interface BookmarkUIDao {
   fun get(): PagingSource<Int, BookmarkUI>
 
   @Insert
-  fun addAll(words: List<BookmarkUI>): Single<List<Long>>
+  fun add(words: List<BookmarkUI>): Single<List<Long>>
 
   @Query("DELETE FROM bookmarks_ui")
   fun deleteAll(): Single<Int>

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sovathna.androidmvi.Logger
 import com.sovathna.androidmvi.fragment.MviFragment
 import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.androidmvi.livedata.Event
@@ -39,7 +38,7 @@ abstract class AbstractPagingWordsFragment<I : MviIntent, S : MviState, VM : Bas
   @Named("clear_menu")
   protected lateinit var clearMenuItemLiveData: MutableLiveData<Boolean>
 
-  protected lateinit var pagingAdapter: WordsPagingAdapter
+  private lateinit var pagingAdapter: WordsPagingAdapter
   private lateinit var layoutManager: LinearLayoutManager
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,15 +72,6 @@ abstract class AbstractPagingWordsFragment<I : MviIntent, S : MviState, VM : Bas
         wordsLiveData?.observe(viewLifecycleOwner, Observer {
           pagingAdapter.submitData(lifecycle, it)
         })
-
-        rv.postOnAnimation {
-          loadSuccess?.getContentIfNotHandled()?.let {
-            selectWordIntent.value?.word?.let {
-              selectWordIntent.onNext(WordsIntent.SelectWord(it))
-            }
-          }
-        }
-
       }
     }
   }

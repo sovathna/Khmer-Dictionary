@@ -28,12 +28,7 @@ class WordsFragment :
     super.render(state)
     with(state) {
       if (isInit) {
-        getWordsIntent.onNext(
-          WordsIntent.GetWords(
-            0,
-            Const.PAGE_SIZE
-          )
-        )
+        getWordsIntent.onNext(WordsIntent.GetWords)
       }
     }
   }

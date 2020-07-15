@@ -5,17 +5,12 @@ import com.sovathna.khmerdictionary.model.Definition
 import com.sovathna.khmerdictionary.model.Word
 import com.sovathna.khmerdictionary.model.entity.BookmarkEntity
 import com.sovathna.khmerdictionary.model.entity.HistoryUI
+import com.sovathna.khmerdictionary.model.entity.SearchUI
 import com.sovathna.khmerdictionary.model.entity.WordUI
 import io.reactivex.Observable
 
 interface AppRepository {
   fun getWords(
-    offset: Int,
-    pageSize: Int
-  ): Observable<List<Word>>
-
-  fun getSearches(
-    searchTerm: String,
     offset: Int,
     pageSize: Int
   ): Observable<List<Word>>
@@ -55,5 +50,9 @@ interface AppRepository {
 
   fun selectWord(id: Long?): Observable<Int>
 
+  fun selectSearch(id: Long?): Observable<Int>
+
   fun selectHistory(word: Word?): Observable<Int>
+
+  fun getSearchesPager(searchTerm: String): Observable<Pager<Int, SearchUI>>
 }

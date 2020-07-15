@@ -30,7 +30,7 @@ class HistoriesRemoteMediator(
           .flatMap {
             dao.get(0, state.config.pageSize)
               .map { it.map { it.toHistoryUI() } }
-              .flatMap { uiDao.addAll(it) }
+              .flatMap { uiDao.add(it) }
           }
           .map { MediatorResult.Success(false) as MediatorResult }
           .onErrorReturn {
@@ -45,7 +45,7 @@ class HistoriesRemoteMediator(
           .get(offset, state.config.pageSize)
           .subscribeOn(Schedulers.io())
           .map { it.map { it.toHistoryUI() } }
-          .flatMap { uiDao.addAll(it).subscribeOn(Schedulers.io()) }
+          .flatMap { uiDao.add(it) }
           .map { it.size < state.config.pageSize }
           .map { MediatorResult.Success(it) as MediatorResult }
           .onErrorReturn {

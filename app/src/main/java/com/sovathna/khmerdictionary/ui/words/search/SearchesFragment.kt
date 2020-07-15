@@ -1,22 +1,22 @@
 package com.sovathna.khmerdictionary.ui.words.search
 
-import androidx.fragment.app.activityViewModels
+import androidx.core.view.postDelayed
 import androidx.fragment.app.viewModels
 import com.sovathna.androidmvi.intent.MviIntent
-import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.model.intent.SearchesIntent
+import com.sovathna.khmerdictionary.model.intent.WordsIntent
 import com.sovathna.khmerdictionary.model.state.SearchWordsState
-import com.sovathna.khmerdictionary.ui.main.MainViewModel
-import com.sovathna.khmerdictionary.ui.words.AbstractWordsFragment
+import com.sovathna.khmerdictionary.ui.words.AbstractPagingWordsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.fragment_word_list.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchesFragment :
-  AbstractWordsFragment<MviIntent, SearchWordsState, SearchesViewModel>() {
+  AbstractPagingWordsFragment<MviIntent, SearchWordsState, SearchesViewModel>() {
 
   override val viewModel: SearchesViewModel by viewModels()
 
@@ -24,8 +24,6 @@ class SearchesFragment :
 
   @Inject
   lateinit var mainGetWordsIntent: PublishSubject<SearchesIntent.GetWords>
-
-  private val mainViewModel: MainViewModel by activityViewModels()
 
   override fun intents(): Observable<MviIntent> =
     Observable.merge(
@@ -40,24 +38,17 @@ class SearchesFragment :
       if (isInit) {
         getWordsIntent.onNext(
           SearchesIntent.GetWords(
-            "",
-            0,
-            Const.PAGE_SIZE,
-            true
+            ""
           )
         )
       }
+      loadSuccess?.getContentIfNotHandled()?.let {
+        selectWordIntent.value?.word?.let {
+          rv.postDelayed(200) {
+            selectWordIntent.onNext(WordsIntent.SelectWord(it))
+          }
+        }
+      }
     }
-  }
-
-  override fun onLoadMore(offset: Int, pageSize: Int) {
-    getWordsIntent.onNext(
-      SearchesIntent.GetWords(
-        mainViewModel.searchTerm,
-        offset,
-        pageSize,
-        false
-      )
-    )
   }
 }

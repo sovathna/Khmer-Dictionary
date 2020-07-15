@@ -14,19 +14,13 @@ interface HistoryUIDao {
   fun get(): PagingSource<Int, HistoryUI>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  fun addAll(words: List<HistoryUI>): Single<List<Long>>
+  fun add(words: List<HistoryUI>): Single<List<Long>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun add(word: HistoryUI): Single<Long>
 
   @Query("DELETE FROM histories_ui")
   fun deleteAll(): Single<Int>
-
-  @Query("SELECT * FROM histories_ui WHERE isSelected = 1")
-  fun getSelected(): Single<HistoryUI>
-
-  @Query("UPDATE histories_ui SET isSelected = :isSelected WHERE id = :id")
-  fun updateSelected(id: Long, isSelected: Boolean): Single<Int>
 
   @Query("UPDATE histories_ui SET isSelected = 0 WHERE isSelected = 1")
   fun deselectAll(): Single<Int>

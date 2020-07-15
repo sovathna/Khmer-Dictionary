@@ -2,23 +2,17 @@ package com.sovathna.khmerdictionary.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.room.EmptyResultSetException
-import com.sovathna.androidmvi.Logger
 import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.data.interactor.HistoriesRemoteMediator
+import com.sovathna.khmerdictionary.data.interactor.SearchesRemoteMediator
 import com.sovathna.khmerdictionary.data.interactor.WordsRemoteMediator
 import com.sovathna.khmerdictionary.data.local.db.AppDatabase
 import com.sovathna.khmerdictionary.data.local.db.LocalDatabase
 import com.sovathna.khmerdictionary.data.repository.base.AppRepository
 import com.sovathna.khmerdictionary.model.Definition
 import com.sovathna.khmerdictionary.model.Word
-import com.sovathna.khmerdictionary.model.entity.BookmarkEntity
-import com.sovathna.khmerdictionary.model.entity.HistoryEntity
-import com.sovathna.khmerdictionary.model.entity.HistoryUI
-import com.sovathna.khmerdictionary.model.entity.WordUI
+import com.sovathna.khmerdictionary.model.entity.*
 import io.reactivex.Observable
-import io.reactivex.Single
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,6 +27,7 @@ class AppRepositoryImpl @Inject constructor(
   private val bookmarkDao = local.bookmarkDao()
   private val wordUIDao = local.wordUIDao()
   private val historyUIDao = local.historyUIDao()
+  private val searchUIDao = local.searchUIDao()
 
   override fun getWords(offset: Int, pageSize: Int): Observable<List<Word>> {
     return wordDao
@@ -60,19 +55,6 @@ class AppRepositoryImpl @Inject constructor(
   override fun getBookmarks(offset: Int, pageSize: Int): Observable<List<Word>> {
     return bookmarkDao
       .get(offset, pageSize)
-      .map { entities ->
-        entities.map { entity -> entity.toWord() }
-      }
-      .toObservable()
-  }
-
-  override fun getSearches(
-    searchTerm: String,
-    offset: Int,
-    pageSize: Int
-  ): Observable<List<Word>> {
-    return wordDao
-      .search("$searchTerm%", offset, pageSize)
       .map { entities ->
         entities.map { entity -> entity.toWord() }
       }
@@ -134,31 +116,35 @@ class AppRepositoryImpl @Inject constructor(
     ))
   }
 
+  override fun getSearchesPager(searchTerm: String): Observable<Pager<Int, SearchUI>> {
+    return Observable.just(Pager(
+      config = PagingConfig(pageSize = Const.PAGE_SIZE),
+      remoteMediator = SearchesRemoteMediator("$searchTerm%", db, local),
+      pagingSourceFactory = { local.searchUIDao().get() }
+    ))
+  }
+
   override fun selectWord(id: Long?): Observable<Int> {
-    val tmp = wordUIDao.getSelected()
-      .onErrorReturn {
-        if (it is EmptyResultSetException) 0 else throw it
-      }
-      .toFlowable()
     return if (id != null) {
-      tmp
+      wordUIDao
+        .deselectAll()
         .flatMap {
-          Single.merge(
-            wordUIDao.updateSelected(it, false),
-            wordUIDao.updateSelected(id, true)
-          )
+          wordUIDao.updateSelected(id, true)
         }
-//        .flatMap {
-//          wordUIDao.updateSelected(id, true)
-//            .subscribeOn(Schedulers.io())
-//        }
     } else {
-      tmp
+      wordUIDao.deselectAll()
+    }.toObservable()
+  }
+
+  override fun selectSearch(id: Long?): Observable<Int> {
+    return if (id != null) {
+      searchUIDao
+        .deselectAll()
         .flatMap {
-          wordUIDao
-            .updateSelected(it, false)
-            .toFlowable()
+          searchUIDao.updateSelected(id, true)
         }
+    } else {
+      searchUIDao.deselectAll()
     }.toObservable()
   }
 
@@ -168,8 +154,8 @@ class AppRepositoryImpl @Inject constructor(
         .deselectAll()
         .flatMap {
           historyUIDao
-            .add(HistoryUI(word.id, word.name,isSelected = true))
-            .map { 0 }
+            .add(HistoryUI(word.id, word.name, isSelected = true))
+            .map { 1 }
         }
     } else {
       historyUIDao.deselectAll()
