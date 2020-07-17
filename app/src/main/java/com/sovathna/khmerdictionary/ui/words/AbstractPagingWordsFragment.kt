@@ -3,10 +3,8 @@ package com.sovathna.khmerdictionary.ui.words
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sovathna.androidmvi.Logger
 import com.sovathna.androidmvi.fragment.MviFragment
 import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.androidmvi.livedata.Event
@@ -15,7 +13,6 @@ import com.sovathna.androidmvi.viewmodel.BaseViewModel
 import com.sovathna.khmerdictionary.R
 import com.sovathna.khmerdictionary.model.Word
 import com.sovathna.khmerdictionary.model.intent.WordsIntent
-import com.sovathna.khmerdictionary.model.state.AbstractPagingWordsState
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_word_list.*
@@ -39,7 +36,7 @@ abstract class AbstractPagingWordsFragment<I : MviIntent, S : MviState, VM : Bas
   @Named("clear_menu")
   protected lateinit var clearMenuItemLiveData: MutableLiveData<Boolean>
 
-  private lateinit var pagingAdapter: WordsPagingAdapter
+  protected lateinit var pagingAdapter: WordsPagingAdapter
   private lateinit var layoutManager: LinearLayoutManager
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,15 +65,6 @@ abstract class AbstractPagingWordsFragment<I : MviIntent, S : MviState, VM : Bas
   }
 
   override fun render(state: S) {
-    Logger.d("render state: ${state.javaClass.simpleName}")
-    with(state) {
-      if (this is AbstractPagingWordsState) {
-        wordsLiveData?.removeObservers(viewLifecycleOwner)
-        wordsLiveData?.observe(viewLifecycleOwner, Observer {
-          Logger.d("render: ${state.javaClass.simpleName}")
-          pagingAdapter.submitData(lifecycle, it)
-        })
-      }
-    }
+
   }
 }

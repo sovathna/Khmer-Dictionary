@@ -1,7 +1,9 @@
 package com.sovathna.khmerdictionary.data.interactor.base
 
+import androidx.paging.Pager
 import com.sovathna.androidmvi.domain.MviInteractor
 import com.sovathna.androidmvi.intent.MviIntent
+import com.sovathna.khmerdictionary.model.entity.HistoryUI
 import com.sovathna.khmerdictionary.model.intent.HistoriesIntent
 import com.sovathna.khmerdictionary.model.intent.WordsIntent
 import com.sovathna.khmerdictionary.model.result.HistoriesResult
@@ -11,8 +13,7 @@ import io.reactivex.ObservableTransformer
 abstract class HistoriesInteractor :
   MviInteractor<MviIntent, HistoriesResult>() {
 
-  protected abstract val getWords:
-      ObservableTransformer<HistoriesIntent.GetWords, HistoriesResult>
+  protected abstract fun getWords(): Pager<Int, HistoryUI>
 
   protected abstract val selectWord:
       ObservableTransformer<WordsIntent.SelectWord, HistoriesResult>
@@ -24,9 +25,6 @@ abstract class HistoriesInteractor :
     ObservableTransformer<MviIntent, HistoriesResult> {
       it.publish { intent ->
         Observable.merge(
-          intent
-            .ofType(HistoriesIntent.GetWords::class.java)
-            .compose(getWords),
           intent
             .ofType(WordsIntent.SelectWord::class.java)
             .compose(selectWord),

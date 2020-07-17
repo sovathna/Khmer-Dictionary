@@ -49,12 +49,12 @@ class AppRepositoryImpl @Inject constructor(
       .toObservable()
   }
 
-  override fun getHistoriesPager(): Observable<Pager<Int, HistoryUI>> {
-    return Observable.just(Pager(
+  override fun getHistoriesPager(): Pager<Int, HistoryUI> {
+    return Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
       remoteMediator = HistoriesRemoteMediator(local),
       pagingSourceFactory = { local.historyUIDao().get() }
-    ))
+    )
   }
 
   override fun getDefinition(id: Long): Observable<Definition> =
@@ -94,28 +94,28 @@ class AppRepositoryImpl @Inject constructor(
       .clear()
       .toObservable()
 
-  override fun getWordsPager(): Observable<Pager<Int, WordUI>> {
-    return Observable.just(Pager(
+  override fun getWordsPager(): Pager<Int, WordUI> {
+    return Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
       remoteMediator = WordsRemoteMediator(db, local),
       pagingSourceFactory = { local.wordUIDao().get() }
-    ))
+    )
   }
 
-  override fun getSearchesPager(searchTerm: String): Observable<Pager<Int, SearchUI>> {
-    return Observable.just(Pager(
+  override fun getSearchesPager(searchTerm: String): Pager<Int, SearchUI> {
+    return Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
       remoteMediator = SearchesRemoteMediator("$searchTerm%", db, local),
       pagingSourceFactory = { local.searchUIDao().get() }
-    ))
+    )
   }
 
-  override fun getBookmarksPager(): Observable<Pager<Int, BookmarkUI>> {
-    return Observable.just(Pager(
+  override fun getBookmarksPager(): Pager<Int, BookmarkUI> {
+    return Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
       remoteMediator = BookmarksRemoteMediator(local),
       pagingSourceFactory = { local.bookmarkUIDao().get() }
-    ))
+    )
   }
 
   override fun selectWord(id: Long?): Observable<Int> {

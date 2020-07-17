@@ -1,12 +1,8 @@
 package com.sovathna.khmerdictionary.model.state
 
-import androidx.lifecycle.LiveData
-import androidx.paging.PagingData
 import com.sovathna.androidmvi.livedata.Event
-import com.sovathna.khmerdictionary.ui.words.WordItem
+import com.sovathna.androidmvi.state.MviState
 
 data class BookmarksState(
-  override val isInit: Boolean = true,
-  override val wordsLiveData: LiveData<PagingData<WordItem>>? = null,
-  override val loadSuccess: Event<Unit>? = null
-) : AbstractPagingWordsState()
+  val loadSuccess: Event<Unit>? = null
+) : MviState

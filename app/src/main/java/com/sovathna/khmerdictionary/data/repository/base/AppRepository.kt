@@ -19,9 +19,9 @@ interface AppRepository {
     word: Word
   ): Observable<Long>
 
-  fun getHistoriesPager(): Observable<Pager<Int, HistoryUI>>
+  fun getHistoriesPager(): Pager<Int, HistoryUI>
 
-  fun getBookmarksPager(): Observable<Pager<Int, BookmarkUI>>
+  fun getBookmarksPager(): Pager<Int, BookmarkUI>
 
   fun getDefinition(
     id: Long
@@ -35,7 +35,7 @@ interface AppRepository {
 
   fun clearBookmarks(): Observable<Int>
 
-  fun getWordsPager(): Observable<Pager<Int, WordUI>>
+  fun getWordsPager(): Pager<Int, WordUI>
 
   fun selectWord(id: Long?): Observable<Int>
 
@@ -45,7 +45,7 @@ interface AppRepository {
 
   fun selectBookmark(id: Long?): Observable<Int>
 
-  fun getSearchesPager(searchTerm: String): Observable<Pager<Int, SearchUI>>
+  fun getSearchesPager(searchTerm: String): Pager<Int, SearchUI>
 
   fun addDeleteBookmark(word: Word): Observable<Boolean>
 }

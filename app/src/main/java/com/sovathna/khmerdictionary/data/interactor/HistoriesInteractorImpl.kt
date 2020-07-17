@@ -12,15 +12,8 @@ import javax.inject.Inject
 class HistoriesInteractorImpl @Inject constructor(
   private val repository: AppRepository
 ) : HistoriesInteractor() {
-  override val getWords =
-    ObservableTransformer<HistoriesIntent.GetWords, HistoriesResult> {
-      it.flatMap { intent ->
-        repository
-          .getHistoriesPager()
-          .subscribeOn(Schedulers.io())
-          .map { HistoriesResult.Success(it) }
-      }
-    }
+
+  override fun getWords() = repository.getHistoriesPager()
 
   override val selectWord =
     ObservableTransformer<WordsIntent.SelectWord, HistoriesResult> {

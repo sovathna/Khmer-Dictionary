@@ -2,13 +2,12 @@ package com.sovathna.khmerdictionary.ui.words.main
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.sovathna.khmerdictionary.Const
+import com.sovathna.androidmvi.Logger
 import com.sovathna.khmerdictionary.model.intent.WordsIntent
 import com.sovathna.khmerdictionary.model.state.WordsState
 import com.sovathna.khmerdictionary.ui.words.AbstractPagingWordsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
 
 @AndroidEntryPoint
 class WordsFragment :
@@ -16,20 +15,13 @@ class WordsFragment :
 
   override val viewModel: WordsViewModel by viewModels()
 
-  private val getWordsIntent = PublishSubject.create<WordsIntent.GetWords>()
-
   override fun intents(): Observable<WordsIntent> =
-    Observable.merge(
-      getWordsIntent,
-      selectWordIntent
-    )
+    selectWordIntent.cast(WordsIntent::class.java)
 
-  override fun render(state: WordsState) {
-    super.render(state)
-    with(state) {
-      if (isInit) {
-        getWordsIntent.onNext(WordsIntent.GetWords)
-      }
-    }
+  override fun onResume() {
+    super.onResume()
+    viewModel.wordsLiveData.observe(viewLifecycleOwner, Observer {
+      pagingAdapter.submitData(lifecycle, it)
+    })
   }
 }
