@@ -1,8 +1,12 @@
 package com.sovathna.khmerdictionary.model.state
 
+import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
 import com.sovathna.androidmvi.livedata.Event
-import com.sovathna.androidmvi.state.MviState
+import com.sovathna.khmerdictionary.ui.words.WordItem
 
 data class HistoriesState(
-  val loadSuccess: Event<Unit>? = null
-) : MviState
+  override val isInit: Boolean = true,
+  override val loadSuccess: Event<Unit>? = null,
+  override val wordsLiveData: LiveData<PagingData<WordItem>>? = null
+) : AbstractPagingWordsState()

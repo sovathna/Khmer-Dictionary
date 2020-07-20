@@ -1,27 +1,30 @@
-package com.sovathna.khmerdictionary.data.interactor
+package com.sovathna.khmerdictionary.data.mediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.sovathna.androidmvi.Logger
+import com.sovathna.khmerdictionary.data.local.db.AppDatabase
 import com.sovathna.khmerdictionary.data.local.db.LocalDatabase
-import com.sovathna.khmerdictionary.model.entity.HistoryUI
+import com.sovathna.khmerdictionary.model.entity.WordUI
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
 @OptIn(ExperimentalPagingApi::class)
-class HistoriesRemoteMediator(
+class WordsRemoteMediator(
+  db: AppDatabase,
   local: LocalDatabase
-) : RxRemoteMediator<Int, HistoryUI>() {
+) : RxRemoteMediator<Int, WordUI>() {
 
-  private val dao = local.historyDao()
-  private val uiDao = local.historyUIDao()
+  private val dao = db.wordDao()
+  private val uiDao = local.wordUIDao()
 
   override fun loadSingle(
     loadType: LoadType,
-    state: PagingState<Int, HistoryUI>
+    state: PagingState<Int, WordUI>
   ): Single<MediatorResult> {
+    Logger.d("loadType: $loadType")
     return when (loadType) {
       LoadType.REFRESH -> {
         uiDao
@@ -29,7 +32,7 @@ class HistoriesRemoteMediator(
           .subscribeOn(Schedulers.io())
           .flatMap {
             dao.get(0, state.config.pageSize)
-              .map { it.map { it.toHistoryUI() } }
+              .map { it.map { it.toWordUI() } }
               .flatMap { uiDao.add(it) }
           }
           .map { MediatorResult.Success(false) as MediatorResult }
@@ -44,7 +47,7 @@ class HistoriesRemoteMediator(
         dao
           .get(offset, state.config.pageSize)
           .subscribeOn(Schedulers.io())
-          .map { it.map { it.toHistoryUI() } }
+          .map { it.map { it.toWordUI() } }
           .flatMap { uiDao.add(it) }
           .map { it.size < state.config.pageSize }
           .map { MediatorResult.Success(it) as MediatorResult }

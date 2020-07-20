@@ -1,6 +1,7 @@
 package com.sovathna.androidmvi.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -25,8 +26,8 @@ abstract class MviFragment
     viewModel.init(intents())
   }
 
-  override fun onResume() {
-    super.onResume()
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     viewModel.stateLiveData.observe(viewLifecycleOwner, Observer(this::render))
   }
 

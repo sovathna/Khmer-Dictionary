@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sovathna.khmerdictionary.R
 import com.sovathna.khmerdictionary.model.entity.WordUI
 
-class WordPagingViewHolder(itemView: View, onItemClick: ((Int, WordItem) -> Unit)?) :
+class WordItemViewHolder(itemView: View, onItemClick: ((Int, WordItem) -> Unit)?) :
   RecyclerView.ViewHolder(itemView) {
 
   private val tvName = itemView.findViewById<AppCompatTextView>(R.id.tv_name)

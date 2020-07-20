@@ -11,7 +11,7 @@ import io.reactivex.ObservableTransformer
 abstract class BookmarksInteractor :
   MviInteractor<MviIntent, BookmarksResult>() {
 
-  protected abstract val getWords:
+  protected abstract val getBookmarks:
       ObservableTransformer<BookmarksIntent.GetWords, BookmarksResult>
 
   protected abstract val selectWord:
@@ -26,7 +26,7 @@ abstract class BookmarksInteractor :
         Observable.merge(
           intent
             .ofType(BookmarksIntent.GetWords::class.java)
-            .compose(getWords),
+            .compose(getBookmarks),
           intent
             .ofType(WordsIntent.SelectWord::class.java)
             .compose(selectWord),

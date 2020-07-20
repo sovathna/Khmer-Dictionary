@@ -1,11 +1,12 @@
 package com.sovathna.khmerdictionary.ui.words.bookmark
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.khmerdictionary.model.intent.BookmarksIntent
 import com.sovathna.khmerdictionary.model.intent.WordsIntent
 import com.sovathna.khmerdictionary.model.state.BookmarksState
-import com.sovathna.khmerdictionary.ui.words.AbstractPagingWordsFragment
+import com.sovathna.khmerdictionary.ui.words.AbstractWordsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class BookmarksFragment :
-  AbstractPagingWordsFragment<MviIntent, BookmarksState, BookmarksViewModel>() {
+  AbstractWordsFragment<MviIntent, BookmarksState, BookmarksViewModel>() {
 
   override val viewModel: BookmarksViewModel by viewModels()
 
@@ -33,6 +34,9 @@ class BookmarksFragment :
   override fun render(state: BookmarksState) {
     super.render(state)
     with(state) {
+      wordsLiveData?.observe(viewLifecycleOwner, Observer {
+        submitData(it, true)
+      })
       if (isInit) {
         getBookmarksIntent.onNext(BookmarksIntent.GetWords)
       }
@@ -43,7 +47,6 @@ class BookmarksFragment :
           }
         }
       }
-//      clearMenuItemLiveData.value = words?.isNotEmpty() == true
     }
   }
 

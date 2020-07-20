@@ -12,7 +12,7 @@ import javax.inject.Inject
 class BookmarksInteractorImpl @Inject constructor(
   private val repository: AppRepository
 ) : BookmarksInteractor() {
-  override val getWords =
+  override val getBookmarks =
     ObservableTransformer<BookmarksIntent.GetWords, BookmarksResult> {
       it.flatMap { intent ->
         repository

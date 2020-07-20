@@ -20,7 +20,7 @@ interface HistoryUIDao {
   fun add(word: HistoryUI): Single<Long>
 
   @Query("DELETE FROM histories_ui")
-  fun deleteAll(): Single<Int>
+  fun clear(): Single<Int>
 
   @Query("UPDATE histories_ui SET isSelected = 0 WHERE isSelected = 1")
   fun deselectAll(): Single<Int>

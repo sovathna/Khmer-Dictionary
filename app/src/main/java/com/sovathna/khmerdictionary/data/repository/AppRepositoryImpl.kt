@@ -3,10 +3,10 @@ package com.sovathna.khmerdictionary.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.sovathna.khmerdictionary.Const
-import com.sovathna.khmerdictionary.data.interactor.BookmarksRemoteMediator
-import com.sovathna.khmerdictionary.data.interactor.HistoriesRemoteMediator
-import com.sovathna.khmerdictionary.data.interactor.SearchesRemoteMediator
-import com.sovathna.khmerdictionary.data.interactor.WordsRemoteMediator
+import com.sovathna.khmerdictionary.data.mediator.BookmarksRemoteMediator
+import com.sovathna.khmerdictionary.data.mediator.HistoriesRemoteMediator
+import com.sovathna.khmerdictionary.data.mediator.SearchesRemoteMediator
+import com.sovathna.khmerdictionary.data.mediator.WordsRemoteMediator
 import com.sovathna.khmerdictionary.data.local.db.AppDatabase
 import com.sovathna.khmerdictionary.data.local.db.LocalDatabase
 import com.sovathna.khmerdictionary.data.repository.base.AppRepository
@@ -49,12 +49,14 @@ class AppRepositoryImpl @Inject constructor(
       .toObservable()
   }
 
-  override fun getHistoriesPager(): Pager<Int, HistoryUI> {
-    return Pager(
+  override fun getHistoriesPager(): Observable<Pager<Int, HistoryUI>> {
+    return Observable.just(Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
-      remoteMediator = HistoriesRemoteMediator(local),
+      remoteMediator = HistoriesRemoteMediator(
+        local
+      ),
       pagingSourceFactory = { local.historyUIDao().get() }
-    )
+    ))
   }
 
   override fun getDefinition(id: Long): Observable<Definition> =
@@ -87,35 +89,48 @@ class AppRepositoryImpl @Inject constructor(
   override fun clearHistories(): Observable<Int> =
     historyDao
       .clear()
+      .flatMap {
+        historyUIDao.clear()
+      }
       .toObservable()
 
   override fun clearBookmarks(): Observable<Int> =
     bookmarkDao
       .clear()
+      .flatMap { bookmarkUIDao.clear() }
       .toObservable()
 
-  override fun getWordsPager(): Pager<Int, WordUI> {
-    return Pager(
+  override fun getWordsPager(): Observable<Pager<Int, WordUI>> {
+    return Observable.just(Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
-      remoteMediator = WordsRemoteMediator(db, local),
+      remoteMediator = WordsRemoteMediator(
+        db,
+        local
+      ),
       pagingSourceFactory = { local.wordUIDao().get() }
-    )
+    ))
   }
 
-  override fun getSearchesPager(searchTerm: String): Pager<Int, SearchUI> {
-    return Pager(
+  override fun getSearchesPager(searchTerm: String): Observable<Pager<Int, SearchUI>> {
+    return Observable.just(Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
-      remoteMediator = SearchesRemoteMediator("$searchTerm%", db, local),
+      remoteMediator = SearchesRemoteMediator(
+        "$searchTerm%",
+        db,
+        local
+      ),
       pagingSourceFactory = { local.searchUIDao().get() }
-    )
+    ))
   }
 
-  override fun getBookmarksPager(): Pager<Int, BookmarkUI> {
-    return Pager(
+  override fun getBookmarksPager(): Observable<Pager<Int, BookmarkUI>> {
+    return Observable.just(Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
-      remoteMediator = BookmarksRemoteMediator(local),
+      remoteMediator = BookmarksRemoteMediator(
+        local
+      ),
       pagingSourceFactory = { local.bookmarkUIDao().get() }
-    )
+    ))
   }
 
   override fun selectWord(id: Long?): Observable<Int> {

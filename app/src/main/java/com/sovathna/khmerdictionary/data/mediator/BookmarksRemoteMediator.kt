@@ -1,4 +1,4 @@
-package com.sovathna.khmerdictionary.data.interactor
+package com.sovathna.khmerdictionary.data.mediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -25,7 +25,7 @@ class BookmarksRemoteMediator(
     return when (loadType) {
       LoadType.REFRESH -> {
         uiDao
-          .deleteAll()
+          .clear()
           .subscribeOn(Schedulers.io())
           .flatMap {
             dao.get(0, state.config.pageSize)

@@ -4,6 +4,8 @@ import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.khmerdictionary.model.Word
 
 sealed class WordsIntent : MviIntent {
+  object GetWords : WordsIntent()
+
   data class SelectWord(
     val word: Word?
   ) : WordsIntent()

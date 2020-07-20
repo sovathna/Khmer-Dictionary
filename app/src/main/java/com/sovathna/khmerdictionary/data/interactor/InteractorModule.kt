@@ -19,6 +19,12 @@ abstract class InteractorModule {
 
   @Binds
   @ActivityRetainedScoped
+  abstract fun wordsInteractor(
+    impl: WordsInteractorImpl
+  ): WordsInteractor
+
+  @Binds
+  @ActivityRetainedScoped
   abstract fun searchesInteractor(
     impl: SearchesInteractorImpl
   ): SearchesInteractor

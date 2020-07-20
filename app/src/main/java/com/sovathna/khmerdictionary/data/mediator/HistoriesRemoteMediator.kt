@@ -1,40 +1,35 @@
-package com.sovathna.khmerdictionary.data.interactor
+package com.sovathna.khmerdictionary.data.mediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.sovathna.androidmvi.Logger
-import com.sovathna.khmerdictionary.data.local.db.AppDatabase
 import com.sovathna.khmerdictionary.data.local.db.LocalDatabase
-import com.sovathna.khmerdictionary.model.entity.SearchUI
-import io.reactivex.Scheduler
+import com.sovathna.khmerdictionary.model.entity.HistoryUI
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
 @OptIn(ExperimentalPagingApi::class)
-class SearchesRemoteMediator(
-  private val filter: String,
-  db: AppDatabase,
+class HistoriesRemoteMediator(
   local: LocalDatabase
-) : RxRemoteMediator<Int, SearchUI>() {
+) : RxRemoteMediator<Int, HistoryUI>() {
 
-  private val dao = db.wordDao()
-  private val uiDao = local.searchUIDao()
+  private val dao = local.historyDao()
+  private val uiDao = local.historyUIDao()
 
   override fun loadSingle(
     loadType: LoadType,
-    state: PagingState<Int, SearchUI>
+    state: PagingState<Int, HistoryUI>
   ): Single<MediatorResult> {
-    Logger.d("load type: $loadType")
     return when (loadType) {
       LoadType.REFRESH -> {
         uiDao
-          .deleteAll()
+          .clear()
           .subscribeOn(Schedulers.io())
           .flatMap {
-            dao.search(filter, 0, state.config.pageSize)
-              .map { it.map { it.toSearchUI() } }
+            dao.get(0, state.config.pageSize)
+              .map { it.map { it.toHistoryUI() } }
               .flatMap { uiDao.add(it) }
           }
           .map { MediatorResult.Success(false) as MediatorResult }
@@ -47,9 +42,9 @@ class SearchesRemoteMediator(
       LoadType.APPEND -> {
         val offset = state.pages.lastOrNull { it.data.isNotEmpty() }?.nextKey ?: 0
         dao
-          .search(filter, offset, state.config.pageSize)
+          .get(offset, state.config.pageSize)
           .subscribeOn(Schedulers.io())
-          .map { it.map { it.toSearchUI() } }
+          .map { it.map { it.toHistoryUI() } }
           .flatMap { uiDao.add(it) }
           .map { it.size < state.config.pageSize }
           .map { MediatorResult.Success(it) as MediatorResult }

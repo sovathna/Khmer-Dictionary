@@ -23,7 +23,7 @@ interface BookmarkUIDao {
   fun delete(id: Long): Single<Int>
 
   @Query("DELETE FROM bookmarks_ui")
-  fun deleteAll(): Single<Int>
+  fun clear(): Single<Int>
 
   @Query("UPDATE bookmarks_ui SET isSelected = 0 WHERE isSelected = 1")
   fun deselectAll(): Single<Int>
