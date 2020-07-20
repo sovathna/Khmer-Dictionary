@@ -24,7 +24,6 @@ class WordsFragment :
     )
 
   override fun render(state: WordsState) {
-    super.render(state)
     with(state) {
       wordsLiveData?.observe(viewLifecycleOwner, Observer {
         submitData(it)

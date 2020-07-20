@@ -27,7 +27,7 @@ class MainModule {
 
   @Provides
   @ActivityScoped
-  fun selectWordSubject() = BehaviorSubject.create<WordsIntent.SelectWord>()
+  fun selectWordIntent() = BehaviorSubject.create<WordsIntent.SelectWord>()
 
   @Provides
   @ActivityScoped

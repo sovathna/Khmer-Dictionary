@@ -47,7 +47,6 @@ class SearchesFragment :
     )
 
   override fun render(state: SearchWordsState) {
-    super.render(state)
     with(state) {
       wordsLiveData?.observe(viewLifecycleOwner, Observer {
         submitData(it)

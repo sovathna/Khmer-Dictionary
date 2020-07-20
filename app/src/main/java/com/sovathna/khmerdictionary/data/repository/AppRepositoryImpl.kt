@@ -3,12 +3,12 @@ package com.sovathna.khmerdictionary.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.sovathna.khmerdictionary.Const
+import com.sovathna.khmerdictionary.data.local.db.AppDatabase
+import com.sovathna.khmerdictionary.data.local.db.LocalDatabase
 import com.sovathna.khmerdictionary.data.mediator.BookmarksRemoteMediator
 import com.sovathna.khmerdictionary.data.mediator.HistoriesRemoteMediator
 import com.sovathna.khmerdictionary.data.mediator.SearchesRemoteMediator
 import com.sovathna.khmerdictionary.data.mediator.WordsRemoteMediator
-import com.sovathna.khmerdictionary.data.local.db.AppDatabase
-import com.sovathna.khmerdictionary.data.local.db.LocalDatabase
 import com.sovathna.khmerdictionary.data.repository.base.AppRepository
 import com.sovathna.khmerdictionary.model.Definition
 import com.sovathna.khmerdictionary.model.Word
@@ -37,24 +37,18 @@ class AppRepositoryImpl @Inject constructor(
   override fun getWords(offset: Int, pageSize: Int): Observable<List<Word>> {
     return wordDao
       .get(offset, pageSize)
-      .map { entities ->
-        entities.map { entity -> entity.toWord() }
-      }
+      .map { entities -> entities.map { entity -> entity.toWord() } }
       .toObservable()
   }
 
   override fun addHistory(word: Word): Observable<Long> {
-    return historyDao
-      .add(word.toHistoryEntity())
-      .toObservable()
+    return historyDao.add(word.toHistoryEntity()).toObservable()
   }
 
   override fun getHistoriesPager(): Observable<Pager<Int, HistoryUI>> {
     return Observable.just(Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
-      remoteMediator = HistoriesRemoteMediator(
-        local
-      ),
+      remoteMediator = HistoriesRemoteMediator(local),
       pagingSourceFactory = { local.historyUIDao().get() }
     ))
   }
@@ -89,9 +83,7 @@ class AppRepositoryImpl @Inject constructor(
   override fun clearHistories(): Observable<Int> =
     historyDao
       .clear()
-      .flatMap {
-        historyUIDao.clear()
-      }
+      .flatMap { historyUIDao.clear() }
       .toObservable()
 
   override fun clearBookmarks(): Observable<Int> =
@@ -103,10 +95,7 @@ class AppRepositoryImpl @Inject constructor(
   override fun getWordsPager(): Observable<Pager<Int, WordUI>> {
     return Observable.just(Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
-      remoteMediator = WordsRemoteMediator(
-        db,
-        local
-      ),
+      remoteMediator = WordsRemoteMediator(db, local),
       pagingSourceFactory = { local.wordUIDao().get() }
     ))
   }
@@ -114,11 +103,7 @@ class AppRepositoryImpl @Inject constructor(
   override fun getSearchesPager(searchTerm: String): Observable<Pager<Int, SearchUI>> {
     return Observable.just(Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
-      remoteMediator = SearchesRemoteMediator(
-        "$searchTerm%",
-        db,
-        local
-      ),
+      remoteMediator = SearchesRemoteMediator("$searchTerm%", db, local),
       pagingSourceFactory = { local.searchUIDao().get() }
     ))
   }
@@ -126,9 +111,7 @@ class AppRepositoryImpl @Inject constructor(
   override fun getBookmarksPager(): Observable<Pager<Int, BookmarkUI>> {
     return Observable.just(Pager(
       config = PagingConfig(pageSize = Const.PAGE_SIZE),
-      remoteMediator = BookmarksRemoteMediator(
-        local
-      ),
+      remoteMediator = BookmarksRemoteMediator(local),
       pagingSourceFactory = { local.bookmarkUIDao().get() }
     ))
   }
@@ -137,9 +120,7 @@ class AppRepositoryImpl @Inject constructor(
     return if (id != null) {
       wordUIDao
         .deselectAll()
-        .flatMap {
-          wordUIDao.updateSelected(id, true)
-        }
+        .flatMap { wordUIDao.updateSelected(id, true) }
     } else {
       wordUIDao.deselectAll()
     }.toObservable()
@@ -149,9 +130,7 @@ class AppRepositoryImpl @Inject constructor(
     return if (id != null) {
       searchUIDao
         .deselectAll()
-        .flatMap {
-          searchUIDao.updateSelected(id, true)
-        }
+        .flatMap { searchUIDao.updateSelected(id, true) }
     } else {
       searchUIDao.deselectAll()
     }.toObservable()
@@ -161,11 +140,7 @@ class AppRepositoryImpl @Inject constructor(
     return if (word != null) {
       historyUIDao
         .deselectAll()
-        .flatMap {
-          historyUIDao
-            .add(word.toHistoryUI(true))
-            .map { 1 }
-        }
+        .flatMap { historyUIDao.add(word.toHistoryUI(true)).map { 1 } }
     } else {
       historyUIDao.deselectAll()
     }.toObservable()
@@ -175,10 +150,7 @@ class AppRepositoryImpl @Inject constructor(
     return if (id != null) {
       bookmarkUIDao
         .deselectAll()
-        .flatMap {
-          bookmarkUIDao
-            .updateSelected(id, true)
-        }
+        .flatMap { bookmarkUIDao.updateSelected(id, true) }
     } else {
       bookmarkUIDao.deselectAll()
     }.toObservable()
@@ -192,10 +164,7 @@ class AppRepositoryImpl @Inject constructor(
         if (it) {
           bookmarkDao
             .delete(word.id)
-            .flatMap {
-              bookmarkUIDao
-                .delete(word.id)
-            }
+            .flatMap { bookmarkUIDao.delete(word.id) }
             .map { false }
         } else {
           bookmarkDao

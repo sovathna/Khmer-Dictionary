@@ -32,19 +32,14 @@ class BookmarksFragment :
     )
 
   override fun render(state: BookmarksState) {
-    super.render(state)
     with(state) {
       wordsLiveData?.observe(viewLifecycleOwner, Observer {
         submitData(it, true)
       })
-      if (isInit) {
-        getBookmarksIntent.onNext(BookmarksIntent.GetWords)
-      }
+      if (isInit) { getBookmarksIntent.onNext(BookmarksIntent.GetWords) }
       loadSuccess?.getContentIfNotHandled()?.let {
         selectWordIntent.value?.word?.let {
-          rv.post {
-            selectWordIntent.onNext(WordsIntent.SelectWord(it))
-          }
+          rv.post { selectWordIntent.onNext(WordsIntent.SelectWord(it)) }
         }
       }
     }

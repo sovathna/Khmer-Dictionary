@@ -33,9 +33,7 @@ class HistoriesFragment :
     )
 
   override fun render(state: HistoriesState) {
-    super.render(state)
     with(state) {
-
       wordsLiveData?.observe(viewLifecycleOwner, Observer {
         submitData(it, true)
       })

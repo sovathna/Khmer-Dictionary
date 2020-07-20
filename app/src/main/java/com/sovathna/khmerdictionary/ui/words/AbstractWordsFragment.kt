@@ -73,14 +73,6 @@ abstract class AbstractWordsFragment<I : MviIntent, S : MviState, VM : BaseViewM
     clearMenuItemLiveData.value = false
   }
 
-  override fun render(state: S) {
-    with(state) {
-      if (this is AbstractPagingWordsState) {
-        wordsLiveData?.removeObservers(viewLifecycleOwner)
-      }
-    }
-  }
-
   protected fun submitData(data: PagingData<WordItem>, hasClearMenu: Boolean? = null) {
     pagingAdapter.submitData(lifecycle, data)
     rv.postDelayed(500) {

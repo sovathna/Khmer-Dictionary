@@ -24,7 +24,6 @@ class WordsRemoteMediator(
     loadType: LoadType,
     state: PagingState<Int, WordUI>
   ): Single<MediatorResult> {
-    Logger.d("loadType: $loadType")
     return when (loadType) {
       LoadType.REFRESH -> {
         uiDao

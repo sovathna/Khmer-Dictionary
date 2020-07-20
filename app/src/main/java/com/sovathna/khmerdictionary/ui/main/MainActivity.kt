@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
   lateinit var fabVisibilitySubject: PublishSubject<Boolean>
 
   @Inject
-  lateinit var selectWordSubject: BehaviorSubject<WordsIntent.SelectWord>
+  lateinit var selectWordIntent: BehaviorSubject<WordsIntent.SelectWord>
 
   @Inject
   lateinit var bookmarkedLiveData: MutableLiveData<Boolean>
@@ -289,8 +289,8 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun onItemClickObserver(word: Word) {
-    selectWordSubject.onNext(WordsIntent.SelectWord(word))
-    setDefMenuItemsVisible(definition_container != null && selectWordSubject.value?.word != null)
+    selectWordIntent.onNext(WordsIntent.SelectWord(word))
+    setDefMenuItemsVisible(definition_container != null && selectWordIntent.value?.word != null)
     if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
       val intent = Intent(this, DefinitionActivity::class.java)
       intent.putExtra("word", word)
@@ -325,7 +325,7 @@ class MainActivity : AppCompatActivity() {
           }
         }
       } else if (resultCode == Activity.RESULT_CANCELED) {
-        selectWordSubject.onNext(WordsIntent.SelectWord(null))
+        selectWordIntent.onNext(WordsIntent.SelectWord(null))
         setDefMenuItemsVisible(false)
       }
     }
@@ -346,7 +346,7 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .remove(defTmp)
             .commit()
-          selectWordSubject.onNext(WordsIntent.SelectWord(null))
+          selectWordIntent.onNext(WordsIntent.SelectWord(null))
         } else {
           showCloseDialog()
         }
@@ -368,7 +368,7 @@ class MainActivity : AppCompatActivity() {
     menu?.findItem(R.id.action_clear)?.isVisible = clearMenuItemLiveData.value == true
 
     // Set definition menu items visibility
-    setDefMenuItemsVisible(definition_container != null && selectWordSubject.value?.word != null)
+    setDefMenuItemsVisible(definition_container != null && selectWordIntent.value?.word != null)
 
     searchItem = menu?.findItem(R.id.action_search)
     searchItem?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
@@ -434,9 +434,9 @@ class MainActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     if (item.itemId == R.id.action_bookmark) {
       menuItemClickLiveData.value = Event("bookmark")
-      selectWordSubject.value?.word?.let {
+      selectWordIntent.value?.word?.let {
         drawer_layout.postDelayed(400) {
-          selectWordSubject.onNext(WordsIntent.SelectWord(it))
+          selectWordIntent.onNext(WordsIntent.SelectWord(it))
         }
       }
     } else if (item.itemId == R.id.action_zoom_in) {
