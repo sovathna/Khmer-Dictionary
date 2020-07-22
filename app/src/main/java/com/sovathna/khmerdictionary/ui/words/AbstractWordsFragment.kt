@@ -17,7 +17,6 @@ import com.sovathna.androidmvi.viewmodel.BaseViewModel
 import com.sovathna.khmerdictionary.R
 import com.sovathna.khmerdictionary.model.Word
 import com.sovathna.khmerdictionary.model.intent.WordsIntent
-import com.sovathna.khmerdictionary.model.state.AbstractPagingWordsState
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_word_list.*
@@ -25,9 +24,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 abstract class AbstractWordsFragment<I : MviIntent, S : MviState, VM : BaseViewModel<I, S>> :
-  MviFragment<I, S, VM>(
-    R.layout.fragment_word_list
-  ) {
+  MviFragment<I, S, VM>(R.layout.fragment_word_list) {
   @Inject
   protected lateinit var selectWordIntent: BehaviorSubject<WordsIntent.SelectWord>
 

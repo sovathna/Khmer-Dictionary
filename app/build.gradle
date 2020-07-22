@@ -92,8 +92,11 @@ dependencies {
   kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
   def retrofit_version = '2.6.4'
+  //noinspection GradleDependency
   implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+  //noinspection GradleDependency
   implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+  //noinspection GradleDependency
   implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
   //noinspection GradleDependency
   implementation "com.squareup.okhttp3:okhttp:3.12.0"
@@ -106,8 +109,9 @@ dependencies {
 
   implementation project(":androidmvi")
 
-  implementation 'com.google.firebase:firebase-analytics:17.4.3'
-  implementation 'com.google.firebase:firebase-messaging:20.2.1'
+  implementation 'com.google.firebase:firebase-analytics-ktx:17.4.4'
+  implementation 'com.google.firebase:firebase-messaging:20.2.3'
+//  implementation 'com.google.firebase:firebase-auth-ktx:19.3.2'
 
   testImplementation 'junit:junit:4.13'
   androidTestImplementation 'androidx.test.ext:junit:1.1.1'
