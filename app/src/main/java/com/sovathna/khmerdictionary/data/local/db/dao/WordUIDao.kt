@@ -1,10 +1,7 @@
 package com.sovathna.khmerdictionary.data.local.db.dao
 
 import androidx.paging.PagingSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.sovathna.khmerdictionary.model.entity.WordUI
 import io.reactivex.Single
 
@@ -20,8 +17,18 @@ interface WordUIDao {
   fun deleteAll(): Single<Int>
 
   @Query("UPDATE words_ui SET isSelected = 0 WHERE isSelected = 1")
-  fun deselectAll(): Single<Int>
+  fun deselectAll(): Int
 
   @Query("UPDATE words_ui SET isSelected = :isSelected WHERE id = :id")
-  fun updateSelected(id: Long, isSelected: Boolean): Single<Int>
+  fun updateSelected(id: Long, isSelected: Boolean): Int
+
+  @Transaction
+  fun selectWord(id: Long?): Int {
+    return if (id != null) {
+      deselectAll()
+      updateSelected(id, true)
+    } else {
+      deselectAll()
+    }
+  }
 }

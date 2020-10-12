@@ -38,14 +38,8 @@ class HistoriesFragment :
         submitData(it, true)
       })
 
-      if (isInit) {
-        getHistoriesIntent.onNext(
-          HistoriesIntent.GetWords(
-            0,
-            Const.PAGE_SIZE
-          )
-        )
-      }
+      if (isInit) getHistoriesIntent.onNext(HistoriesIntent.GetWords(0, Const.PAGE_SIZE))
+
       loadSuccess?.getContentIfNotHandled()?.let {
         selectWordIntent.value?.word?.let {
           rv.post {

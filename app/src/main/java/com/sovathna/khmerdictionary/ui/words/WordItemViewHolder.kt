@@ -5,7 +5,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.sovathna.khmerdictionary.R
-import com.sovathna.khmerdictionary.model.entity.WordUI
 
 class WordItemViewHolder(itemView: View, onItemClick: ((Int, WordItem) -> Unit)?) :
   RecyclerView.ViewHolder(itemView) {

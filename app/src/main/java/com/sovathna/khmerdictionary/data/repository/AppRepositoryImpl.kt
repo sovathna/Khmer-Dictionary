@@ -17,6 +17,7 @@ import com.sovathna.khmerdictionary.model.entity.HistoryUI
 import com.sovathna.khmerdictionary.model.entity.SearchUI
 import com.sovathna.khmerdictionary.model.entity.WordUI
 import io.reactivex.Observable
+import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -117,61 +118,30 @@ class AppRepositoryImpl @Inject constructor(
   }
 
   override fun selectWord(id: Long?): Observable<Int> {
-    return if (id != null) {
-      wordUIDao
-        .deselectAll()
-        .flatMap { wordUIDao.updateSelected(id, true) }
-    } else {
-      wordUIDao.deselectAll()
-    }.toObservable()
+    return Observable.fromCallable { wordUIDao.selectWord(id) }
   }
 
   override fun selectSearch(id: Long?): Observable<Int> {
-    return if (id != null) {
-      searchUIDao
-        .deselectAll()
-        .flatMap { searchUIDao.updateSelected(id, true) }
-    } else {
-      searchUIDao.deselectAll()
-    }.toObservable()
+    return Observable.fromCallable { searchUIDao.selectWord(id) }
   }
 
   override fun selectHistory(word: Word?): Observable<Int> {
-    return if (word != null) {
-      historyUIDao
-        .deselectAll()
-        .flatMap { historyUIDao.add(word.toHistoryUI(true)).map { 1 } }
-    } else {
-      historyUIDao.deselectAll()
-    }.toObservable()
+    return Observable.fromCallable { historyUIDao.selectWord(word) }
   }
 
   override fun selectBookmark(id: Long?): Observable<Int> {
-    return if (id != null) {
-      bookmarkUIDao
-        .deselectAll()
-        .flatMap { bookmarkUIDao.updateSelected(id, true) }
-    } else {
-      bookmarkUIDao.deselectAll()
-    }.toObservable()
+    return Observable.fromCallable { bookmarkUIDao.selectWord(id) }
   }
 
   override fun addDeleteBookmark(word: Word): Observable<Boolean> {
-    return bookmarkDao
-      .get(word.id).map { true }
-      .onErrorReturn { false }
-      .flatMap {
-        if (it) {
-          bookmarkDao
-            .delete(word.id)
-            .flatMap { bookmarkUIDao.delete(word.id) }
-            .map { false }
-        } else {
-          bookmarkDao
-            .add(word.toBookmarkEntity())
-            .flatMap { bookmarkUIDao.add(word.toBookmarkUI()) }
-            .map { true }
-        }
-      }.toObservable()
+    return Single.fromCallable {
+      bookmarkDao.addDelete(word)
+    }.flatMap {
+      if (!it) {
+        bookmarkUIDao.delete(word.id).map { false }
+      } else {
+        bookmarkUIDao.add(word.toBookmarkUI()).map { true }
+      }
+    }.toObservable()
   }
 }

@@ -36,7 +36,9 @@ class BookmarksFragment :
       wordsLiveData?.observe(viewLifecycleOwner, Observer {
         submitData(it, true)
       })
-      if (isInit) { getBookmarksIntent.onNext(BookmarksIntent.GetWords) }
+
+      if (isInit) getBookmarksIntent.onNext(BookmarksIntent.GetWords)
+
       loadSuccess?.getContentIfNotHandled()?.let {
         selectWordIntent.value?.word?.let {
           rv.post { selectWordIntent.onNext(WordsIntent.SelectWord(it)) }

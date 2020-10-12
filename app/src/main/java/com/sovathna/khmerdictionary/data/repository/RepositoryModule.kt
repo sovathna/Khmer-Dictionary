@@ -1,6 +1,5 @@
 package com.sovathna.khmerdictionary.data.repository
 
-import com.sovathna.khmerdictionary.data.repository.AppRepositoryImpl
 import com.sovathna.khmerdictionary.data.repository.base.AppRepository
 import dagger.Binds
 import dagger.Module

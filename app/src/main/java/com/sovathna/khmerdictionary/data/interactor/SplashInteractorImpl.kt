@@ -3,9 +3,9 @@ package com.sovathna.khmerdictionary.data.interactor
 import com.sovathna.androidmvi.Logger
 import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.data.interactor.base.SplashInteractor
+import com.sovathna.khmerdictionary.data.remote.service.DownloadService
 import com.sovathna.khmerdictionary.model.intent.SplashIntent
 import com.sovathna.khmerdictionary.model.result.SplashResult
-import com.sovathna.khmerdictionary.data.remote.service.DownloadService
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.schedulers.Schedulers

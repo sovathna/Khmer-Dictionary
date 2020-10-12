@@ -12,7 +12,7 @@ data class HistoryUI(
   val name: String,
   val isSelected: Boolean = false,
   @PrimaryKey(autoGenerate = true)
-  val uid: Long=0L
+  val uid: Long = 0L
 ) {
   fun toWordItem() = WordItem(Word(id, name), isSelected)
 }

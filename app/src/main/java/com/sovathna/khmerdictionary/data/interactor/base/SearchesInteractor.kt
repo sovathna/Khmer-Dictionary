@@ -2,8 +2,8 @@ package com.sovathna.khmerdictionary.data.interactor.base
 
 import com.sovathna.androidmvi.domain.MviInteractor
 import com.sovathna.androidmvi.intent.MviIntent
-import com.sovathna.khmerdictionary.model.intent.WordsIntent
 import com.sovathna.khmerdictionary.model.intent.SearchesIntent
+import com.sovathna.khmerdictionary.model.intent.WordsIntent
 import com.sovathna.khmerdictionary.model.result.SearchesResult
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer

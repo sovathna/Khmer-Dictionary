@@ -7,7 +7,7 @@ sealed class SplashIntent : MviIntent {
 
   data class CheckDatabase(
     val db: File,
-    val tmpDb:File
+    val tmpDb: File
   ) : SplashIntent()
 
 }

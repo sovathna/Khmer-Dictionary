@@ -1,5 +1,6 @@
 package com.sovathna.khmerdictionary.data.remote
 
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,9 +29,13 @@ object RetrofitModule {
 
   @Provides
   @Singleton
-  fun converterFactory(): Converter.Factory =
+  fun moshi(): Moshi = Moshi.Builder().build()
+
+  @Provides
+  @Singleton
+  fun converterFactory(moshi: Moshi): Converter.Factory =
     MoshiConverterFactory
-      .create()
+      .create(moshi)
       .withNullSerialization()
 
   @Provides

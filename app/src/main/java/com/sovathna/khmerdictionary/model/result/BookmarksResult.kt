@@ -2,7 +2,6 @@ package com.sovathna.khmerdictionary.model.result
 
 import androidx.paging.Pager
 import com.sovathna.androidmvi.result.MviResult
-import com.sovathna.khmerdictionary.model.Word
 import com.sovathna.khmerdictionary.model.entity.BookmarkUI
 
 sealed class BookmarksResult : MviResult {

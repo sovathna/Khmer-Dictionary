@@ -1,10 +1,8 @@
 package com.sovathna.khmerdictionary.data.local.db.dao
 
 import androidx.paging.PagingSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import com.sovathna.khmerdictionary.model.Word
 import com.sovathna.khmerdictionary.model.entity.HistoryUI
 import io.reactivex.Single
 
@@ -17,11 +15,22 @@ interface HistoryUIDao {
   fun add(words: List<HistoryUI>): Single<List<Long>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  fun add(word: HistoryUI): Single<Long>
+  fun add(word: HistoryUI): Long
 
   @Query("DELETE FROM histories_ui")
   fun clear(): Single<Int>
 
   @Query("UPDATE histories_ui SET isSelected = 0 WHERE isSelected = 1")
-  fun deselectAll(): Single<Int>
+  fun deselectAll(): Int
+
+  @Transaction
+  fun selectWord(word: Word?): Int {
+    return if (word != null) {
+      deselectAll()
+      add(word.toHistoryUI(true))
+      1
+    } else {
+      deselectAll()
+    }
+  }
 }

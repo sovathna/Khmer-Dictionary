@@ -6,8 +6,8 @@ interface AppPreferences {
 
   fun getTextSize(): Float
 
-  fun incrementTextSize():Float
+  fun incrementTextSize(): Float
 
-  fun decrementTextSize():Float
+  fun decrementTextSize(): Float
 
 }

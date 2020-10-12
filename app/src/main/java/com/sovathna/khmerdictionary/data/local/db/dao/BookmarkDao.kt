@@ -1,9 +1,7 @@
 package com.sovathna.khmerdictionary.data.local.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import com.sovathna.khmerdictionary.model.Word
 import com.sovathna.khmerdictionary.model.entity.BookmarkEntity
 import io.reactivex.Single
 
@@ -18,17 +16,34 @@ interface BookmarkDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun add(
     word: BookmarkEntity
-  ): Single<Long>
+  ): Long
 
   @Query("SELECT * FROM bookmark WHERE id=:wordId")
   fun get(
     wordId: Long
   ): Single<BookmarkEntity>
 
+  @Query("SELECT * FROM bookmark WHERE id=:wordId")
+  fun getSync(
+    wordId: Long
+  ): BookmarkEntity?
+
+  @Transaction
+  fun addDelete(word: Word): Boolean {
+    val entity = getSync(word.id)
+    return if (entity != null) {
+      delete(word.id)
+      false
+    } else {
+      add(word.toBookmarkEntity())
+      true
+    }
+  }
+
   @Query("DELETE FROM bookmark WHERE id=:wordId")
   fun delete(
     wordId: Long
-  ): Single<Int>
+  ): Int
 
   @Query("DELETE FROM bookmark")
   fun clear(): Single<Int>

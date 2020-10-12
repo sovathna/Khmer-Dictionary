@@ -10,26 +10,18 @@ import com.sovathna.khmerdictionary.model.entity.WordUI
 import io.reactivex.Observable
 
 interface AppRepository {
-  fun getWords(
-    offset: Int,
-    pageSize: Int
-  ): Observable<List<Word>>
 
-  fun addHistory(
-    word: Word
-  ): Observable<Long>
+  fun getWords(offset: Int, pageSize: Int): Observable<List<Word>>
+
+  fun addHistory(word: Word): Observable<Long>
 
   fun getHistoriesPager(): Observable<Pager<Int, HistoryUI>>
 
   fun getBookmarksPager(): Observable<Pager<Int, BookmarkUI>>
 
-  fun getDefinition(
-    id: Long
-  ): Observable<Definition>
+  fun getDefinition(id: Long): Observable<Definition>
 
-  fun checkBookmark(
-    id: Long
-  ): Observable<Boolean>
+  fun checkBookmark(id: Long): Observable<Boolean>
 
   fun clearHistories(): Observable<Int>
 
