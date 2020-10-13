@@ -47,17 +47,14 @@ class SearchesFragment :
 
   override fun render(state: SearchWordsState) {
     with(state) {
-      wordsLiveData?.observe(viewLifecycleOwner) {
-        submitData(it)
-      }
-      if (isInit) {
-        getWordsIntent.onNext(SearchesIntent.GetWords(""))
-      }
+
+      wordsLiveData?.observe(viewLifecycleOwner) { submitData(it) }
+
+      if (isInit) getWordsIntent.onNext(SearchesIntent.GetWords(""))
+
       loadSuccess?.getContentIfNotHandled()?.let {
         selectWordIntent.value?.word?.let {
-          rv.postDelayed(200) {
-            selectWordIntent.onNext(WordsIntent.SelectWord(it))
-          }
+          rv.postDelayed(200) { selectWordIntent.onNext(WordsIntent.SelectWord(it)) }
         }
       }
     }

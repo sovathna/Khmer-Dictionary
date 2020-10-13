@@ -30,19 +30,12 @@ class WordsFragment :
   }
 
   override fun intents(): Observable<WordsIntent> =
-    Observable.merge(
-      getWordsIntent,
-      selectWord
-    )
+    Observable.merge(getWordsIntent, selectWord)
 
   override fun render(state: WordsState) {
     with(state) {
-      wordsLiveData?.observe(viewLifecycleOwner) {
-        submitData(it)
-      }
-      if (isInit) {
-        getWordsIntent.onNext(WordsIntent.GetWords)
-      }
+      wordsLiveData?.observe(viewLifecycleOwner) { submitData(it) }
+      if (isInit) getWordsIntent.onNext(WordsIntent.GetWords)
     }
   }
 }

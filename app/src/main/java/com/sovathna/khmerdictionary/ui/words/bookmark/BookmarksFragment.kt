@@ -32,9 +32,7 @@ class BookmarksFragment :
 
   override fun render(state: BookmarksState) {
     with(state) {
-      wordsLiveData?.observe(viewLifecycleOwner) {
-        submitData(it, true)
-      }
+      wordsLiveData?.observe(viewLifecycleOwner) { submitData(it, true) }
 
       if (isInit) getBookmarksIntent.onNext(BookmarksIntent.GetWords)
 

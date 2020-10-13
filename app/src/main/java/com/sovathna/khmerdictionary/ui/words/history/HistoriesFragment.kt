@@ -25,25 +25,17 @@ class HistoriesFragment :
   lateinit var clearHistoriesIntent: PublishSubject<HistoriesIntent.ClearHistories>
 
   override fun intents(): Observable<MviIntent> =
-    Observable.merge(
-      getHistoriesIntent,
-      clearHistoriesIntent,
-      selectWordIntent
-    )
+    Observable.merge(getHistoriesIntent, clearHistoriesIntent, selectWordIntent)
 
   override fun render(state: HistoriesState) {
     with(state) {
-      wordsLiveData?.observe(viewLifecycleOwner) {
-        submitData(it, true)
-      }
+      wordsLiveData?.observe(viewLifecycleOwner) { submitData(it, true) }
 
       if (isInit) getHistoriesIntent.onNext(HistoriesIntent.GetWords(0, Const.PAGE_SIZE))
 
       loadSuccess?.getContentIfNotHandled()?.let {
         selectWordIntent.value?.word?.let {
-          rv.post {
-            selectWordIntent.onNext(WordsIntent.SelectWord(it))
-          }
+          rv.post { selectWordIntent.onNext(WordsIntent.SelectWord(it)) }
         }
       }
 

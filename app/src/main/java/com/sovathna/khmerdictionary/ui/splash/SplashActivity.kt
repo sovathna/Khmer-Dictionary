@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import com.sovathna.androidmvi.activity.MviActivity
 import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.R
@@ -33,31 +34,21 @@ class SplashActivity :
   override fun render(state: SplashState) {
     with(state) {
       if (isInit) {
-        checkDatabase
-          .onNext(
-            SplashIntent.CheckDatabase(
-              getDatabasePath(Const.DB_NAME),
-              getFileStreamPath(Const.DB_TMP_NAME)
-            )
+        checkDatabase.onNext(
+          SplashIntent.CheckDatabase(
+            getDatabasePath(Const.DB_NAME),
+            getFileStreamPath(Const.DB_TMP_NAME)
           )
+        )
       }
 
       successEvent?.getContentIfNotHandled()?.let {
-        val intent = Intent(
-          this@SplashActivity,
-          MainActivity::class.java
-        )
-        intent.addFlags(
-          Intent.FLAG_ACTIVITY_NEW_TASK or
-              Intent.FLAG_ACTIVITY_CLEAR_TASK
-        )
+        val intent = Intent(this@SplashActivity, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
       }
 
-      pb.visibility = when {
-        isProgress -> View.VISIBLE
-        else -> View.GONE
-      }
+      pb.isVisible = isProgress
 
       if (!isInit && !isProgress) {
         vs_download?.inflate()
@@ -93,9 +84,7 @@ class SplashActivity :
         }
       }
 
-      if (error == null) {
-        findViewById<View>(R.id.layout_error)?.visibility = View.GONE
-      }
+      if (error == null) findViewById<View>(R.id.layout_error)?.visibility = View.GONE
 
       error?.let {
         findViewById<View>(R.id.layout_download)?.visibility = View.GONE
@@ -118,24 +107,15 @@ class SplashActivity :
 
   private fun getFileSize(value: Long): String {
     return when {
-      value >= 1_000_000 -> {
-        String.format("%.2f MB", value / 1_000_000f)
-      }
-      value >= 1_000 -> {
-        String.format("%.2f KB", value / 1_000f)
-      }
-      else -> {
-        String.format("%d %s", value, if (value == 1L) "Byte" else "Bytes")
-      }
-
+      value >= 1_000_000 -> String.format("%.2f MB", value / 1_000_000f)
+      value >= 1_000 -> String.format("%.2f KB", value / 1_000f)
+      else -> String.format("%d %s", value, if (value == 1L) "Byte" else "Bytes")
     }
   }
 
   override fun onBackPressed() {
-    if (viewModel.stateLiveData.value?.error != null) {
-      super.onBackPressed()
-    } else {
-      Toast.makeText(this, R.string.please_wait, Toast.LENGTH_SHORT).show()
-    }
+    if (viewModel.stateLiveData.value?.error != null) super.onBackPressed()
+    else Toast.makeText(this, R.string.please_wait, Toast.LENGTH_SHORT).show()
+
   }
 }

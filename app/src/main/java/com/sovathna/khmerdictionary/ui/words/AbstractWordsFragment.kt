@@ -50,9 +50,7 @@ abstract class AbstractWordsFragment<I : MviIntent, S : MviState, VM : BaseViewM
         clickWordSubject.onNext(Event(item.word))
       }
     }
-    pagingAdapter.addLoadStateListener {
-      loadStates = it
-    }
+    pagingAdapter.addLoadStateListener { loadStates = it }
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

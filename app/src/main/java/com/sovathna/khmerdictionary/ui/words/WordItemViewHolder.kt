@@ -26,10 +26,7 @@ class WordItemViewHolder(itemView: View, onItemClick: ((Int, WordItem) -> Unit)?
     if (item.isSelected) {
       tvName.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorPrimary))
       tvName.setBackgroundColor(
-        ContextCompat.getColor(
-          itemView.context,
-          R.color.color_item_bg_selected
-        )
+        ContextCompat.getColor(itemView.context, R.color.color_item_bg_selected)
       )
       divider.visibility = View.GONE
     } else {

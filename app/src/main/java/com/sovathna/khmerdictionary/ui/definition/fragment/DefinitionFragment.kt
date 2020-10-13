@@ -65,7 +65,7 @@ class DefinitionFragment :
 
   private lateinit var word: Word
 
-  private var isSet = false
+  private var isRendered = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -127,12 +127,11 @@ class DefinitionFragment :
 
   override fun render(state: DefinitionState) {
     with(state) {
-      if (isInit) {
-        getDefinitionIntent.onNext(DefinitionIntent.GetDefinition(word))
-      }
+      if (isInit) getDefinitionIntent.onNext(DefinitionIntent.GetDefinition(word))
+
       definition?.let {
-        if (!isSet) {
-          isSet = true
+        if (!isRendered) {
+          isRendered = true
           tv_name.text = definition.word
           setTextViewHTML(tv_definition, definition.definition)
         }

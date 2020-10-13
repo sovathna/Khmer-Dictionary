@@ -23,7 +23,6 @@ class SplashViewModel @ViewModelInject constructor(
         isInit = false,
         isProgress = true
       )
-
       is SplashResult.Fail ->
         state.copy(
           error = result.throwable.message ?: "An error has occurred!",

@@ -131,38 +131,29 @@ class MainActivity : AppCompatActivity() {
       fabVisibilitySubject.toFlowable(BackpressureStrategy.BUFFER)
     ).observe(this, Observer { if (it) fab.show() else fab.hide() })
 
-    clearMenuItemLiveData.observe(this, Observer {
+    clearMenuItemLiveData.observe(this) {
       menu?.findItem(R.id.action_clear)?.isVisible = it
-    })
+    }
 
-    viewModel.titleLiveData.observe(this, Observer {
+    viewModel.titleLiveData.observe(this) {
       title = it
       nav_view.checkedItem?.isChecked = it != getString(R.string.app_name_kh)
 
-    })
+    }
 
     if (savedInstanceState == null) {
       viewModel.title = getString(R.string.app_name_kh)
       supportFragmentManager.beginTransaction()
         .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-        .replace(
-          R.id.word_list_container,
-          WordsFragment(),
-          Const.WORD_LIST_FRAGMENT_TAG
-        )
+        .replace(R.id.word_list_container, WordsFragment(), Const.WORD_LIST_FRAGMENT_TAG)
         .commit()
     } else {
       supportFragmentManager
         .findFragmentByTag(Const.DEFINITION_FRAGMENT_TAG)?.let {
           it.arguments?.let { args ->
-            args.getParcelable<Word>("word")?.let { word ->
-              clickWordSubject.onNext(Event(word))
-            }
+            args.getParcelable<Word>("word")?.let { word -> clickWordSubject.onNext(Event(word)) }
           }
-          supportFragmentManager
-            .beginTransaction()
-            .remove(it)
-            .commit()
+          supportFragmentManager.beginTransaction().remove(it).commit()
         }
     }
 
@@ -194,17 +185,11 @@ class MainActivity : AppCompatActivity() {
       when {
         isBookmark -> {
           item.setTitle(R.string.delete_bookmark)
-          item.icon = ContextCompat.getDrawable(
-            this,
-            R.drawable.round_bookmark_white_24
-          )
+          item.icon = ContextCompat.getDrawable(this, R.drawable.round_bookmark_white_24)
         }
         else -> {
           item.setTitle(R.string.add_bookmark)
-          item.icon = ContextCompat.getDrawable(
-            this,
-            R.drawable.round_bookmark_border_white_24
-          )
+          item.icon = ContextCompat.getDrawable(this, R.drawable.round_bookmark_border_white_24)
         }
       }
     }
@@ -215,41 +200,21 @@ class MainActivity : AppCompatActivity() {
       drawer_layout.closeDrawer(GravityCompat.START)
       if (!menu.isChecked) {
         menu.isChecked = true
-        if (supportFragmentManager.backStackEntryCount > 0) {
-          super.onBackPressed()
-        }
+        if (supportFragmentManager.backStackEntryCount > 0) super.onBackPressed()
         when (menu.itemId) {
           R.id.nav_histories -> {
             viewModel.title = getString(R.string.histories)
             supportFragmentManager.beginTransaction()
-              .setCustomAnimations(
-                R.anim.fade_in,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.fade_out
-              )
-              .replace(
-                R.id.word_list_container,
-                HistoriesFragment(),
-                Const.HISTORIES_FRAGMENT_TAG
-              )
+              .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+              .replace(R.id.word_list_container, HistoriesFragment(), Const.HISTORIES_FRAGMENT_TAG)
               .addToBackStack(null)
               .commit()
           }
           R.id.nav_bookmarks -> {
             viewModel.title = getString(R.string.bookmarks)
             supportFragmentManager.beginTransaction()
-              .setCustomAnimations(
-                R.anim.fade_in,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.fade_out
-              )
-              .replace(
-                R.id.word_list_container,
-                BookmarksFragment(),
-                Const.BOOKMARKS_FRAGMENT_TAG
-              )
+              .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+              .replace(R.id.word_list_container, BookmarksFragment(), Const.BOOKMARKS_FRAGMENT_TAG)
               .addToBackStack(null)
               .commit()
           }
@@ -266,17 +231,8 @@ class MainActivity : AppCompatActivity() {
       }
       searchItem?.expandActionView()
       supportFragmentManager.beginTransaction()
-        .setCustomAnimations(
-          R.anim.fade_in,
-          R.anim.fade_out,
-          R.anim.fade_in,
-          R.anim.fade_out
-        )
-        .replace(
-          R.id.word_list_container,
-          SearchesFragment(),
-          Const.SEARCH_WORDS_FRAGMENT_TAG
-        )
+        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+        .replace(R.id.word_list_container, SearchesFragment(), Const.SEARCH_WORDS_FRAGMENT_TAG)
         .addToBackStack(null)
         .commit()
     } else {
@@ -298,17 +254,10 @@ class MainActivity : AppCompatActivity() {
     } else {
       supportFragmentManager
         .beginTransaction()
-        .setCustomAnimations(
-          R.anim.fade_in,
-          R.anim.fade_out
-        )
+        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
         .replace(
           R.id.definition_container,
-          DefinitionFragment().apply {
-            arguments = Bundle().apply {
-              putParcelable("word", word)
-            }
-          },
+          DefinitionFragment().apply { arguments = Bundle().apply { putParcelable("word", word) } },
           Const.DEFINITION_FRAGMENT_TAG
         )
         .commit()
@@ -342,10 +291,7 @@ class MainActivity : AppCompatActivity() {
         val defTmp = supportFragmentManager.findFragmentByTag(Const.DEFINITION_FRAGMENT_TAG)
         if (defTmp != null) {
           setDefMenuItemsVisible(false)
-          supportFragmentManager
-            .beginTransaction()
-            .remove(defTmp)
-            .commit()
+          supportFragmentManager.beginTransaction().remove(defTmp).commit()
           selectWordIntent.onNext(WordsIntent.SelectWord(null))
         } else {
           showCloseDialog()
@@ -374,25 +320,16 @@ class MainActivity : AppCompatActivity() {
     searchItem?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
       override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
         fab?.setImageDrawable(
-          ContextCompat.getDrawable(
-            this@MainActivity,
-            R.drawable.round_clear_white_24
-          )
+          ContextCompat.getDrawable(this@MainActivity, R.drawable.round_clear_white_24)
         )
         return true
       }
 
       override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-
         fab?.setImageDrawable(
-          ContextCompat.getDrawable(
-            this@MainActivity,
-            R.drawable.round_search_white_24
-          )
+          ContextCompat.getDrawable(this@MainActivity, R.drawable.round_search_white_24)
         )
-        if (supportFragmentManager.backStackEntryCount > 0) {
-          supportFragmentManager.popBackStack()
-        }
+        if (supportFragmentManager.backStackEntryCount > 0) supportFragmentManager.popBackStack()
         viewModel.title = getString(R.string.app_name_kh)
         return true
       }
@@ -415,11 +352,7 @@ class MainActivity : AppCompatActivity() {
         if (searchTerm != viewModel.searchTerm) {
           Logger.d("query text change $searchTerm")
           viewModel.searchTerm = searchTerm
-          searchesIntent.onNext(
-            SearchesIntent.GetWords(
-              viewModel.searchTerm
-            )
-          )
+          searchesIntent.onNext(SearchesIntent.GetWords(viewModel.searchTerm))
         }
         return true
       }
@@ -435,9 +368,7 @@ class MainActivity : AppCompatActivity() {
     if (item.itemId == R.id.action_bookmark) {
       menuItemClickLiveData.value = Event("bookmark")
       selectWordIntent.value?.word?.let {
-        drawer_layout.postDelayed(400) {
-          selectWordIntent.onNext(WordsIntent.SelectWord(it))
-        }
+        drawer_layout.postDelayed(400) { selectWordIntent.onNext(WordsIntent.SelectWord(it)) }
       }
     } else if (item.itemId == R.id.action_zoom_in) {
       menuItemClickLiveData.value = Event("zoom_in")
@@ -459,10 +390,7 @@ class MainActivity : AppCompatActivity() {
       closeDialog?.dismiss()
     }
     v.findViewById<AppCompatButton>(R.id.btn_clear)?.let {
-      it.setOnClickListener {
-        closeDialog?.dismiss()
-        finish()
-      }
+      it.setOnClickListener { closeDialog?.dismiss(); finish() }
     }
     builder.setView(v)
     closeDialog = builder.show()
@@ -473,9 +401,7 @@ class MainActivity : AppCompatActivity() {
     val builder = AlertDialog.Builder(this)
     val v = LayoutInflater.from(this)
       .inflate(R.layout.dialog_clear_words, null, false)
-    v.findViewById<AppCompatButton>(R.id.btn_cancel)?.setOnClickListener {
-      clearDialog?.dismiss()
-    }
+    v.findViewById<AppCompatButton>(R.id.btn_cancel)?.setOnClickListener { clearDialog?.dismiss() }
     v.findViewById<AppCompatButton>(R.id.btn_clear)?.setOnClickListener {
       clearDialog?.dismiss()
       if (viewModel.title == getString(R.string.histories)) {

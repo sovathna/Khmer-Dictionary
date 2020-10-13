@@ -18,8 +18,8 @@
 
     <activity
         android:name=".ui.splash.SplashActivity"
-        android:screenOrientation="userPortrait"
         android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
+        android:screenOrientation="userPortrait"
         android:theme="@style/AppTheme.NoActionBarStatus">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

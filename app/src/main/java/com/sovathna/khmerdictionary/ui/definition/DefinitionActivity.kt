@@ -39,18 +39,14 @@ class DefinitionActivity : AppCompatActivity() {
 
     intent.getParcelableExtra<Word>("word")?.let { word ->
       if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        setResult(Activity.RESULT_OK, Intent().apply {
-          putExtra("word", word)
-        })
+        setResult(Activity.RESULT_OK, Intent().apply { putExtra("word", word) })
         finish()
       }
       if (savedInstanceState == null) {
         supportFragmentManager
           .beginTransaction()
           .replace(R.id.container, DefinitionFragment().apply {
-            arguments = Bundle().apply {
-              putParcelable("word", word)
-            }
+            arguments = Bundle().apply { putParcelable("word", word) }
           })
           .commit()
       }
@@ -62,10 +58,7 @@ class DefinitionActivity : AppCompatActivity() {
         when {
           isBookmark -> {
             item.title = "លុបការរក្សាទុក"
-            item.icon = ContextCompat.getDrawable(
-              this,
-              R.drawable.round_bookmark_white_24
-            )
+            item.icon = ContextCompat.getDrawable(this, R.drawable.round_bookmark_white_24)
           }
           else -> {
             item.title = "រក្សាទុក"

@@ -14,9 +14,7 @@ class WordItemAdapter :
   }
 
   override fun onBindViewHolder(holder: WordItemViewHolder, position: Int) {
-    getItem(position)?.let {
-      holder.bindView(it)
-    }
+    getItem(position)?.let { holder.bindView(it) }
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordItemViewHolder {
