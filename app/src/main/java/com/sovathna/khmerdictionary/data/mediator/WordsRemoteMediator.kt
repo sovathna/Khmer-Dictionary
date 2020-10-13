@@ -35,10 +35,7 @@ class WordsRemoteMediator(
               .flatMap { uiDao.add(it) }
           }
           .map { MediatorResult.Success(false) as MediatorResult }
-          .onErrorReturn {
-            Logger.e(it)
-            MediatorResult.Error(it)
-          }
+          .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }
       LoadType.PREPEND -> Single.just(MediatorResult.Success(true) as MediatorResult)
       LoadType.APPEND -> {
@@ -50,10 +47,7 @@ class WordsRemoteMediator(
           .flatMap { uiDao.add(it) }
           .map { it.size < state.config.pageSize }
           .map { MediatorResult.Success(it) as MediatorResult }
-          .onErrorReturn {
-            Logger.e(it)
-            MediatorResult.Error(it)
-          }
+          .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }
     }
   }

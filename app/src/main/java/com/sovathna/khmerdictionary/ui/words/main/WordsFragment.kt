@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.Observer
 import com.sovathna.khmerdictionary.model.intent.WordsIntent
 import com.sovathna.khmerdictionary.model.state.WordsState
 import com.sovathna.khmerdictionary.ui.words.AbstractWordsFragment
@@ -27,7 +26,7 @@ class WordsFragment :
     super.onViewCreated(view, savedInstanceState)
     LiveDataReactiveStreams.fromPublisher(
       selectWordIntent.toFlowable(BackpressureStrategy.BUFFER)
-    ).observe(viewLifecycleOwner, Observer { selectWord.onNext(it) })
+    ).observe(viewLifecycleOwner) { selectWord.onNext(it) }
   }
 
   override fun intents(): Observable<WordsIntent> =
@@ -38,9 +37,9 @@ class WordsFragment :
 
   override fun render(state: WordsState) {
     with(state) {
-      wordsLiveData?.observe(viewLifecycleOwner, Observer {
+      wordsLiveData?.observe(viewLifecycleOwner) {
         submitData(it)
-      })
+      }
       if (isInit) {
         getWordsIntent.onNext(WordsIntent.GetWords)
       }

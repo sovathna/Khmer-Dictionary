@@ -1,7 +1,6 @@
 package com.sovathna.khmerdictionary.ui.words.history
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.model.intent.HistoriesIntent
@@ -34,9 +33,9 @@ class HistoriesFragment :
 
   override fun render(state: HistoriesState) {
     with(state) {
-      wordsLiveData?.observe(viewLifecycleOwner, Observer {
+      wordsLiveData?.observe(viewLifecycleOwner) {
         submitData(it, true)
-      })
+      }
 
       if (isInit) getHistoriesIntent.onNext(HistoriesIntent.GetWords(0, Const.PAGE_SIZE))
 

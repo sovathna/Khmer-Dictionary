@@ -51,10 +51,7 @@ class SearchesRemoteMediator(
           .flatMap { uiDao.add(it) }
           .map { it.size < state.config.pageSize }
           .map { MediatorResult.Success(it) as MediatorResult }
-          .onErrorReturn {
-            Logger.e(it)
-            MediatorResult.Error(it)
-          }
+          .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }
     }
   }

@@ -1,7 +1,6 @@
 package com.sovathna.khmerdictionary.ui.words.bookmark
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.khmerdictionary.model.intent.BookmarksIntent
 import com.sovathna.khmerdictionary.model.intent.WordsIntent
@@ -33,9 +32,9 @@ class BookmarksFragment :
 
   override fun render(state: BookmarksState) {
     with(state) {
-      wordsLiveData?.observe(viewLifecycleOwner, Observer {
+      wordsLiveData?.observe(viewLifecycleOwner) {
         submitData(it, true)
-      })
+      }
 
       if (isInit) getBookmarksIntent.onNext(BookmarksIntent.GetWords)
 

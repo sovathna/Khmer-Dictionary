@@ -5,7 +5,6 @@ import android.view.View
 import androidx.core.view.postDelayed
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.Observer
 import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.khmerdictionary.model.intent.SearchesIntent
 import com.sovathna.khmerdictionary.model.intent.WordsIntent
@@ -34,9 +33,9 @@ class SearchesFragment :
     super.onViewCreated(view, savedInstanceState)
     LiveDataReactiveStreams
       .fromPublisher(mainGetWordsIntent.toFlowable(BackpressureStrategy.BUFFER))
-      .observe(viewLifecycleOwner, Observer {
+      .observe(viewLifecycleOwner) {
         viewModel.stateLiveData.value?.wordsLiveData?.removeObservers(viewLifecycleOwner)
-      })
+      }
   }
 
   override fun intents(): Observable<MviIntent> =
@@ -48,9 +47,9 @@ class SearchesFragment :
 
   override fun render(state: SearchWordsState) {
     with(state) {
-      wordsLiveData?.observe(viewLifecycleOwner, Observer {
+      wordsLiveData?.observe(viewLifecycleOwner) {
         submitData(it)
-      })
+      }
       if (isInit) {
         getWordsIntent.onNext(SearchesIntent.GetWords(""))
       }

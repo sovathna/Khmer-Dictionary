@@ -7,6 +7,7 @@ import com.sovathna.khmerdictionary.model.entity.BookmarkUI
 import com.sovathna.khmerdictionary.model.entity.HistoryUI
 import com.sovathna.khmerdictionary.model.entity.SearchUI
 import com.sovathna.khmerdictionary.model.entity.WordUI
+import com.sovathna.khmerdictionary.ui.words.WordItem
 import io.reactivex.Observable
 
 interface AppRepository {

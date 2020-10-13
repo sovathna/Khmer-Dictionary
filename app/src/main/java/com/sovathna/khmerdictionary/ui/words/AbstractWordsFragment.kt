@@ -71,7 +71,7 @@ abstract class AbstractWordsFragment<I : MviIntent, S : MviState, VM : BaseViewM
   }
 
   protected fun submitData(data: PagingData<WordItem>, hasClearMenu: Boolean? = null) {
-    pagingAdapter.submitData(lifecycle, data)
+    pagingAdapter.submitData(viewLifecycleOwner.lifecycle, data)
     rv.postDelayed(500) {
       val notLoading = loadStates?.prepend is LoadState.NotLoading &&
           loadStates?.refresh is LoadState.NotLoading &&

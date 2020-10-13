@@ -13,7 +13,7 @@ interface WordDao {
     pageSize: Int
   ): Single<List<WordEntity>>
 
-  @Query("SELECT * FROM dict WHERE word LIKE :filter LIMIT :offset, :pageSize")
+  @Query("SELECT * FROM dict WHERE word LIKE :filter ORDER BY word LIMIT :offset, :pageSize")
   fun search(
     filter: String,
     offset: Int,
