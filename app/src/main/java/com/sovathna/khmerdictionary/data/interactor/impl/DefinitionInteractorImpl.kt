@@ -1,4 +1,4 @@
-package com.sovathna.khmerdictionary.data.interactor
+package com.sovathna.khmerdictionary.data.interactor.impl
 
 import com.sovathna.khmerdictionary.data.interactor.base.DefinitionInteractor
 import com.sovathna.khmerdictionary.data.repository.base.AppRepository

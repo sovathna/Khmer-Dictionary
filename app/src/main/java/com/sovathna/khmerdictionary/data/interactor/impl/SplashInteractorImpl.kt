@@ -1,4 +1,4 @@
-package com.sovathna.khmerdictionary.data.interactor
+package com.sovathna.khmerdictionary.data.interactor.impl
 
 import com.sovathna.androidmvi.Logger
 import com.sovathna.khmerdictionary.Const

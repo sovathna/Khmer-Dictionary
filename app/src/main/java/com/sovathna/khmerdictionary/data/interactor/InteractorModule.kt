@@ -1,6 +1,7 @@
 package com.sovathna.khmerdictionary.data.interactor
 
 import com.sovathna.khmerdictionary.data.interactor.base.*
+import com.sovathna.khmerdictionary.data.interactor.impl.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

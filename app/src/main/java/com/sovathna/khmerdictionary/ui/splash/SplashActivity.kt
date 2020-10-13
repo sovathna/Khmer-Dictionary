@@ -135,13 +135,7 @@ class SplashActivity :
     if (viewModel.stateLiveData.value?.error != null) {
       super.onBackPressed()
     } else {
-      Toast
-        .makeText(
-          this,
-          R.string.please_wait,
-          Toast.LENGTH_SHORT
-        )
-        .show()
+      Toast.makeText(this, R.string.please_wait, Toast.LENGTH_SHORT).show()
     }
   }
 }

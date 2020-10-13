@@ -27,16 +27,16 @@ object RetrofitModule {
   fun callAdapterFactory(): CallAdapter.Factory =
     RxJava2CallAdapterFactory.create()
 
-  @Provides
-  @Singleton
-  fun moshi(): Moshi = Moshi.Builder().build()
-
-  @Provides
-  @Singleton
-  fun converterFactory(moshi: Moshi): Converter.Factory =
-    MoshiConverterFactory
-      .create(moshi)
-      .withNullSerialization()
+//  @Provides
+//  @Singleton
+//  fun moshi(): Moshi = Moshi.Builder().build()
+//
+//  @Provides
+//  @Singleton
+//  fun converterFactory(moshi: Moshi): Converter.Factory =
+//    MoshiConverterFactory
+//      .create(moshi)
+//      .withNullSerialization()
 
   @Provides
   @Singleton
