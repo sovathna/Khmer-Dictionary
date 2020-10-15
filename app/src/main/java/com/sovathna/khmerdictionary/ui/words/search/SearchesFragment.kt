@@ -54,7 +54,7 @@ class SearchesFragment :
 
       loadSuccess?.getContentIfNotHandled()?.let {
         selectWordIntent.value?.word?.let {
-          rv.postDelayed(200) { selectWordIntent.onNext(WordsIntent.SelectWord(it)) }
+          rv.postDelayed(150L) { selectWordIntent.onNext(WordsIntent.SelectWord(it)) }
         }
       }
     }

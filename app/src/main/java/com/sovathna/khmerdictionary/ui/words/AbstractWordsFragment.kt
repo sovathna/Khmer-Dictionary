@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingData
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sovathna.androidmvi.fragment.MviFragment
 import com.sovathna.androidmvi.intent.MviIntent
@@ -39,16 +38,13 @@ abstract class AbstractWordsFragment<I : MviIntent, S : MviState, VM : BaseViewM
   protected lateinit var clearMenuItemLiveData: MutableLiveData<Boolean>
 
   private lateinit var pagingAdapter: WordItemAdapter
-  private lateinit var layoutManager: LinearLayoutManager
   private var loadStates: CombinedLoadStates? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     pagingAdapter = WordItemAdapter()
     pagingAdapter.setOnItemClickListener { _, item ->
-      if (!item.isSelected) {
-        clickWordSubject.onNext(Event(item.word))
-      }
+      if (!item.isSelected) clickWordSubject.onNext(Event(item.word))
     }
     pagingAdapter.addLoadStateListener { loadStates = it }
   }
@@ -57,14 +53,14 @@ abstract class AbstractWordsFragment<I : MviIntent, S : MviState, VM : BaseViewM
     super.onViewCreated(view, savedInstanceState)
     rv.setRecycledViewPool(recycledViewPool)
     rv.setHasFixedSize(true)
-
-    layoutManager = LinearLayoutManager(requireContext())
-    rv.layoutManager = layoutManager
     rv.adapter = pagingAdapter
   }
 
   override fun onDestroyView() {
     super.onDestroyView()
+    rv.setRecycledViewPool(null)
+    rv.adapter = null
+    rv.layoutManager = null
     clearMenuItemLiveData.value = false
   }
 

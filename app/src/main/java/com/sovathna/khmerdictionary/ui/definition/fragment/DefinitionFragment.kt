@@ -44,24 +44,15 @@ class DefinitionFragment :
 
   override val viewModel: DefinitionViewModel by viewModels()
 
-  private val getDefinitionIntent =
-    PublishSubject.create<DefinitionIntent.GetDefinition>()
+  private val getDefinitionIntent = PublishSubject.create<DefinitionIntent.GetDefinition>()
+  private val addDeleteBookmarkIntent = PublishSubject.create<DefinitionIntent.AddDeleteBookmark>()
   private val getQuickDefinitionIntent =
     PublishSubject.create<DefinitionIntent.GetQuickDefinition>()
-  private val addDeleteBookmarkIntent =
-    PublishSubject.create<DefinitionIntent.AddDeleteBookmark>()
 
-  @Inject
-  lateinit var fabVisibilitySubject: Lazy<PublishSubject<Boolean>>
-
-  @Inject
-  lateinit var bookmarkedLiveData: MutableLiveData<Boolean>
-
-  @Inject
-  lateinit var menuItemClickLiveData: MutableLiveData<Event<String>>
-
-  @Inject
-  lateinit var appPref: AppPreferences
+  @Inject lateinit var fabVisibilitySubject: Lazy<PublishSubject<Boolean>>
+  @Inject lateinit var bookmarkedLiveData: MutableLiveData<Boolean>
+  @Inject lateinit var menuItemClickLiveData: MutableLiveData<Event<String>>
+  @Inject lateinit var appPref: AppPreferences
 
   private lateinit var word: Word
 
@@ -82,12 +73,13 @@ class DefinitionFragment :
     tv_name.textSize = textSize + 8.0F
 
     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-      nsv.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
-        if (scrollY < oldScrollY) {
-          fabVisibilitySubject.get().onNext(true)
-        } else if (scrollY > oldScrollY) {
-          fabVisibilitySubject.get().onNext(false)
-        }
+      nsv.setOnScrollChangeListener { _: NestedScrollView?,
+                                      _: Int, scrollY: Int,
+                                      _: Int,
+                                      oldScrollY: Int ->
+        if (scrollY < oldScrollY) fabVisibilitySubject.get().onNext(true)
+        else if (scrollY > oldScrollY) fabVisibilitySubject.get().onNext(false)
+
       }
     }
   }
@@ -96,9 +88,7 @@ class DefinitionFragment :
     super.onResume()
     menuItemClickLiveData.observe(viewLifecycleOwner, EventObserver {
       when (it) {
-        "bookmark" -> {
-          addDeleteBookmarkIntent.onNext(DefinitionIntent.AddDeleteBookmark(word))
-        }
+        "bookmark" -> addDeleteBookmarkIntent.onNext(DefinitionIntent.AddDeleteBookmark(word))
         "zoom_in" -> {
           val textSize = appPref.incrementTextSize()
           tv_definition.textSize = textSize
@@ -137,13 +127,9 @@ class DefinitionFragment :
         }
       }
 
-      isBookmark?.let {
-        bookmarkedLiveData.value = it
-      }
+      isBookmark?.let { bookmarkedLiveData.value = it }
 
-      quickDef?.getContentIfNotHandled()?.let {
-        showQuickDefDialog(it)
-      }
+      quickDef?.getContentIfNotHandled()?.let { showQuickDefDialog(it) }
     }
   }
 
@@ -152,36 +138,25 @@ class DefinitionFragment :
   private fun showQuickDefDialog(def: Definition) {
     val builder = AlertDialog.Builder(requireContext())
     val v = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_definition, null, false)
-    v.findViewById<AppCompatTextView>(R.id.tv_name)?.let {
-      it.text = def.word
-    }
+    v.findViewById<AppCompatTextView>(R.id.tv_name)?.let { it.text = def.word }
     v.findViewById<AppCompatTextView>(R.id.tv_definition)?.let {
-//      it.text = def.definition
       setQuickTextViewHTML(it, def.definition)
       it.movementMethod = ScrollingMovementMethod.getInstance()
     }
     builder.setView(v)
     quickDefDialog = builder.show()
-//    quickDefDialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
-//    quickDefDialog?.show()
   }
 
   private fun setTextViewHTML(text: TextView, html: String) {
     val sequence: CharSequence = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
     val strBuilder = SpannableStringBuilder(sequence)
-    val urls =
-      strBuilder.getSpans(0, sequence.length, URLSpan::class.java)
-    for (span in urls) {
-      makeLinkClickable(strBuilder, span)
-    }
+    val urls = strBuilder.getSpans(0, sequence.length, URLSpan::class.java)
+    for (span in urls) makeLinkClickable(strBuilder, span)
     text.text = strBuilder
     text.movementMethod = LinkMovementMethod.getInstance()
   }
 
-  private fun makeLinkClickable(
-    strBuilder: SpannableStringBuilder,
-    span: URLSpan?
-  ) {
+  private fun makeLinkClickable(strBuilder: SpannableStringBuilder, span: URLSpan?) {
     val start = strBuilder.getSpanStart(span)
     val end = strBuilder.getSpanEnd(span)
     val flags = strBuilder.getSpanFlags(span)
@@ -204,18 +179,12 @@ class DefinitionFragment :
   private fun setQuickTextViewHTML(text: TextView, html: String) {
     val sequence: CharSequence = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
     val strBuilder = SpannableStringBuilder(sequence)
-    val urls =
-      strBuilder.getSpans(0, sequence.length, URLSpan::class.java)
-    for (span in urls) {
-      removeUnderline(strBuilder, span)
-    }
+    val urls = strBuilder.getSpans(0, sequence.length, URLSpan::class.java)
+    for (span in urls) removeUnderline(strBuilder, span)
     text.text = strBuilder
   }
 
-  private fun removeUnderline(
-    strBuilder: SpannableStringBuilder,
-    span: URLSpan?
-  ) {
+  private fun removeUnderline(strBuilder: SpannableStringBuilder, span: URLSpan?) {
     val start = strBuilder.getSpanStart(span)
     val end = strBuilder.getSpanEnd(span)
     val flags = strBuilder.getSpanFlags(span)

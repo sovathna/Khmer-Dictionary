@@ -1,5 +1,6 @@
 package com.sovathna.khmerdictionary.ui.words.bookmark
 
+import androidx.core.view.postDelayed
 import androidx.fragment.app.viewModels
 import com.sovathna.androidmvi.intent.MviIntent
 import com.sovathna.khmerdictionary.model.intent.BookmarksIntent
@@ -37,8 +38,8 @@ class BookmarksFragment :
       if (isInit) getBookmarksIntent.onNext(BookmarksIntent.GetWords)
 
       loadSuccess?.getContentIfNotHandled()?.let {
-        selectWordIntent.value?.word?.let {
-          rv.post { selectWordIntent.onNext(WordsIntent.SelectWord(it)) }
+        selectWordIntent.value?.word?.let { word ->
+          rv.postDelayed(150L) { selectWordIntent.onNext(WordsIntent.SelectWord(word)) }
         }
       }
     }
