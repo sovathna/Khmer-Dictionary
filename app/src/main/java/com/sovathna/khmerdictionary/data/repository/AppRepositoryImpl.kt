@@ -94,11 +94,13 @@ class AppRepositoryImpl @Inject constructor(
       .toObservable()
 
   override fun getWordsPager(): Observable<Pager<Int, WordUI>> {
-    return Observable.just(Pager(
-      config = PagingConfig(pageSize = Const.PAGE_SIZE),
-      remoteMediator = WordsRemoteMediator(db, local),
-      pagingSourceFactory = { local.wordUIDao().get() }
-    ))
+    return Observable.fromCallable {
+      Pager(
+        config = PagingConfig(pageSize = Const.PAGE_SIZE),
+        remoteMediator = WordsRemoteMediator(db, local),
+        pagingSourceFactory = { local.wordUIDao().get() }
+      )
+    }
   }
 
   override fun getSearchesPager(searchTerm: String): Observable<Pager<Int, SearchUI>> {

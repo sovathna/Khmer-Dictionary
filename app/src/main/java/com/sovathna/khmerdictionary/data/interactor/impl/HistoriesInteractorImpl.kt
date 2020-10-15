@@ -14,7 +14,7 @@ class HistoriesInteractorImpl @Inject constructor(
 ) : HistoriesInteractor() {
   override val getHistories =
     ObservableTransformer<HistoriesIntent.GetWords, HistoriesResult> {
-      it.flatMap { intent ->
+      it.flatMap { _ ->
         repository
           .getHistoriesPager()
           .subscribeOn(Schedulers.io())

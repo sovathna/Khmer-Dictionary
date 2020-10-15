@@ -14,7 +14,7 @@ class BookmarksInteractorImpl @Inject constructor(
 ) : BookmarksInteractor() {
   override val getBookmarks =
     ObservableTransformer<BookmarksIntent.GetWords, BookmarksResult> {
-      it.flatMap { intent ->
+      it.flatMap { _ ->
         repository
           .getBookmarksPager()
           .subscribeOn(Schedulers.io())

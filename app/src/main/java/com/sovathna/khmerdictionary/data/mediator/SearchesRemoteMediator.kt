@@ -35,13 +35,12 @@ class SearchesRemoteMediator(
               .map { it.map { it.toSearchUI() } }
               .flatMap { uiDao.add(it) }
           }
-          .map { MediatorResult.Success(false) as MediatorResult }
-          .onErrorReturn {
-            Logger.e(it)
-            MediatorResult.Error(it)
-          }
+          .map { MediatorResult.Success(false) }
+          .cast(MediatorResult::class.java)
+          .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }
-      LoadType.PREPEND -> Single.just(MediatorResult.Success(true) as MediatorResult)
+      LoadType.PREPEND -> Single.just(MediatorResult.Success(true))
+        .cast(MediatorResult::class.java)
       LoadType.APPEND -> {
         val offset = state.pages.lastOrNull { it.data.isNotEmpty() }?.nextKey ?: 0
         dao
@@ -50,7 +49,8 @@ class SearchesRemoteMediator(
           .map { it.map { it.toSearchUI() } }
           .flatMap { uiDao.add(it) }
           .map { it.size < state.config.pageSize }
-          .map { MediatorResult.Success(it) as MediatorResult }
+          .map { MediatorResult.Success(it) }
+          .cast(MediatorResult::class.java)
           .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }
     }

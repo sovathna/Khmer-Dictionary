@@ -22,6 +22,9 @@ interface WordUIDao {
   @Query("UPDATE words_ui SET isSelected = :isSelected WHERE id = :id")
   fun updateSelected(id: Long, isSelected: Boolean): Int
 
+  @Query("SELECT COUNT(*) FROM words_ui")
+  fun count(): Single<Int>
+
   @Transaction
   fun selectWord(id: Long?): Int {
     return if (id != null) {

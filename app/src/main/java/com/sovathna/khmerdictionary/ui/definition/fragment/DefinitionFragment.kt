@@ -18,7 +18,6 @@ import androidx.core.text.HtmlCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
-import com.sovathna.androidmvi.Logger
 import com.sovathna.androidmvi.fragment.MviFragment
 import com.sovathna.androidmvi.livedata.Event
 import com.sovathna.androidmvi.livedata.EventObserver
@@ -37,8 +36,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DefinitionFragment :
-  MviFragment<DefinitionIntent, DefinitionState, DefinitionViewModel>(
+class DefinitionFragment : MviFragment<DefinitionIntent, DefinitionState, DefinitionViewModel>(
     R.layout.fragment_definition
   ) {
 
@@ -79,7 +77,6 @@ class DefinitionFragment :
                                       oldScrollY: Int ->
         if (scrollY < oldScrollY) fabVisibilitySubject.get().onNext(true)
         else if (scrollY > oldScrollY) fabVisibilitySubject.get().onNext(false)
-
       }
     }
   }
@@ -103,8 +100,8 @@ class DefinitionFragment :
     })
   }
 
-  override fun onPause() {
-    super.onPause()
+  override fun onDestroyView() {
+    super.onDestroyView()
     quickDefDialog?.dismiss()
   }
 
@@ -166,7 +163,6 @@ class DefinitionFragment :
       }
 
       override fun onClick(widget: View) {
-        Logger.d("click: ${span?.url}")
         span?.url?.let {
           getQuickDefinitionIntent.onNext(DefinitionIntent.GetQuickDefinition(it.toLong()))
         }

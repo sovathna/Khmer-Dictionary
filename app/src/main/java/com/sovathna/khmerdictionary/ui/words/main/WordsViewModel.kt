@@ -7,6 +7,7 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.liveData
+import androidx.paging.map
 import com.sovathna.androidmvi.viewmodel.MviViewModel
 import com.sovathna.khmerdictionary.data.interactor.base.WordsInteractor
 import com.sovathna.khmerdictionary.model.intent.WordsIntent
