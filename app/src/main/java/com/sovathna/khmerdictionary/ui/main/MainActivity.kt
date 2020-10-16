@@ -234,7 +234,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
   private fun onItemClickObserver(word: Word) {
     selectWordIntent.onNext(WordsIntent.SelectWord(word))
     setDefMenuItemsVisible(definition_container != null && selectWordIntent.value?.word != null)
-    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+    if (definition_container == null) {
       val intent = Intent(this, DefinitionActivity::class.java)
       intent.putExtra("word", word)
       startActivityForResult(intent, 0)
