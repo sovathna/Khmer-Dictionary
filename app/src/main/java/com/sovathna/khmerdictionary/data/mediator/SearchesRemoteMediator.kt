@@ -30,12 +30,10 @@ class SearchesRemoteMediator(
         uiDao
           .deleteAll()
           .subscribeOn(Schedulers.io())
-          .flatMap {
-            dao.search(filter, 0, state.config.pageSize)
-              .map { it.map { it.toSearchUI() } }
-              .flatMap { uiDao.add(it) }
-          }
-          .map { MediatorResult.Success(false) }
+          .flatMap { dao.search(filter, 0, state.config.pageSize) }
+          .map { it.map { it.toSearchUI() } }
+          .flatMap { uiDao.add(it) }
+          .map { MediatorResult.Success(it.size < state.config.pageSize) }
           .cast(MediatorResult::class.java)
           .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }
@@ -48,8 +46,7 @@ class SearchesRemoteMediator(
           .subscribeOn(Schedulers.io())
           .map { it.map { it.toSearchUI() } }
           .flatMap { uiDao.add(it) }
-          .map { it.size < state.config.pageSize }
-          .map { MediatorResult.Success(it) }
+          .map { MediatorResult.Success(it.size < state.config.pageSize) }
           .cast(MediatorResult::class.java)
           .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }

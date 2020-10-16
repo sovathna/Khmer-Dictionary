@@ -4,6 +4,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.R
 
 class WordItemViewHolder(itemView: View, onItemClick: ((Int, WordItem) -> Unit)?) :
@@ -15,6 +16,7 @@ class WordItemViewHolder(itemView: View, onItemClick: ((Int, WordItem) -> Unit)?
   private var item: WordItem? = null
 
   init {
+    tvName.textSize = Const.mainTextSize
     itemView.setOnClickListener {
       val item = this.item
       if (onItemClick != null && item != null) onItemClick(bindingAdapterPosition, item)

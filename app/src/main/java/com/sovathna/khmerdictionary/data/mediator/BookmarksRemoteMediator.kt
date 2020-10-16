@@ -27,12 +27,10 @@ class BookmarksRemoteMediator(
         uiDao
           .clear()
           .subscribeOn(Schedulers.io())
-          .flatMap {
-            dao.get(0, state.config.pageSize)
-              .map { it.map { it.toBookmarkUI() } }
-              .flatMap { uiDao.add(it) }
-          }
-          .map { MediatorResult.Success(false) }
+          .flatMap { dao.get(0, state.config.pageSize) }
+          .map { it.map { it.toBookmarkUI() } }
+          .flatMap { uiDao.add(it) }
+          .map { MediatorResult.Success(it.size < state.config.pageSize) }
           .cast(MediatorResult::class.java)
           .onErrorReturn { Logger.e(it);MediatorResult.Error(it) }
       }
@@ -45,8 +43,7 @@ class BookmarksRemoteMediator(
           .subscribeOn(Schedulers.io())
           .map { it.map { it.toBookmarkUI() } }
           .flatMap { uiDao.add(it) }
-          .map { it.size < state.config.pageSize }
-          .map { MediatorResult.Success(it) }
+          .map { MediatorResult.Success(it.size < state.config.pageSize) }
           .cast(MediatorResult::class.java)
           .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }

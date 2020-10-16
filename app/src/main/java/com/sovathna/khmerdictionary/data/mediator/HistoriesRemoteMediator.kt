@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 
 @OptIn(ExperimentalPagingApi::class)
 class HistoriesRemoteMediator(
-  local: LocalDatabase
+  private val local: LocalDatabase
 ) : RxRemoteMediator<Int, HistoryUI>() {
 
   private val dao = local.historyDao()
@@ -27,12 +27,10 @@ class HistoriesRemoteMediator(
         uiDao
           .clear()
           .subscribeOn(Schedulers.io())
-          .flatMap {
-            dao.get(0, state.config.pageSize)
-              .map { it.map { it.toHistoryUI() } }
-              .flatMap { uiDao.add(it) }
-          }
-          .map { MediatorResult.Success(false) }
+          .flatMap { dao.get(0, state.config.pageSize) }
+          .map { it.map { it.toHistoryUI() } }
+          .flatMap { uiDao.add(it) }
+          .map { MediatorResult.Success(it.size < state.config.pageSize) }
           .cast(MediatorResult::class.java)
           .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }
@@ -45,8 +43,7 @@ class HistoriesRemoteMediator(
           .subscribeOn(Schedulers.io())
           .map { it.map { it.toHistoryUI() } }
           .flatMap { uiDao.add(it) }
-          .map { it.size < state.config.pageSize }
-          .map { MediatorResult.Success(it) }
+          .map { MediatorResult.Success(it.size < state.config.pageSize) }
           .cast(MediatorResult::class.java)
           .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }

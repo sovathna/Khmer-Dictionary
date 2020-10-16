@@ -10,23 +10,16 @@ import io.reactivex.ObservableTransformer
 abstract class WordsInteractor :
   MviInteractor<MviIntent, WordsResult>() {
 
-  protected abstract val getWords:
-      ObservableTransformer<WordsIntent.GetWords, WordsResult>
+  protected abstract val getWords: ObservableTransformer<WordsIntent.GetWords, WordsResult>
 
-  protected abstract val selectWord:
-      ObservableTransformer<WordsIntent.SelectWord, WordsResult>
+  protected abstract val selectWord: ObservableTransformer<WordsIntent.SelectWord, WordsResult>
 
-  override val intentsProcessor =
-    ObservableTransformer<MviIntent, WordsResult> {
-      it.publish { intent ->
-        Observable.merge(
-          intent
-            .ofType(WordsIntent.GetWords::class.java)
-            .compose(getWords),
-          intent
-            .ofType(WordsIntent.SelectWord::class.java)
-            .compose(selectWord)
-        )
-      }
+  override val intentsProcessor = ObservableTransformer<MviIntent, WordsResult> {
+    it.publish { intent ->
+      Observable.merge(
+        intent.ofType(WordsIntent.GetWords::class.java).compose(getWords),
+        intent.ofType(WordsIntent.SelectWord::class.java).compose(selectWord)
+      )
     }
+  }
 }

@@ -19,10 +19,7 @@ class AppPreferencesImpl(
   }
 
   override fun getTextSize(): Float {
-    return pref.getFloat(
-      TEXT_SIZE,
-      MIN_TEXT_SIZE
-    )
+    return pref.getFloat(TEXT_SIZE, MIN_TEXT_SIZE)
   }
 
   override fun incrementTextSize(): Float {

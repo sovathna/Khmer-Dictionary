@@ -29,7 +29,10 @@ class WordsRemoteMediator(
         uiDao
           .deleteAll()
           .subscribeOn(Schedulers.io())
-          .map { MediatorResult.Success(false) }
+          .flatMap { dao.get(0, state.config.pageSize) }
+          .map { it.map { it.toWordUI() } }
+          .flatMap { uiDao.add(it) }
+          .map { MediatorResult.Success(it.size < state.config.pageSize) }
           .cast(MediatorResult::class.java)
           .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }
@@ -37,14 +40,12 @@ class WordsRemoteMediator(
         .subscribeOn(Schedulers.io())
         .cast(MediatorResult::class.java)
       LoadType.APPEND -> {
-        uiDao
-          .count()
+        val offset = state.pages.lastOrNull { it.data.isNotEmpty() }?.nextKey ?: 0
+        dao.get(offset, state.config.pageSize)
           .subscribeOn(Schedulers.io())
-          .flatMap { dao.get(it, state.config.pageSize) }
           .map { it.map { it.toWordUI() } }
           .flatMap { uiDao.add(it) }
-          .map { it.size < state.config.pageSize }
-          .map { MediatorResult.Success(it) }
+          .map { MediatorResult.Success(it.size < state.config.pageSize) }
           .cast(MediatorResult::class.java)
           .onErrorReturn { Logger.e(it); MediatorResult.Error(it) }
       }

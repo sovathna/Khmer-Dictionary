@@ -24,11 +24,11 @@ import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.android.material.navigation.NavigationView
-import com.sovathna.androidmvi.Logger
 import com.sovathna.androidmvi.livedata.Event
 import com.sovathna.androidmvi.livedata.EventObserver
 import com.sovathna.khmerdictionary.Const
 import com.sovathna.khmerdictionary.R
+import com.sovathna.khmerdictionary.data.local.pref.AppPreferences
 import com.sovathna.khmerdictionary.listener.DrawerListener
 import com.sovathna.khmerdictionary.model.Word
 import com.sovathna.khmerdictionary.model.intent.BookmarksIntent
@@ -53,45 +53,36 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-  @Inject
-  lateinit var searchesIntent: PublishSubject<SearchesIntent.GetWords>
-
-  @Inject
-  lateinit var clearHistoriesIntent: PublishSubject<HistoriesIntent.ClearHistories>
-
-  @Inject
-  lateinit var clearBookmarksIntent: PublishSubject<BookmarksIntent.ClearBookmarks>
-
-  @Inject
-  lateinit var clickWordSubject: PublishSubject<Event<Word>>
-
-  @Inject
-  lateinit var fabVisibilitySubject: PublishSubject<Boolean>
-
-  @Inject
-  lateinit var selectWordIntent: BehaviorSubject<WordsIntent.SelectWord>
-
-  @Inject
-  lateinit var bookmarkedLiveData: MutableLiveData<Boolean>
-
-  @Inject
-  lateinit var menuItemClickLiveData: MutableLiveData<Event<String>>
-
-  @Inject
-  @Named("clear_menu")
-  lateinit var clearMenuItemLiveData: MutableLiveData<Boolean>
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
   private val viewModel: MainViewModel by viewModels()
+
+  @Inject lateinit var searchesIntent: PublishSubject<SearchesIntent.GetWords>
+  @Inject lateinit var clearHistoriesIntent: PublishSubject<HistoriesIntent.ClearHistories>
+  @Inject lateinit var clearBookmarksIntent: PublishSubject<BookmarksIntent.ClearBookmarks>
+  @Inject lateinit var clickWordSubject: PublishSubject<Event<Word>>
+  @Inject lateinit var fabVisibilitySubject: PublishSubject<Boolean>
+  @Inject lateinit var selectWordIntent: BehaviorSubject<WordsIntent.SelectWord>
+  @Inject lateinit var bookmarkedLiveData: MutableLiveData<Boolean>
+  @Inject lateinit var menuItemClickLiveData: MutableLiveData<Event<String>>
+  @Inject @Named("clear_menu") lateinit var clearMenuItemLiveData: MutableLiveData<Boolean>
+  @Inject lateinit var appPref: AppPreferences
 
   private var menu: Menu? = null
   private var searchItem: MenuItem? = null
   private var closeDialog: AlertDialog? = null
   private var clearDialog: AlertDialog? = null
 
+  private val drawerListener = object : DrawerListener() {
+    override fun onDrawerOpened(drawerView: View) {
+      if (searchItem?.isActionViewExpanded == true) searchItem?.collapseActionView()
+    }
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
+
+    if (savedInstanceState == null) Const.mainTextSize = appPref.getTextSize()
 
 //    FirebaseInstanceId.getInstance().instanceId
 //      .addOnCompleteListener(OnCompleteListener { task ->
@@ -119,17 +110,11 @@ class MainActivity : AppCompatActivity() {
     fab.setOnClickListener(fabClickListener)
 
     nav_view.setNavigationItemSelectedListener(navMenuItemClickListener)
-    drawer_layout.addDrawerListener(object : DrawerListener() {
-      override fun onDrawerOpened(drawerView: View) {
-        if (searchItem?.isActionViewExpanded == true) {
-          searchItem?.collapseActionView()
-        }
-      }
-    })
+    drawer_layout.addDrawerListener(drawerListener)
 
     LiveDataReactiveStreams.fromPublisher(
       fabVisibilitySubject.toFlowable(BackpressureStrategy.BUFFER)
-    ).observe(this, Observer { if (it) fab.show() else fab.hide() })
+    ).observe(this) { if (it) fab.show() else fab.hide() }
 
     clearMenuItemLiveData.observe(this) {
       menu?.findItem(R.id.action_clear)?.isVisible = it
@@ -138,7 +123,6 @@ class MainActivity : AppCompatActivity() {
     viewModel.titleLiveData.observe(this) {
       title = it
       nav_view.checkedItem?.isChecked = it != getString(R.string.app_name_kh)
-
     }
 
     if (savedInstanceState == null) {
@@ -148,15 +132,18 @@ class MainActivity : AppCompatActivity() {
         .replace(R.id.word_list_container, WordsFragment(), Const.WORD_LIST_FRAGMENT_TAG)
         .commit()
     } else {
-      supportFragmentManager
-        .findFragmentByTag(Const.DEFINITION_FRAGMENT_TAG)?.let {
-          it.arguments?.let { args ->
-            args.getParcelable<Word>("word")?.let { word -> clickWordSubject.onNext(Event(word)) }
-          }
-          supportFragmentManager.beginTransaction().remove(it).commit()
+      supportFragmentManager.findFragmentByTag(Const.DEFINITION_FRAGMENT_TAG)?.let {
+        it.arguments?.let { args ->
+          args.getParcelable<Word>("word")?.let { word -> clickWordSubject.onNext(Event(word)) }
         }
+        supportFragmentManager.beginTransaction().remove(it).commit()
+      }
     }
+  }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    drawer_layout.removeDrawerListener(drawerListener)
   }
 
   override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -342,7 +329,7 @@ class MainActivity : AppCompatActivity() {
       searchView.setQuery(viewModel.searchTerm, true)
     }
     searchView.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)?.apply {
-      textSize = 14.0F
+      textSize = 18.0F
       typeface = ResourcesCompat.getFont(this@MainActivity, R.font.kantumruy)
     }
 
@@ -350,7 +337,6 @@ class MainActivity : AppCompatActivity() {
       override fun onQueryTextChange(newText: String?): Boolean {
         val searchTerm = newText?.trim() ?: ""
         if (searchTerm != viewModel.searchTerm) {
-          Logger.d("query text change $searchTerm")
           viewModel.searchTerm = searchTerm
           searchesIntent.onNext(SearchesIntent.GetWords(viewModel.searchTerm))
         }
