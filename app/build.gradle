@@ -72,6 +72,9 @@ android {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
   implementation "com.google.dagger:hilt-android:2.28-alpha"
   kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
   implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
