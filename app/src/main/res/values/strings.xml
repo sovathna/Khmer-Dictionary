@@ -1,4 +1,12 @@
 <resources>
-    <string name="app_name_kh">វចនានុក្រមខ្មែរ</string>
     <string name="app_name">Khmer Dictionary</string>
+
+    <string name="app_name_kh">វចនានុក្រមខ្មែរ</string>
+
+    <string name="splash_preparing">កំពុងរៀបចំទាញយកទិន្នន័យ… សូមមេត្តារង់ចាំ</string>
+    <string name="splash_downloading">កំពុងទាញយកទិន្នន័យ… សូមមេត្តារង់ចាំ</string>
+    <string name="splash_done">កំពុងផ្ទុក… សូមមេត្តារង់ចាំ</string>
+
+    <string name="splash_error">មានបញ្ហារអាក់រអួលអំឡុងពេលទាញយកទិន្នន័យ</string>
+    <string name="splash_try_gain">ព្យាយាមម្ដងទៀត</string>
 </resources>
