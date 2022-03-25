@@ -12,11 +12,16 @@ class AppDatabaseInitializer : Initializer<AppDatabase> {
         private val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL(
-                    "CREATE TABLE `home`(`id` INTEGER NOT NULL, " +
-                            "`word` TEXT NOT NULL, " +
-                            "`definition` TEXT NOT NULL, " +
-                            "`selected` INTEGER NOT NULL, " +
-                            "PRIMARY KEY(`id`))"
+                    "ALTER TABLE dict ADD COLUMN selected INTEGER NOT NULL DEFAULT 0"
+                )
+                database.execSQL(
+                    "ALTER TABLE dict ADD COLUMN favorite INTEGER NOT NULL DEFAULT 0"
+                )
+                database.execSQL(
+                    "ALTER TABLE dict ADD COLUMN history INTEGER NOT NULL DEFAULT 0"
+                )
+                database.execSQL(
+                    "ALTER TABLE dict ADD COLUMN timestamp INTEGER NOT NULL DEFAULT 0"
                 )
             }
         }

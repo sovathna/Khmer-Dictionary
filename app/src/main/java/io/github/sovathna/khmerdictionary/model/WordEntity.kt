@@ -12,7 +12,13 @@ data class WordEntity(
     val definition: String,
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Long = 0
-) {
-    fun toHomeEntity() = HomeEntity(word = word, definition = definition, id = id)
-}
+    val id: Long = 0,
+    @ColumnInfo(name = "selected")
+    val selected: Boolean = false,
+    @ColumnInfo(name = "favorite")
+    val favorite: Boolean = false,
+    @ColumnInfo(name = "history")
+    val history: Boolean = false,
+    @ColumnInfo(name = "timestamp")
+    val timestamp: Long = 0L,
+)

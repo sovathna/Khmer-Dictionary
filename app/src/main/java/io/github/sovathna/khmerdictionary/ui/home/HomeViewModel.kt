@@ -10,14 +10,12 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.sovathna.khmerdictionary.config.Const
-import io.github.sovathna.khmerdictionary.data.database.HomeMediator
 import io.github.sovathna.khmerdictionary.domain.database.AppDatabase
 import javax.inject.Inject
 
 @HiltViewModel
 @ExperimentalPagingApi
 class HomeViewModel @Inject constructor(
-    private val mediator: HomeMediator,
     private val appDatabase: AppDatabase
 ) : ViewModel() {
 
@@ -25,12 +23,13 @@ class HomeViewModel @Inject constructor(
     val stateLiveData: LiveData<HomeState> = state
     private val current get() = state.value!!
 
-    val words = Pager(
-        config = PagingConfig(pageSize = Const.PAGE_SIZE),
-        remoteMediator = mediator
-    ) { appDatabase.homeDao().words() }
-        .flow.cachedIn(viewModelScope)
+    val words = Pager(config = PagingConfig(pageSize = Const.PAGE_SIZE)) {
+        appDatabase.wordDao().homeWords()
+    }.flow.cachedIn(viewModelScope)
 
+    val filtered = Pager(config = PagingConfig(pageSize = Const.PAGE_SIZE)) {
+        appDatabase.wordDao().filteredWords("ខ%")
+    }.flow
 
     private fun setState(state: HomeState) {
         this.state.value = state

@@ -31,7 +31,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.rv.adapter = adapter
         viewModel.stateLiveData.observe(viewLifecycleOwner, ::render)
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.words.collectLatest {
+            viewModel.filtered.collectLatest {
                 adapter.submitData(it)
             }
         }

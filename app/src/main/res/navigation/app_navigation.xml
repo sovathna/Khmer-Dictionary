@@ -14,6 +14,10 @@
         <action
             android:id="@+id/action_to_home"
             app:destination="@id/home_fragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
             app:popUpTo="@id/splash_fragment"
             app:popUpToInclusive="true" />
     </fragment>

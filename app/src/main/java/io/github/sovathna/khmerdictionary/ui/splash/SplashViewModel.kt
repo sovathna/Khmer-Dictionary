@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.sovathna.khmerdictionary.Event
 import io.github.sovathna.khmerdictionary.data.interactors.DownloadInteractor
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -37,8 +36,9 @@ class SplashViewModel @Inject constructor(
                         is DownloadInteractor.Result.Downloading ->
                             setState(current.copy(read = result.read, size = result.size))
                         is DownloadInteractor.Result.Done -> {
-                            setState(current.copy(read = 1.0, size = 1.0))
-                            redirect()
+                            setState(
+                                current.copy(read = 1.0, size = 1.0, redirectEvent = Event(Unit))
+                            )
                         }
                         is DownloadInteractor.Result.Error ->
                             setState(current.copy(error = result.error))
@@ -49,13 +49,6 @@ class SplashViewModel @Inject constructor(
 
     private fun setState(state: SplashState) {
         this.state.value = state
-    }
-
-    private fun redirect() {
-        viewModelScope.launch {
-            delay(2000)
-            setState(current.copy(redirectEvent = Event(Unit)))
-        }
     }
 
 }

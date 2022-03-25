@@ -9,4 +9,6 @@
 
     <string name="splash_error">មានបញ្ហារអាក់រអួលអំឡុងពេលទាញយកទិន្នន័យ</string>
     <string name="splash_try_gain">ព្យាយាមម្ដងទៀត</string>
+
+    <string name="search_word">ស្វែងរកពាក្យ</string>
 </resources>
