@@ -7,6 +7,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('debug.jks')
+            storePassword 'android'
+            keyAlias 'debug'
+            keyPassword 'android'
+        }
+    }
     compileSdk 31
 
     defaultConfig {
@@ -17,6 +25,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {
@@ -64,7 +73,7 @@ dependencies {
 
     implementation platform("com.squareup.okhttp3:okhttp-bom:4.9.3")
     implementation "com.squareup.okhttp3:okhttp"
-    implementation "com.squareup.okhttp3:logging-interceptor"
+    debugImplementation "com.squareup.okhttp3:logging-interceptor"
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
 
     implementation "com.jakewharton.timber:timber:5.0.1"
@@ -79,6 +88,8 @@ dependencies {
 
     def paging_version = "3.1.1"
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -11,7 +11,7 @@ interface WordDao {
     @Query("SELECT * FROM dict ORDER BY word")
     fun homeWords(): PagingSource<Int, WordEntity>
 
-    @Query("SELECT * FROM dict WHERE word LIKE :filter")
+    @Query("SELECT * FROM dict WHERE word LIKE :filter ORDER BY word")
     fun filteredWords(filter:String):PagingSource<Int,WordEntity>
 
 }

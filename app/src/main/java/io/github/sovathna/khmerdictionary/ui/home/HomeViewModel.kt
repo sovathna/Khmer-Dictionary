@@ -11,27 +11,36 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.sovathna.khmerdictionary.config.Const
 import io.github.sovathna.khmerdictionary.domain.database.AppDatabase
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 @ExperimentalPagingApi
 class HomeViewModel @Inject constructor(
-    private val appDatabase: AppDatabase
+  private val appDatabase: AppDatabase
 ) : ViewModel() {
 
-    private val state = MutableLiveData(HomeState())
-    val stateLiveData: LiveData<HomeState> = state
-    private val current get() = state.value!!
+  private val state = MutableLiveData(HomeState())
+  val stateLiveData: LiveData<HomeState> = state
+  private val current get() = state.value!!
 
-    val words = Pager(config = PagingConfig(pageSize = Const.PAGE_SIZE)) {
-        appDatabase.wordDao().homeWords()
-    }.flow.cachedIn(viewModelScope)
+  fun search(searchTerm: String) {
 
-    val filtered = Pager(config = PagingConfig(pageSize = Const.PAGE_SIZE)) {
-        appDatabase.wordDao().filteredWords("ខ%")
-    }.flow
-
-    private fun setState(state: HomeState) {
-        this.state.value = state
+    viewModelScope.launch {
+      Pager(config = PagingConfig(pageSize = Const.PAGE_SIZE)) {
+        appDatabase.wordDao().filteredWords("$searchTerm%")
+      }.flow
+        .cachedIn(viewModelScope)
+        .distinctUntilChanged()
+        .collectLatest {
+          setState(current.copy(paging = it))
+        }
     }
+  }
+
+  private fun setState(state: HomeState) {
+    this.state.value = state
+  }
 }
