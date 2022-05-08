@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/root"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".ui.main.MainActivity">
+
+  <com.google.android.material.appbar.AppBarLayout
+    android:id="@+id/abl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="?attr/colorPrimary"
+    android:theme="@style/Theme.KhmerDictionary.AppBarOverlay"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="?attr/colorPrimary"
+      app:popupTheme="@style/Theme.KhmerDictionary.PopupOverlay"
+      app:title="@string/app_name_kh"
+      app:titleTextAppearance="@style/AppBarTextAppearance" />
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/til_search"
+      style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="16dp"
+      android:layout_marginBottom="8dp"
+      app:boxCornerRadiusBottomEnd="24dp"
+      app:boxCornerRadiusBottomStart="24dp"
+      app:boxCornerRadiusTopEnd="24dp"
+      app:boxCornerRadiusTopStart="24dp"
+      app:boxStrokeColor="@color/white"
+      app:boxStrokeWidth="1dp"
+      app:boxStrokeWidthFocused="2dp"
+      app:hintEnabled="false">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:fontFamily="@font/suwannaphum"
+        android:gravity="center_vertical"
+        android:hint="@string/search_word"
+        android:inputType="text"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray"
+        android:textCursorDrawable="@drawable/color_cursor" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <include layout="@layout/content_main" />
+
+  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    android:id="@+id/fab_search"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp"
+    app:icon="@drawable/round_search_24" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

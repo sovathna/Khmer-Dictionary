@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:showIn="navigation_view">
+  <group
+    android:id="@+id/group_1"
+    android:checkableBehavior="single">
+    <item
+      android:id="@+id/nav_bookmark"
+      android:icon="@drawable/round_bookmark_24"
+      android:title="@string/menu_bookmark" />
+
+    <item
+      android:id="@+id/nav_history"
+      android:icon="@drawable/round_history_24"
+      android:title="@string/menu_history" />
+
+  </group>
+  <group
+    android:id="@+id/group_2"
+    android:checkableBehavior="single">
+    <item
+      android:id="@+id/nav_settings"
+      android:icon="@drawable/round_settings_24"
+      android:title="@string/menu_settings" />
+    <item
+      android:id="@+id/nav_about"
+      android:icon="@drawable/round_info_24"
+      android:title="@string/menu_about" />
+  </group>
+  <!--  <group-->
+  <!--      android:id="@+id/group_3"-->
+  <!--      android:checkableBehavior="none">-->
+  <!--    <item-->
+  <!--        android:id="@+id/nav_review"-->
+  <!--        android:icon="@drawable/round_rate_review_24"-->
+  <!--        android:title="@string/menu_review" />-->
+
+  <!--    <item-->
+  <!--        android:id="@+id/nav_privacy"-->
+  <!--        android:icon="@drawable/round_policy_24"-->
+  <!--        android:title="@string/menu_privacy" />-->
+  <!--  </group>-->
+</menu>

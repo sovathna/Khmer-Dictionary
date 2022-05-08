@@ -1,54 +1,43 @@
 package io.github.sovathna.khmerdictionary.ui.splash
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.sovathna.khmerdictionary.BaseViewModel
 import io.github.sovathna.khmerdictionary.Event
 import io.github.sovathna.khmerdictionary.data.interactors.DownloadInteractor
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val interactor: DownloadInteractor
-) : ViewModel() {
+  private val interactor: DownloadInteractor
+) : BaseViewModel<SplashState>(SplashState()) {
 
-    private val state = MutableLiveData(SplashState())
-    val stateLiveData: LiveData<SplashState> = state
-    private val current get() = state.value!!
+  init {
+    downloadDatabase()
+  }
 
-    init {
-        downloadDatabase()
-    }
-
-    private fun downloadDatabase() {
-        viewModelScope.launch {
-            interactor.downloadFlow()
-                .distinctUntilChanged()
-                .collectLatest { result ->
-                    Timber.d("download result: $result")
-                    when (result) {
-                        is DownloadInteractor.Result.Downloading ->
-                            setState(current.copy(read = result.read, size = result.size))
-                        is DownloadInteractor.Result.Done -> {
-                            setState(
-                                current.copy(read = 1.0, size = 1.0, redirectEvent = Event(Unit))
-                            )
-                        }
-                        is DownloadInteractor.Result.Error ->
-                            setState(current.copy(error = result.error))
-                    }
-                }
+  fun downloadDatabase() {
+    viewModelScope.launch {
+      interactor.downloadFlow()
+        .distinctUntilChanged()
+        .collectLatest { result ->
+          setState(mapDownloadState(result))
         }
     }
+  }
 
-    private fun setState(state: SplashState) {
-        this.state.value = state
+  private fun mapDownloadState(result: DownloadInteractor.Result): SplashState {
+    return when (result) {
+      is DownloadInteractor.Result.Downloading ->
+        current.copy(read = result.read, size = result.size)
+      is DownloadInteractor.Result.Done ->
+        current.copy(read = 1.0, size = 1.0, redirectEvent = Event(Unit))
+      is DownloadInteractor.Result.Error ->
+        current.copy(error = result.error)
     }
+  }
 
 }

@@ -8,9 +8,17 @@
         <entry key="app/src/main/res/drawable/round_bookmark_20.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_bookmark_border_24.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_history_20.xml" value="0.1745" />
+        <entry key="app/src/main/res/drawable/round_info_20.xml" value="0.1745" />
+        <entry key="app/src/main/res/drawable/round_settings_20.xml" value="0.1745" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33697916666666666" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.33229166666666665" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.33229166666666665" />
+        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.5008375209380235" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33697916666666666" />
-        <entry key="app/src/main/res/layout/view_holder_word.xml" value="0.27685185185185185" />
+        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.33229166666666665" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.33229166666666665" />
+        <entry key="app/src/main/res/layout/view_holder_word.xml" value="0.4" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.33229166666666665" />
       </map>
     </option>
   </component>

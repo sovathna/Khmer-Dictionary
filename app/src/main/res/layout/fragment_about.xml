@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="*"
+    android:textColor="?attr/colorSecondary"
+    android:textSize="64dp"
+    app:fontFamily="@font/tacteing"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="&amp;"
+    android:textColor="?attr/colorSecondary"
+    android:textSize="64dp"
+    app:fontFamily="@font/tacteing"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text=","
+    android:textColor="?attr/colorSecondary"
+    android:textSize="64dp"
+    app:fontFamily="@font/tacteing"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="-"
+    android:textColor="?attr/colorSecondary"
+    android:textSize="64dp"
+    app:fontFamily="@font/tacteing"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="64dp"
+        android:gravity="center_horizontal"
+        android:text="@string/app_name_kh"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="32sp"
+        app:fontFamily="@font/suwannaphum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+      <TextView
+        android:id="@+id/tv_name_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_horizontal"
+        android:text="6"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="64dp"
+        app:fontFamily="@font/tacteing"
+        app:layout_constraintTop_toTopOf="@id/tv_name" />
+
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_sub"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:text="វចនានុក្រមឌីជីថលខ្មែរសម្ដេចសង្ឃជួនណាត ត្រូវបានដកស្រង់ពាក្យទាំងស្រុងពី វចនានុក្រមសម្ដេចសង្ឃជួនណាត\nបោះពុម្ពលើកទី៥ នៅឆ្នាំ ១៩៦៧"
+        app:fontFamily="@font/suwannaphum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_name_bottom" />
+
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_creator"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/suwannaphum"
+        android:text="អភិវឌ្ឍកម្មវិធី៖ ហុង សុវឌ្ឍនា"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_sub"
+        app:strokeColor="?attr/colorPrimary" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_font"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/suwannaphum"
+        android:text="ពុម្ពអក្សរប្រើប្រាស់៖ Suwannaphum\nDesigned by Danh Hong"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_creator"
+        app:strokeColor="?attr/colorPrimary" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_github"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="64dp"
+        android:text="Source code on GitHub"
+        app:icon="@drawable/github_mark"
+        app:iconGravity="end"
+        app:iconPadding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_font"
+        app:strokeColor="?attr/colorPrimary" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tv_version"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="16dp"
+    android:gravity="center_horizontal"
+    android:text="@string/splash_version_text"
+    app:fontFamily="@font/suwannaphum"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

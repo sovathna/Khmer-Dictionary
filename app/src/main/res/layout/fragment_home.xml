@@ -12,12 +12,27 @@
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:clipToPadding="false"
-    android:paddingVertical="8dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="88dp"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     tools:listitem="@layout/view_holder_word" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tv_message"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="32dp"
+    android:gravity="center_horizontal"
+    android:text="@string/home_empty_words"
+    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+    android:textColor="?attr/colorPrimary"
+    android:visibility="gone"
+    app:fontFamily="@font/suwannaphum"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

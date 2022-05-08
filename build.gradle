@@ -2,8 +2,7 @@
 buildscript{
     ext{
         hiltVersion = "2.40.5"
-        navVersion = "2.4.1"
-
+        navVersion = "2.4.2"
     }
     dependencies{
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
@@ -14,7 +13,7 @@ buildscript{
 plugins {
     id 'com.android.application' version '7.1.2' apply false
     id 'com.android.library' version '7.1.2' apply false
-    id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
+    id 'org.jetbrains.kotlin.android' version '1.6.21' apply false
 }
 
 task clean(type: Delete) {

@@ -1,82 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.drawerlayout.widget.DrawerLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/drawer_layout"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:animateLayoutChanges="true"
-  tools:context=".ui.main.MainActivity">
+  tools:openDrawer="start">
 
-  <com.google.android.material.appbar.AppBarLayout
-    android:id="@+id/abl"
+  <include
+    android:id="@+id/app_bar_main"
+    layout="@layout/app_bar_main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
-    android:animateLayoutChanges="true"
-    android:theme="@style/Theme.KhmerDictionary.AppBarOverlay"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="match_parent" />
 
-    <androidx.appcompat.widget.Toolbar
-      android:id="@+id/toolbar"
-      android:layout_width="match_parent"
-      android:layout_height="?attr/actionBarSize"
-      android:background="?attr/colorPrimary"
-      app:popupTheme="@style/Theme.KhmerDictionary.PopupOverlay"
-      app:title="@string/app_name_kh"
-      app:titleTextAppearance="@style/AppBarTextAppearance" />
-
-    <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/til_search"
-      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginHorizontal="8dp"
-      android:layout_marginBottom="8dp"
-      app:boxCornerRadiusBottomEnd="24dp"
-      app:boxCornerRadiusBottomStart="24dp"
-      app:boxCornerRadiusTopEnd="24dp"
-      app:boxCornerRadiusTopStart="24dp"
-      app:boxStrokeColor="@color/white"
-      app:boxStrokeWidth="1dp"
-      app:boxStrokeWidthFocused="1dp"
-      app:hintEnabled="false">
-
-      <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/et_search"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:fontFamily="@font/suwannaphum"
-        android:gravity="center_vertical"
-        android:focusable="true"
-        android:hint="@string/search_word"
-        android:textColorHint="@color/white"
-        android:textCursorDrawable="@drawable/color_cursor"
-        android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-  </com.google.android.material.appbar.AppBarLayout>
-
-  <androidx.fragment.app.FragmentContainerView
-    android:id="@+id/nav_host"
-    android:name="androidx.navigation.fragment.NavHostFragment"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    app:defaultNavHost="true"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/abl"
-    app:navGraph="@navigation/app_navigation" />
-
-  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-    android:id="@+id/fab_add"
+  <com.google.android.material.navigation.NavigationView
+    android:id="@+id/nav_view"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="16dp"
-    app:icon="@drawable/round_search_24"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" />
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    app:headerLayout="@layout/nav_header_main"
+    app:itemTextAppearance="@style/DrawerMenuItemTextAppearance"
+    app:menu="@menu/activity_main_drawer" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

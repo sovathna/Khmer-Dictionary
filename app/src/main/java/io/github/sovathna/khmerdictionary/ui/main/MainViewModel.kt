@@ -1,19 +1,13 @@
 package io.github.sovathna.khmerdictionary.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.github.sovathna.khmerdictionary.BaseViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
-
-  private val state = MutableLiveData(MainState())
-  val stateLiveData: LiveData<MainState> = state
-  private val current get() = state.value!!
+class MainViewModel @Inject constructor() : BaseViewModel<MainState>(MainState()) {
 
   private val _searchFlow = MutableStateFlow("")
   val searchFlow: Flow<String> = _searchFlow
@@ -26,9 +20,4 @@ class MainViewModel @Inject constructor() : ViewModel() {
     val isSearch = current.isSearch
     setState(current.copy(isSearch = !isSearch))
   }
-
-  private fun setState(state: MainState) {
-    this.state.value = state
-  }
-
 }

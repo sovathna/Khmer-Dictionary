@@ -1,66 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true">
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:animateLayoutChanges="true">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:gravity="center_horizontal"
-        android:text="@string/splash_preparing"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:fontFamily="@font/suwannaphum"
-        app:layout_constraintBottom_toTopOf="@id/pb"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="*"
+    android:textColor="?attr/colorSecondary"
+    android:textSize="64dp"
+    app:fontFamily="@font/tacteing"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/pb"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="24dp"
-        android:indeterminate="true"
-        app:layout_constraintBottom_toTopOf="@id/tv_sub"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="&amp;"
+    android:textColor="?attr/colorSecondary"
+    android:textSize="64dp"
+    app:fontFamily="@font/tacteing"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_sub"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="8dp"
-        android:gravity="end"
-        android:text="@string/splash_downloading"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:fontFamily="@font/suwannaphum"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pb" />
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text=","
+    android:textColor="?attr/colorSecondary"
+    android:textSize="64dp"
+    app:fontFamily="@font/tacteing"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_retry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/suwannaphum"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp"
-        android:text="@string/splash_try_gain"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="-"
+    android:textColor="?attr/colorSecondary"
+    android:textSize="64dp"
+    app:fontFamily="@font/tacteing"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tv_name"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:gravity="center_horizontal"
+    android:text="@string/app_name_kh"
+    android:textColor="?attr/colorSecondary"
+    android:textSize="32sp"
+    app:fontFamily="@font/suwannaphum"
+    app:layout_constraintBottom_toTopOf="@id/tv_title"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tv_version"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="8dp"
+    android:gravity="center_horizontal"
+    android:text="@string/splash_version_text"
+    app:fontFamily="@font/suwannaphum"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tv_title"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:gravity="center_horizontal"
+    android:text="@string/splash_preparing"
+    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+    android:textColor="?attr/colorPrimary"
+    app:fontFamily="@font/suwannaphum"
+    app:layout_constraintBottom_toTopOf="@id/pb"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_chainStyle="packed" />
+
+  <com.google.android.material.progressindicator.LinearProgressIndicator
+    android:id="@+id/pb"
+    style="@style/Widget.Material3.LinearProgressIndicator"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="32dp"
+    android:layout_marginTop="24dp"
+    android:indeterminate="true"
+    app:layout_constraintBottom_toTopOf="@id/tv_sub"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tv_sub"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="32dp"
+    android:layout_marginTop="8dp"
+    android:gravity="end"
+    android:text="@string/splash_downloading"
+    app:fontFamily="@font/suwannaphum"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/pb" />
+
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/btn_retry"
+    style="@style/Widget.Material3.Button.OutlinedButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:fontFamily="@font/suwannaphum"
+    android:paddingHorizontal="16dp"
+    android:text="@string/splash_try_gain"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tv_sub"
+    app:strokeColor="?attr/colorPrimary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

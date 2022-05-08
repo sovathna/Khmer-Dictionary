@@ -3,12 +3,20 @@
 
     <string name="app_name_kh">វចនានុក្រមខ្មែរ</string>
 
+    <string name="menu_history">បញ្ជីពាក្យធ្លាប់មើល</string>
+    <string name="menu_bookmark">បញ្ជីពាក្យកត់ចំណាំ</string>
+    <string name="menu_settings">ការកំណត់</string>
+    <string name="menu_about">អំពីកម្មវិធី</string>
+
+    <string name="splash_version_text">កម្មវិធីជំនាន់ %1$s</string>
     <string name="splash_preparing">កំពុងរៀបចំទាញយកទិន្នន័យ… សូមមេត្តារង់ចាំ</string>
-    <string name="splash_downloading">កំពុងទាញយកទិន្នន័យ… សូមមេត្តារង់ចាំ</string>
+    <string name="splash_downloading">កំពុងទាញយក និងពន្លាទិន្នន័យ… សូមមេត្តារង់ចាំ</string>
     <string name="splash_done">កំពុងផ្ទុក… សូមមេត្តារង់ចាំ</string>
 
-    <string name="splash_error">មានបញ្ហារអាក់រអួលអំឡុងពេលទាញយកទិន្នន័យ</string>
+    <string name="splash_error">មានបញ្ហាអំឡុងពេលទាញយកទិន្នន័យ</string>
     <string name="splash_try_gain">ព្យាយាមម្ដងទៀត</string>
 
     <string name="search_word">ស្វែងរកពាក្យ</string>
+
+    <string name="home_empty_words">មិនមានពាក្យ</string>
 </resources>
