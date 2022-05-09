@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tv_name"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:gravity="center_horizontal"
+    android:text="@string/app_name_kh"
+    android:textSize="32sp"
+    app:fontFamily="@font/suwannaphum"
+    app:layout_constraintBottom_toTopOf="@id/tv_name_bottom"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+    android:id="@+id/tv_name_bottom"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:text="{Y|"
+    android:textColor="?attr/colorSecondary"
+    android:textSize="36dp"
+    app:fontFamily="@font/tacteing"
+    app:layout_constraintBottom_toTopOf="@id/tv_sub"
+    app:layout_constraintEnd_toEndOf="@id/tv_name"
+    app:layout_constraintStart_toStartOf="@id/tv_name"
+    app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tv_sub"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="24dp"
+    android:gravity="center_horizontal"
+    android:text="វចនានុក្រមឌីជីថលខ្មែរសម្ដេចសង្ឃជួនណាត ត្រូវបានដកស្រង់ពាក្យទាំងស្រុងពី វចនានុក្រមសម្ដេចសង្ឃជួនណាត\nបោះពុម្ពលើកទី៥ នៅឆ្នាំ ១៩៦៧"
+    app:fontFamily="@font/suwannaphum"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tv_name_bottom" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

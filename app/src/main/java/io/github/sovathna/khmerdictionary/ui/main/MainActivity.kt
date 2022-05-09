@@ -125,7 +125,11 @@ class MainActivity : AppCompatActivity() {
     if (binding.drawerLayout.isOpen) {
       binding.drawerLayout.close()
     } else {
-      super.onBackPressed()
+      if (navController.currentDestination?.id != R.id.home_fragment) {
+        super.onBackPressed()
+      } else {
+        finishAfterTransition()
+      }
     }
   }
 }

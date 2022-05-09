@@ -26,15 +26,17 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
 //        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
 //        startActivity(intent)
 //      }
-      btnGithub.setOnClickListener {
-        val url = "https://github.com/sovathna/Khmer-Dictionary"
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(intent)
-      }
-      btnCreator.setOnClickListener {
-        val url = "https://sovathna.github.io/"
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(intent)
+      with(layoutAboutButtons) {
+        btnGithub.setOnClickListener {
+          val url = "https://github.com/sovathna/Khmer-Dictionary"
+          val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+          startActivity(intent)
+        }
+        btnCreator.setOnClickListener {
+          val url = "https://sovathna.github.io/"
+          val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+          startActivity(intent)
+        }
       }
     }
   }
