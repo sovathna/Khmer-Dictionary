@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.sovathna.khmerdictionary.BaseViewModel
+import io.github.sovathna.khmerdictionary.Event
 import io.github.sovathna.khmerdictionary.config.Const
 import io.github.sovathna.khmerdictionary.domain.database.AppDatabase
 import io.github.sovathna.khmerdictionary.model.WordEntity
@@ -35,7 +36,10 @@ class HomeViewModel @Inject constructor(
 
   private var job: Job? = null
 
+  private var mSearchTerm: String? = null
+
   fun search(searchTerm: String, type: HomeType) {
+    if(mSearchTerm==searchTerm) return
     job?.cancel()
     job = viewModelScope.launch {
       val filter = "$searchTerm%"
@@ -50,7 +54,11 @@ class HomeViewModel @Inject constructor(
         .cachedIn(viewModelScope)
         .distinctUntilChanged()
         .collectLatest {
-          setState(current.copy(paging = it))
+          val tmp: Event<Unit>? =
+            if (mSearchTerm != null && mSearchTerm != searchTerm) Event(Unit)
+            else current.shouldScrollTop
+          setState(current.copy(shouldScrollTop = tmp, paging = it))
+          mSearchTerm = searchTerm
         }
     }
   }

@@ -64,6 +64,12 @@ class MainActivity : AppCompatActivity() {
       } else {
         binding.appBarMain.fabSearch.hide()
       }
+
+      if(destination.id == R.id.nav_detail){
+        if (viewModel.current.isSearch) {
+          viewModel.updateSearchState()
+        }
+      }
     }
     with(binding) {
       appBarMain.fabSearch.setOnClickListener {

@@ -23,6 +23,7 @@
       android:layout_height="?attr/actionBarSize"
       app:popupTheme="@style/AppTheme.PopupOverlay"
       app:title="@string/app_name_kh"
+      app:titleCentered="true"
       app:titleTextAppearance="@style/AppBarTextAppearance" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -36,6 +37,8 @@
       app:boxCornerRadiusBottomStart="24dp"
       app:boxCornerRadiusTopEnd="24dp"
       app:boxCornerRadiusTopStart="24dp"
+      app:boxStrokeColor="@color/color_stroke_search"
+      app:endIconMode="clear_text"
       app:hintEnabled="false">
 
       <com.google.android.material.textfield.TextInputEditText
@@ -48,6 +51,7 @@
         android:inputType="text"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        android:textColor="?attr/colorOnPrimary"
         android:textCursorDrawable="@drawable/color_cursor" />
     </com.google.android.material.textfield.TextInputLayout>
 

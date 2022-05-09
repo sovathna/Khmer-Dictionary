@@ -42,8 +42,6 @@ class DownloadInteractor @Inject constructor(
     val dbFile = context.getDatabasePath("dict.db")
     if (dbFile.exists()) {
       return flow<Result> {
-        emit(Result.Downloading(1.0, 1.0))
-        delay(2000)
         emit(Result.Done)
       }.flowOn(ioDispatcher)
         .catch {

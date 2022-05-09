@@ -44,7 +44,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         R.id.btn_bookmark -> viewModel.updateBookmark(word)
         R.id.root -> {
           findNavController().navigate(
-            R.id.nav_detail,
+            R.id.action_to_detail,
             Bundle().apply {
               putLong("word_id", word.id)
             }
@@ -54,6 +54,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
       }
     }
     type = (arguments?.getSerializable("type") as? HomeType) ?: HomeType.ALL
+    search("")
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,7 +64,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     viewModel.stateLiveData.observe(viewLifecycleOwner, ::render)
     onSearchChanged {
       search(it)
-      scrollToTop()
     }
   }
 
@@ -80,7 +80,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     viewLifecycleOwner.lifecycleScope.launch {
       mViewModel.searchFlow
         .distinctUntilChanged()
-        .debounce(400L)
+        .debounce(700L)
         .collectLatest {
           onChanged(it)
         }
@@ -88,6 +88,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
   }
 
   private fun render(state: HomeState) {
+    state.shouldScrollTop?.getContentIfNotHandled()?.let {
+      scrollToTop()
+    }
     viewLifecycleOwner.lifecycleScope.launch {
       launch {
         state.paging?.let {

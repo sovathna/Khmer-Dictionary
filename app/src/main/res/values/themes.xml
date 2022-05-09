@@ -45,6 +45,11 @@
     <item name="fontFamily">@font/suwannaphum</item>
   </style>
 
+  <style name="AppBarSubTextAppearance" parent="TextAppearance.Material3.ActionBar.Subtitle">
+    <item name="android:textColor">?attr/colorOnPrimary</item>
+    <item name="fontFamily">@font/tacteing</item>
+  </style>
+
   <style name="DrawerMenuItemTextAppearance" parent="TextAppearance.Material3.TitleMedium">
     <item name="fontFamily">@font/suwannaphum</item>
   </style>
