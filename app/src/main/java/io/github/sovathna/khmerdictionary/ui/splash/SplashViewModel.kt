@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.sovathna.khmerdictionary.BaseViewModel
 import io.github.sovathna.khmerdictionary.Event
 import io.github.sovathna.khmerdictionary.data.interactors.DownloadInteractor
+import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class SplashViewModel @Inject constructor(
     viewModelScope.launch {
       interactor.downloadFlow()
         .distinctUntilChanged()
+        .buffer()
         .collectLatest { result ->
           setState(mapDownloadState(result))
         }

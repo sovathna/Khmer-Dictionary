@@ -7,6 +7,7 @@
   android:animateLayoutChanges="true">
 
   <TextView
+    android:id="@+id/tv_top_start"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="*"
@@ -29,7 +30,7 @@
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text=","
+    android:text=")"
     android:textColor="?attr/colorSecondary"
     android:textSize="64dp"
     app:fontFamily="@font/tacteing"
@@ -39,7 +40,7 @@
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="-"
+    android:text="("
     android:textColor="?attr/colorSecondary"
     android:textSize="64dp"
     app:fontFamily="@font/tacteing"
@@ -61,18 +62,31 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
+  <TextView
+    android:id="@+id/tv_name_bottom"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:text="{Y|"
+    android:textColor="?attr/colorSecondary"
+    android:textSize="36dp"
+    app:fontFamily="@font/tacteing"
+    app:layout_constraintEnd_toEndOf="@id/tv_name"
+    app:layout_constraintStart_toStartOf="@id/tv_name"
+    app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
   <com.google.android.material.textview.MaterialTextView
     android:id="@+id/tv_version"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginBottom="16dp"
     android:gravity="center_horizontal"
     android:text="@string/splash_version_text"
     app:fontFamily="@font/suwannaphum"
+    app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_name" />
+    app:layout_constraintStart_toStartOf="parent" />
 
   <com.google.android.material.textview.MaterialTextView
     android:id="@+id/tv_title"

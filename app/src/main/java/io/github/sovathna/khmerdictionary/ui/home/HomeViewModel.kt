@@ -27,6 +27,10 @@ class HomeViewModel @Inject constructor(
   private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel<HomeState>(HomeState()) {
 
+  init {
+    Timber.d("init")
+  }
+
   private val dao = appDatabase.wordDao()
 
   private var job: Job? = null
@@ -34,18 +38,18 @@ class HomeViewModel @Inject constructor(
   fun search(searchTerm: String, type: HomeType) {
     job?.cancel()
     job = viewModelScope.launch {
+      val filter = "$searchTerm%"
       Pager(config = PagingConfig(pageSize = Const.PAGE_SIZE)) {
         when (type) {
-          HomeType.ALL -> dao.filteredWords("$searchTerm%")
-          HomeType.FAVORITE -> dao.filteredBookmarks("$searchTerm%")
-          HomeType.HISTORY -> dao.filteredHistories("$searchTerm%")
+          HomeType.ALL -> dao.filteredWords(filter)
+          HomeType.FAVORITE -> dao.filteredBookmarks(filter)
+          HomeType.HISTORY -> dao.filteredHistories(filter)
         }
       }.flow
         .flowOn(ioDispatcher)
         .cachedIn(viewModelScope)
         .distinctUntilChanged()
         .collectLatest {
-          Timber.e("search: $searchTerm")
           setState(current.copy(paging = it))
         }
     }

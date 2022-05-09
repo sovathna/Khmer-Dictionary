@@ -4,6 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.32314814814814813" />
+        <entry key="..\:/Projects/Android/KhmerDictionary/app/src/main/res/drawable/outline_arrow_back_24.xml" value="0.13" />
+        <entry key="..\:/Projects/Android/KhmerDictionary/app/src/main/res/drawable/round_book_24.xml" value="0.13" />
+        <entry key="..\:/Projects/Android/KhmerDictionary/app/src/main/res/layout-land/fragment_about.xml" value="0.3203592814371258" />
+        <entry key="..\:/Projects/Android/KhmerDictionary/app/src/main/res/layout/fragment_about.xml" value="0.25" />
+        <entry key="..\:/Projects/Android/KhmerDictionary/app/src/main/res/layout/fragment_detail.xml" value="0.19322916666666667" />
+        <entry key="..\:/Projects/Android/KhmerDictionary/app/src/main/res/layout/fragment_splash.xml" value="0.42971887550200805" />
+        <entry key="..\:/Projects/Android/KhmerDictionary/app/src/main/res/layout/view_holder_word.xml" value="0.19322916666666667" />
+        <entry key="..\:/Projects/Android/KhmerDictionary/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
         <entry key="app/src/main/res/drawable/color_cursor.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_bookmark_20.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_bookmark_border_24.xml" value="0.1745" />

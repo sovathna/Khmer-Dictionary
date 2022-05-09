@@ -50,14 +50,15 @@ class MainActivity : AppCompatActivity() {
     setupActionBarWithNavController(navController, appBarConfiguration)
     binding.navView.setupWithNavController(navController)
     navController.addOnDestinationChangedListener { nav, destination, args ->
-      val shouldShowAppBar = destination.id != R.id.splash_fragment
+      val shouldShowAppBar = destination.id !in arrayOf(R.id.splash_fragment, R.id.nav_about)
       if (shouldShowAppBar) {
         supportActionBar?.show()
       } else {
         supportActionBar?.hide()
       }
 
-      val shouldShowFab = destination.id == R.id.home_fragment
+      val shouldShowFab =
+        destination.id in arrayOf(R.id.home_fragment, R.id.nav_history, R.id.nav_bookmark)
       if (shouldShowFab) {
         binding.appBarMain.fabSearch.show()
       } else {
@@ -101,17 +102,17 @@ class MainActivity : AppCompatActivity() {
       val icon = if (state.isSearch) R.drawable.round_close_24 else R.drawable.round_search_24
       fabSearch.setIconResource(icon)
       if (state.isSearch) {
+        etSearch.requestFocus()
         ViewCompat.getWindowInsetsController(binding.root)?.let {
           val flags = WindowInsetsCompat.Type.ime()
           it.show(flags)
         }
-        etSearch.requestFocus()
       } else {
+        etSearch.clearFocus()
         ViewCompat.getWindowInsetsController(binding.root)?.let {
           val flags = WindowInsetsCompat.Type.ime()
           it.hide(flags)
         }
-        etSearch.clearFocus()
       }
     }
   }

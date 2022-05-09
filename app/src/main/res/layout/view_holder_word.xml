@@ -22,6 +22,7 @@
       android:paddingVertical="16dp"
       android:text="@string/splash_try_gain"
       android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+      app:drawableTint="?attr/colorSecondary"
       app:fontFamily="@font/suwannaphum"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@id/btn_bookmark"

@@ -8,7 +8,7 @@
     android:checkableBehavior="single">
     <item
       android:id="@+id/nav_bookmark"
-      android:icon="@drawable/round_bookmark_24"
+      android:icon="@drawable/round_book_24"
       android:title="@string/menu_bookmark" />
 
     <item

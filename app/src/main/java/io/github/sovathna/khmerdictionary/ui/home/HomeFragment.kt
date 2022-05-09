@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +21,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @ExperimentalPagingApi
@@ -43,6 +43,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
       when (id) {
         R.id.btn_bookmark -> viewModel.updateBookmark(word)
         R.id.root -> {
+          findNavController().navigate(
+            R.id.nav_detail,
+            Bundle().apply {
+              putLong("word_id", word.id)
+            }
+          )
           viewModel.updateHistory(word)
         }
       }
@@ -100,24 +106,24 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
   }
 
   private fun scrollToTop() {
-//    with(binding.rv) {
-//      addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-//        override fun onLayoutChange(
-//          v: View?,
-//          left: Int,
-//          top: Int,
-//          right: Int,
-//          bottom: Int,
-//          oldLeft: Int,
-//          oldTop: Int,
-//          oldRight: Int,
-//          oldBottom: Int
-//        ) {
-//          removeOnLayoutChangeListener(this)
-//          scrollToPosition(0)
-//        }
-//      })
-//    }
+    with(binding.rv) {
+      addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+        override fun onLayoutChange(
+          v: View?,
+          left: Int,
+          top: Int,
+          right: Int,
+          bottom: Int,
+          oldLeft: Int,
+          oldTop: Int,
+          oldRight: Int,
+          oldBottom: Int
+        ) {
+          removeOnLayoutChangeListener(this)
+          scrollToPosition(0)
+        }
+      })
+    }
   }
 
 }

@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
+
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guide_center_horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_percent="0.5" />
 
   <TextView
     android:id="@+id/tv_top_start"
@@ -52,15 +58,16 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="64dp"
     android:gravity="center_horizontal"
     android:text="@string/app_name_kh"
     android:textColor="?attr/colorSecondary"
     android:textSize="32sp"
     app:fontFamily="@font/suwannaphum"
-    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toTopOf="@id/tv_name_bottom"
+    app:layout_constraintEnd_toEndOf="@id/guide_center_horizontal"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_chainStyle="packed" />
 
   <TextView
     android:id="@+id/tv_name_bottom"
@@ -71,6 +78,7 @@
     android:textColor="?attr/colorSecondary"
     android:textSize="36dp"
     app:fontFamily="@font/tacteing"
+    app:layout_constraintBottom_toTopOf="@id/tv_sub"
     app:layout_constraintEnd_toEndOf="@id/tv_name"
     app:layout_constraintStart_toStartOf="@id/tv_name"
     app:layout_constraintTop_toBottomOf="@id/tv_name" />
@@ -84,22 +92,10 @@
     android:gravity="center_horizontal"
     android:text="វចនានុក្រមឌីជីថលខ្មែរសម្ដេចសង្ឃជួនណាត ត្រូវបានដកស្រង់ពាក្យទាំងស្រុងពី វចនានុក្រមសម្ដេចសង្ឃជួនណាត\nបោះពុម្ពលើកទី៥ នៅឆ្នាំ ១៩៦៧"
     app:fontFamily="@font/suwannaphum"
-    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="@id/guide_center_horizontal"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/tv_name_bottom" />
-
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:text="3"
-    android:textColor="?attr/colorSecondary"
-    android:textSize="64dp"
-    app:fontFamily="@font/tacteing"
-    app:layout_constraintBottom_toTopOf="@id/btn_creator"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_sub" />
 
   <com.google.android.material.button.MaterialButton
     android:id="@+id/btn_creator"
@@ -111,8 +107,8 @@
     android:text="អភិវឌ្ឍកម្មវិធី៖ ហុង សុវឌ្ឍនា"
     app:layout_constraintBottom_toTopOf="@id/btn_font"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_sub"
+    app:layout_constraintStart_toStartOf="@id/guide_center_horizontal"
+    app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintVertical_chainStyle="packed"
     app:strokeColor="?attr/colorPrimary" />
 
@@ -127,7 +123,7 @@
     android:text="ពុម្ពអក្សរប្រើប្រាស់៖ Suwannaphum\nDesigned by Danh Hong"
     app:layout_constraintBottom_toTopOf="@id/btn_github"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintStart_toStartOf="@id/guide_center_horizontal"
     app:layout_constraintTop_toBottomOf="@id/btn_creator"
     app:strokeColor="?attr/colorPrimary" />
 
@@ -142,7 +138,7 @@
     app:iconGravity="end"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintStart_toStartOf="@id/guide_center_horizontal"
     app:layout_constraintTop_toBottomOf="@id/btn_font"
     app:strokeColor="?attr/colorPrimary" />
 

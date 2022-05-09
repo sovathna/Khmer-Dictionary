@@ -27,4 +27,7 @@ interface WordDao {
     timestamp: Long = System.currentTimeMillis()
   )
 
+  @Query("SELECT * FROM dict WHERE id=:id")
+  suspend fun getWord(id: Long): WordEntity?
+
 }
