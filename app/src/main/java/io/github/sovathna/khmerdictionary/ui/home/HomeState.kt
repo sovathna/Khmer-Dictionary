@@ -6,8 +6,9 @@ import io.github.sovathna.khmerdictionary.Event
 import io.github.sovathna.khmerdictionary.model.WordEntity
 
 data class HomeState(
-  val shouldScrollTop:Event<Unit>?=null,
-  val paging: PagingData<WordEntity>? = null
+  val scrollToTopEvent: Event<Unit>? = null,
+  val paging: PagingData<WordEntity>? = null,
+  val selectEvent: Event<Unit>? = null
 )
 
 @Keep

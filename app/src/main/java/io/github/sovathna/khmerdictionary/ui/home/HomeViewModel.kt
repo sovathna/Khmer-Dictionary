@@ -11,6 +11,7 @@ import io.github.sovathna.khmerdictionary.Event
 import io.github.sovathna.khmerdictionary.config.Const
 import io.github.sovathna.khmerdictionary.domain.database.AppDatabase
 import io.github.sovathna.khmerdictionary.model.WordEntity
+import io.github.sovathna.khmerdictionary.ui.detail.DetailState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -39,7 +40,7 @@ class HomeViewModel @Inject constructor(
   private var mSearchTerm: String? = null
 
   fun search(searchTerm: String, type: HomeType) {
-    if(mSearchTerm==searchTerm) return
+    if (mSearchTerm == searchTerm) return
     job?.cancel()
     job = viewModelScope.launch {
       val filter = "$searchTerm%"
@@ -56,8 +57,8 @@ class HomeViewModel @Inject constructor(
         .collectLatest {
           val tmp: Event<Unit>? =
             if (mSearchTerm != null && mSearchTerm != searchTerm) Event(Unit)
-            else current.shouldScrollTop
-          setState(current.copy(shouldScrollTop = tmp, paging = it))
+            else current.scrollToTopEvent
+          setState(current.copy(scrollToTopEvent = tmp, paging = it))
           mSearchTerm = searchTerm
         }
     }
@@ -71,11 +72,16 @@ class HomeViewModel @Inject constructor(
     }
   }
 
-  fun updateHistory(word: WordEntity) {
+  fun select(word: WordEntity, detail: DetailState?) {
     viewModelScope.launch {
       withContext(ioDispatcher) {
+        detail?.id?.let {
+          dao.updateSelection(it, false)
+        }
         dao.updateHistory(word.id)
+        dao.updateSelection(word.id, true)
       }
+      setState(current.copy(selectEvent = Event(Unit)))
     }
   }
 }

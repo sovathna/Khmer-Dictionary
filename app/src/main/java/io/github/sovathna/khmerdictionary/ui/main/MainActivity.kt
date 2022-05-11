@@ -4,10 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -19,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.sovathna.khmerdictionary.R
 import io.github.sovathna.khmerdictionary.databinding.ActivityMainBinding
 import io.github.sovathna.khmerdictionary.ui.viewBinding
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -50,43 +47,28 @@ class MainActivity : AppCompatActivity() {
     setupActionBarWithNavController(navController, appBarConfiguration)
     binding.navView.setupWithNavController(navController)
     navController.addOnDestinationChangedListener { nav, destination, args ->
+      Timber.d("changed: ${destination.label}")
       val shouldShowAppBar = destination.id !in arrayOf(R.id.splash_fragment, R.id.nav_about)
       if (shouldShowAppBar) {
         supportActionBar?.show()
       } else {
         supportActionBar?.hide()
       }
+      val isSingle = resources.getBoolean(R.bool.is_single)
+      if (!isSingle && destination.id == R.id.nav_detail) {
+        navController.popBackStack()
+      }else {
 
-      val shouldShowFab =
-        destination.id in arrayOf(R.id.home_fragment, R.id.nav_history, R.id.nav_bookmark)
-      if (shouldShowFab) {
-        binding.appBarMain.fabSearch.show()
-      } else {
-        binding.appBarMain.fabSearch.hide()
-      }
-
-      if(destination.id == R.id.nav_detail){
-        if (viewModel.current.isSearch) {
-          viewModel.updateSearchState()
-        }
       }
     }
     with(binding) {
-      appBarMain.fabSearch.setOnClickListener {
-        viewModel.updateSearchState()
-      }
-      appBarMain.etSearch.addTextChangedListener {
-        viewModel.search(it?.trim()?.toString() ?: "")
-      }
       drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
         override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
 
         }
 
         override fun onDrawerOpened(drawerView: View) {
-          if (viewModel.current.isSearch) {
-            viewModel.updateSearchState()
-          }
+
         }
 
         override fun onDrawerClosed(drawerView: View) {
@@ -102,25 +84,7 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun render(state: MainState) {
-    with(binding.appBarMain) {
-      if (!state.isSearch) etSearch.text = null
-      tilSearch.isVisible = state.isSearch
-      val icon = if (state.isSearch) R.drawable.round_close_24 else R.drawable.round_search_24
-      fabSearch.setIconResource(icon)
-      if (state.isSearch) {
-        etSearch.requestFocus()
-        ViewCompat.getWindowInsetsController(binding.root)?.let {
-          val flags = WindowInsetsCompat.Type.ime()
-          it.show(flags)
-        }
-      } else {
-        etSearch.clearFocus()
-        ViewCompat.getWindowInsetsController(binding.root)?.let {
-          val flags = WindowInsetsCompat.Type.ime()
-          it.hide(flags)
-        }
-      }
-    }
+
   }
 
   override fun onSupportNavigateUp(): Boolean {

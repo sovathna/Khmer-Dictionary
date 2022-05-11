@@ -2,7 +2,9 @@ package io.github.sovathna.khmerdictionary.ui.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -10,16 +12,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.sovathna.khmerdictionary.Event
 import io.github.sovathna.khmerdictionary.R
 import io.github.sovathna.khmerdictionary.databinding.FragmentHomeBinding
+import io.github.sovathna.khmerdictionary.model.WordEntity
 import io.github.sovathna.khmerdictionary.ui.main.MainViewModel
 import io.github.sovathna.khmerdictionary.ui.viewBinding
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,7 +33,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
   private val binding by viewBinding(FragmentHomeBinding::bind)
   private val viewModel by viewModels<HomeViewModel>()
-  private val mViewModel by activityViewModels<MainViewModel>()
+  private val mainViewModel by activityViewModels<MainViewModel>()
   private lateinit var adapter: HomeAdapter
 
   private lateinit var type: HomeType
@@ -43,18 +47,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
       when (id) {
         R.id.btn_bookmark -> viewModel.updateBookmark(word)
         R.id.root -> {
-          findNavController().navigate(
-            R.id.action_to_detail,
-            Bundle().apply {
-              putLong("word_id", word.id)
-            }
-          )
-          viewModel.updateHistory(word)
+          viewModel.select(word, mainViewModel.current.detail)
         }
       }
     }
     type = (arguments?.getSerializable("type") as? HomeType) ?: HomeType.ALL
     search("")
+    mainViewModel.observeSelectedWord()
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,55 +77,82 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
   private fun onSearchChanged(onChanged: (String) -> Unit) {
     viewLifecycleOwner.lifecycleScope.launch {
-      mViewModel.searchFlow
-        .distinctUntilChanged()
-        .debounce(700L)
-        .collectLatest {
-          onChanged(it)
-        }
-    }
-  }
-
-  private fun render(state: HomeState) {
-    state.shouldScrollTop?.getContentIfNotHandled()?.let {
-      scrollToTop()
-    }
-    viewLifecycleOwner.lifecycleScope.launch {
-      launch {
-        state.paging?.let {
-          adapter.submitData(it)
-        }
-      }
       launch {
         adapter.loadStateFlow.map {
           val append = it.append
           append is LoadState.NotLoading && append.endOfPaginationReached && adapter.itemCount == 0
-        }.distinctUntilChanged().debounce(100).collectLatest {
-          binding.tvMessage.isVisible = it
-        }
+        }.debounce(200L)
+          .distinctUntilChanged()
+          .collectLatest {
+            binding.tvMessage.isVisible = it
+          }
+      }
+
+      launch {
+        binding.etSearch.textChangedFlow
+          .debounce(500L)
+          .distinctUntilChanged()
+          .collectLatest {
+            it?.let { onChanged(it) }
+          }
       }
     }
   }
 
-  private fun scrollToTop() {
-    with(binding.rv) {
-      addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-        override fun onLayoutChange(
-          v: View?,
-          left: Int,
-          top: Int,
-          right: Int,
-          bottom: Int,
-          oldLeft: Int,
-          oldTop: Int,
-          oldRight: Int,
-          oldBottom: Int
-        ) {
-          removeOnLayoutChangeListener(this)
-          scrollToPosition(0)
-        }
-      })
+  private fun render(state: HomeState) {
+    with(state) {
+      observeData(paging)
+      selectEvent?.getContentIfNotHandled()?.let {
+        findNavController().navigate(R.id.action_to_detail)
+      }
+      scrollToTop(scrollToTopEvent)
+    }
+  }
+
+  private fun observeData(paging: PagingData<WordEntity>?) {
+    if (paging == null) return
+    viewLifecycleOwner.lifecycleScope.launch {
+      adapter.submitData(paging)
+    }
+  }
+
+  private fun scrollToTop(event: Event<Unit>?) {
+    event?.getContentIfNotHandled()?.let {
+      binding.rv.scrollToTopWhenChanged()
     }
   }
 
 }
+
+fun RecyclerView.scrollToTopWhenChanged(isSmoothScroll: Boolean = false) {
+  object : View.OnLayoutChangeListener {
+    override fun onLayoutChange(
+      v: View?,
+      left: Int,
+      top: Int,
+      right: Int,
+      bottom: Int,
+      oldLeft: Int,
+      oldTop: Int,
+      oldRight: Int,
+      oldBottom: Int
+    ) {
+      removeOnLayoutChangeListener(this)
+      if (isSmoothScroll) {
+        smoothScrollToPosition(0)
+      } else {
+        scrollToPosition(0)
+      }
+    }
+  }
+}
+
+val EditText.textChangedFlow: Flow<String?>
+  get() = callbackFlow {
+    val watcher = addTextChangedListener {
+      trySendBlocking(it?.toString())
+    }
+    awaitClose {
+      removeTextChangedListener(watcher)
+    }
+  }

@@ -1,5 +1,7 @@
 package io.github.sovathna.khmerdictionary.ui.main
 
+import io.github.sovathna.khmerdictionary.ui.detail.DetailState
+
 data class MainState(
-  val isSearch: Boolean = false
+  val detail: DetailState? = null
 )

@@ -30,10 +30,14 @@
         <entry key="app/src/main/res/drawable/round_info_20.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_settings_20.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/stroke_color_search.xml" value="0.1745" />
+        <entry key="app/src/main/res/layout-land/content_main.xml" value="0.2" />
+        <entry key="app/src/main/res/layout-land/fragment_about.xml" value="0.40989583333333335" />
+        <entry key="app/src/main/res/layout-sw600dp/content_main.xml" value="0.24921875" />
+        <entry key="app/src/main/res/layout-sw600dp/fragment_about.xml" value="0.24921875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33697916666666666" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.33229166666666665" />
-        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.5008375209380235" />
+        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5173010380622838" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/layout_about_main.xml" value="0.33229166666666665" />

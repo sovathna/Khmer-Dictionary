@@ -5,13 +5,14 @@ import androidx.room.RoomDatabase
 import io.github.sovathna.khmerdictionary.model.WordEntity
 
 @Database(
-    entities = [
-        WordEntity::class
-    ],
-    version = 3
+  entities = [
+    WordEntity::class
+  ],
+  version = 3,
+  exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun wordDao(): WordDao
+  abstract fun wordDao(): WordDao
 
 }
