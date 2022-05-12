@@ -54,6 +54,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     type = (arguments?.getSerializable("type") as? HomeType) ?: HomeType.ALL
     if (savedInstanceState == null) {
       search("")
+      mainViewModel.observeSelectedWord()
     }
   }
 
