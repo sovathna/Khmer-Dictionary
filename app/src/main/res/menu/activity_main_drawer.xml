@@ -3,9 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   tools:showIn="navigation_view">
-  <group
-    android:id="@+id/group_1"
-    android:checkableBehavior="single">
+  <group android:checkableBehavior="single">
     <item
       android:id="@+id/nav_bookmark"
       android:icon="@drawable/round_book_24"
@@ -16,10 +14,6 @@
       android:icon="@drawable/round_history_24"
       android:title="@string/menu_history" />
 
-  </group>
-  <group
-    android:id="@+id/group_2"
-    android:checkableBehavior="single">
     <item
       android:id="@+id/nav_settings"
       android:icon="@drawable/round_settings_24"

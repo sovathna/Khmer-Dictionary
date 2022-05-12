@@ -12,8 +12,8 @@ class WordViewHolder(private val binding: ViewHolderWordBinding) :
   fun bindView(item: WordEntity?, clickListener: (WordEntity, Int) -> Unit) {
     if (item == null) return
     with(binding) {
-      root.setOnClickListener { clickListener(item, it.id) }
-      btnBookmark.setOnClickListener { clickListener(item, it.id) }
+      root.setOnSafeClick { clickListener(item, it.id) }
+      btnBookmark.setOnSafeClick { clickListener(item, it.id) }
       tvWord.text = item.word
       if (item.selected) {
         tvWord.setTextColor(ContextCompat.getColor(root.context, R.color.color_selected))

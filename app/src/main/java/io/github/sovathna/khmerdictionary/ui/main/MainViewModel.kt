@@ -27,7 +27,11 @@ class MainViewModel @Inject constructor(
 
   private val dao = appDatabase.wordDao()
 
-  fun observeSelectedWord() {
+  init {
+    observeSelectedWord()
+  }
+
+  private fun observeSelectedWord() {
     viewModelScope.launch {
       dao.observeWord()
         .distinctUntilChanged()

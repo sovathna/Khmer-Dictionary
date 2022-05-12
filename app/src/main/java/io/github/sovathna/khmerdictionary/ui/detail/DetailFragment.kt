@@ -27,10 +27,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
   }
 
-//  override fun onDestroyView() {
-//    super.onDestroyView()
-//    mainViewModel.stateLiveData.removeObservers(viewLifecycleOwner)
-//  }
+  override fun onDestroyView() {
+    super.onDestroyView()
+    mainViewModel.stateLiveData.removeObservers(viewLifecycleOwner)
+  }
 
   private fun render(state: DetailState?) {
     binding.tvWord.text = state?.word

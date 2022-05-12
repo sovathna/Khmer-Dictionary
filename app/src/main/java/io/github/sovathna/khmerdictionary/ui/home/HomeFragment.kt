@@ -52,8 +52,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
       }
     }
     type = (arguments?.getSerializable("type") as? HomeType) ?: HomeType.ALL
-    search("")
-    mainViewModel.observeSelectedWord()
+    if (savedInstanceState == null) {
+      search("")
+    }
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -90,7 +91,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
       launch {
         binding.etSearch.textChangedFlow
-          .debounce(500L)
+          .debounce(600L)
           .distinctUntilChanged()
           .collectLatest {
             it?.let { onChanged(it) }
@@ -125,7 +126,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 }
 
 fun RecyclerView.scrollToTopWhenChanged(isSmoothScroll: Boolean = false) {
-  object : View.OnLayoutChangeListener {
+  val onChanged = object : View.OnLayoutChangeListener {
     override fun onLayoutChange(
       v: View?,
       left: Int,
@@ -145,6 +146,7 @@ fun RecyclerView.scrollToTopWhenChanged(isSmoothScroll: Boolean = false) {
       }
     }
   }
+  addOnLayoutChangeListener(onChanged)
 }
 
 val EditText.textChangedFlow: Flow<String?>
@@ -156,3 +158,14 @@ val EditText.textChangedFlow: Flow<String?>
       removeTextChangedListener(watcher)
     }
   }
+
+fun View.setOnSafeClick(delayMillis: Long = 600L, onClick: (View) -> Unit) {
+  var last = 0L
+  setOnClickListener {
+    val current = System.currentTimeMillis()
+    if (current - last >= delayMillis) {
+      last = current
+      onClick(it)
+    }
+  }
+}

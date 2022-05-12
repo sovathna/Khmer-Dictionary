@@ -57,11 +57,18 @@ class MainActivity : AppCompatActivity() {
       val isSingle = resources.getBoolean(R.bool.is_single)
       if (!isSingle && destination.id == R.id.nav_detail) {
         navController.popBackStack()
-      }else {
-
+      }
+      if(destination.id in arrayOf(R.id.splash_fragment, R.id.nav_about)){
+        binding.appBarMain.contentMain.guide?.setGuidelinePercent(1F)
+      }else{
+        binding.appBarMain.contentMain.guide?.setGuidelinePercent(0.4F)
       }
     }
     with(binding) {
+//      navView.setNavigationItemSelectedListener {
+//
+//        false
+//      }
       drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
         override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
 
