@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,11 +29,9 @@ class MainViewModel @Inject constructor(
 
   private val dao = appDatabase.wordDao()
 
-  private var isInit = false
-
   fun observeSelectedWord() {
-    if (isInit) return
-    isInit = true
+    if (current.isObserved) return
+    setState(current.copy(isObserved = true))
     viewModelScope.launch {
       dao.observeWord()
         .distinctUntilChanged()
@@ -48,7 +48,12 @@ class MainViewModel @Inject constructor(
             .replace("និ.", "<span style=\"color:#D32F2F\">និ.</span>")
             .replace("គុ.", "<span style=\"color:#D32F2F\">គុ.</span>")
           val definition = generate(tmp)
-          DetailState(id = entity.id, word = entity.word, definition = definition)
+          DetailState(
+            id = entity.id,
+            word = entity.word,
+            definition = definition,
+            isBookmark = entity.isBookmark
+          )
         }
         .flowOn(ioDispatcher)
         .collectLatest {
@@ -70,7 +75,10 @@ class MainViewModel @Inject constructor(
       }
 
       override fun onClick(widget: View) {
-
+        Timber.d("url: ${span?.url}")
+        span?.url?.toLongOrNull()?.let {
+          select(it)
+        }
       }
     }
     strBuilder.setSpan(clickable, start, end, flags)
@@ -86,6 +94,27 @@ class MainViewModel @Inject constructor(
       makeLinkClickable(strBuilder, span)
     }
     return strBuilder
+  }
+
+  fun updateBookmark(wordId: Long, isBookmark: Boolean) {
+    viewModelScope.launch {
+      withContext(ioDispatcher) {
+        dao.updateBookmark(wordId, isBookmark)
+      }
+    }
+  }
+
+  fun select(wordId: Long) {
+    if (wordId == current.detail?.id) return
+    viewModelScope.launch {
+      withContext(ioDispatcher) {
+        current.detail?.id?.let {
+          dao.updateSelection(it, false)
+        }
+        dao.updateHistory(wordId)
+        dao.updateSelection(wordId, true)
+      }
+    }
   }
 
 }

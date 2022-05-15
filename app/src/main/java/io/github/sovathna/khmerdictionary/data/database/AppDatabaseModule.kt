@@ -12,8 +12,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppDatabaseModule {
 
-    @Provides
-    @Singleton
-    fun appDatabase(initializer: AppInitializer): AppDatabase =
-        initializer.initializeComponent(AppDatabaseInitializer::class.java)
+  @Provides
+  @Singleton
+  fun appDatabase(initializer: AppInitializer): AppDatabase =
+    initializer.initializeComponent(AppDatabaseInitializer::class.java)
 }

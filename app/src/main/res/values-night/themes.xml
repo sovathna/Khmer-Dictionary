@@ -26,13 +26,10 @@
     <item name="colorOutline">@color/md_theme_dark_outline</item>
     <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
     <item name="colorSurfaceInverse">@color/md_theme_dark_inverseSurface</item>
-<!--    <item name="colorInversePrimary">@color/md_theme_dark_inversePrimary</item>-->
-<!--    <item name="colorShadow">@color/md_theme_dark_shadow</item>-->
+    <!--    <item name="colorInversePrimary">@color/md_theme_dark_inversePrimary</item>-->
+    <!--    <item name="colorShadow">@color/md_theme_dark_shadow</item>-->
     <item name="colorPrimaryInverse">@color/md_theme_dark_primaryInverse</item>
-    <item name="drawerArrowStyle">@style/Tmp</item>
+    <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
-  </style>
-  <style name="Tmp" parent="Widget.AppCompat.DrawerArrowToggle">
-    <item name="color">?attr/colorOnPrimary</item>
   </style>
 </resources>

@@ -7,8 +7,8 @@ import retrofit2.http.Url
 
 interface SplashService {
 
-    @Streaming
-    @GET
-    suspend fun downloadDatabase(@Url url: String): ResponseBody
+  @Streaming
+  @GET
+  suspend fun downloadDatabase(@Url url: String): ResponseBody
 
 }

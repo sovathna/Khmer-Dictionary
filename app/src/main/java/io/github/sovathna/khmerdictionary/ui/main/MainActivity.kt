@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.sovathna.khmerdictionary.R
 import io.github.sovathna.khmerdictionary.databinding.ActivityMainBinding
 import io.github.sovathna.khmerdictionary.ui.viewBinding
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -39,15 +38,12 @@ class MainActivity : AppCompatActivity() {
           R.id.splash_fragment,
           R.id.home_fragment,
           R.id.nav_bookmark,
-          R.id.nav_history,
-          R.id.nav_settings,
-          R.id.nav_about
+          R.id.nav_history
         ), binding.drawerLayout
       )
     setupActionBarWithNavController(navController, appBarConfiguration)
     binding.navView.setupWithNavController(navController)
-    navController.addOnDestinationChangedListener { nav, destination, args ->
-      Timber.d("changed: ${destination.label}")
+    navController.addOnDestinationChangedListener { _, destination, _ ->
       val shouldShowAppBar = destination.id !in arrayOf(R.id.splash_fragment, R.id.nav_about)
       if (shouldShowAppBar) {
         supportActionBar?.show()
@@ -58,9 +54,9 @@ class MainActivity : AppCompatActivity() {
       if (!isSingle && destination.id == R.id.nav_detail) {
         navController.popBackStack()
       }
-      if(destination.id in arrayOf(R.id.splash_fragment, R.id.nav_about)){
+      if (destination.id in arrayOf(R.id.splash_fragment, R.id.nav_about)) {
         binding.appBarMain.contentMain.guide?.setGuidelinePercent(1F)
-      }else{
+      } else {
         binding.appBarMain.contentMain.guide?.setGuidelinePercent(0.4F)
       }
     }
@@ -87,11 +83,6 @@ class MainActivity : AppCompatActivity() {
         }
       })
     }
-    viewModel.stateLiveData.observe(this, ::render)
-  }
-
-  private fun render(state: MainState) {
-
   }
 
   override fun onSupportNavigateUp(): Boolean {

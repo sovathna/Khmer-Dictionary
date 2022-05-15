@@ -3,37 +3,10 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/root"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:animateLayoutChanges="true">
-
-  <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/til_search"
-    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:boxBackgroundColor="?attr/colorSurfaceVariant"
-    app:boxCornerRadiusBottomEnd="0dp"
-    app:boxCornerRadiusBottomStart="0dp"
-    app:boxCornerRadiusTopEnd="0dp"
-    app:boxCornerRadiusTopStart="0dp"
-    app:boxStrokeWidth="0dp"
-    app:boxStrokeWidthFocused="0dp"
-    app:hintEnabled="false"
-    app:layout_constraintTop_toTopOf="parent"
-    app:startIconDrawable="@drawable/round_search_24">
-
-    <com.google.android.material.textfield.TextInputEditText
-      android:id="@+id/et_search"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/suwannaphum"
-      android:hint="@string/search_word"
-      android:imeOptions="actionDone"
-      android:inputType="text"
-      android:singleLine="true"
-      android:textColor="?attr/colorOnSurfaceVariant" />
-  </com.google.android.material.textfield.TextInputLayout>
 
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/rv"
@@ -41,13 +14,13 @@
     android:layout_height="0dp"
     android:clipToPadding="false"
     android:paddingTop="16dp"
-    android:paddingBottom="88dp"
+    android:paddingBottom="16dp"
     android:splitMotionEvents="false"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/til_search"
+    app:layout_constraintTop_toTopOf="parent"
     tools:listitem="@layout/view_holder_word" />
 
   <com.google.android.material.textview.MaterialTextView

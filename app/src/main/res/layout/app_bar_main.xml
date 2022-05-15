@@ -32,12 +32,4 @@
     android:id="@+id/content_main"
     layout="@layout/content_main" />
 
-<!--  <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
-<!--    android:id="@+id/fab_search"-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:layout_gravity="bottom|end"-->
-<!--    android:layout_marginEnd="16dp"-->
-<!--    android:layout_marginBottom="16dp"-->
-<!--    app:icon="@drawable/round_search_24" />-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

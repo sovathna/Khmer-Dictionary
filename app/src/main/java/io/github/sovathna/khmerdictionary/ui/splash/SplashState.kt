@@ -1,18 +1,18 @@
 package io.github.sovathna.khmerdictionary.ui.splash
 
 import io.github.sovathna.khmerdictionary.Event
-import io.github.sovathna.khmerdictionary.toKmStringNum
+import io.github.sovathna.khmerdictionary.extensions.kmNumString
 
 data class SplashState(
-    val read: Double = 0.0,
-    val size: Double = 0.0,
-    val error: Throwable? = null,
-    val redirectEvent: Event<Unit>? =null
+  val read: Double = 0.0,
+  val size: Double = 0.0,
+  val error: Throwable? = null,
+  val redirectEvent: Event<Unit>? = null
 ) {
-    val isStarting = size == 0.0
-    val isDownloading = size > 0.0 && read < size
-    val isDone = size > 0.0 && read == size
+  val isStarting = size == 0.0
+  val isDownloading = size > 0.0 && read < size
+  val isDone = size > 0.0 && read == size
 
-    val readString = String.format("%.02f", read).toKmStringNum()
-    val sizeString = String.format("%.02f", size).toKmStringNum()
+  val readString = String.format("%.02f", read).kmNumString()
+  val sizeString = String.format("%.02f", size).kmNumString()
 }

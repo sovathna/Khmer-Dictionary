@@ -1,22 +1,33 @@
 <resources>
-    <string name="app_name">Khmer Dictionary</string>
+  <string name="app_name">Khmer Dictionary</string>
 
-    <string name="app_name_kh">វចនានុក្រមខ្មែរ</string>
+  <string name="app_name_kh">វចនានុក្រមខ្មែរ</string>
 
-    <string name="menu_history">បញ្ជីពាក្យធ្លាប់មើល</string>
-    <string name="menu_bookmark">បញ្ជីពាក្យចំណាំ</string>
-    <string name="menu_settings">ការកំណត់</string>
-    <string name="menu_about">អំពីកម្មវិធី</string>
+  <string name="menu_history">បញ្ជីពាក្យធ្លាប់មើល</string>
+  <string name="menu_bookmark">បញ្ជីពាក្យចំណាំ</string>
+  <string name="menu_settings">ការកំណត់</string>
+  <string name="menu_about">អំពីកម្មវិធី</string>
 
-    <string name="splash_version_text">ជំនាន់កម្មវិធី %1$s</string>
-    <string name="splash_preparing">កំពុងរៀបចំទាញយកទិន្នន័យ… សូមមេត្តារង់ចាំ</string>
-    <string name="splash_downloading">កំពុងទាញយក និងពន្លាទិន្នន័យ… សូមមេត្តារង់ចាំ</string>
-    <string name="splash_done">កំពុងផ្ទុក… សូមមេត្តារង់ចាំ</string>
+  <string name="definition">ពន្យល់ន័យ</string>
 
-    <string name="splash_error">មានបញ្ហាអំឡុងពេលទាញយកទិន្នន័យ</string>
-    <string name="splash_try_gain">ព្យាយាមម្ដងទៀត</string>
+  <string name="splash_version_text">ជំនាន់កម្មវិធី %1$s</string>
+  <string name="splash_preparing">កំពុងរៀបចំទាញយកទិន្នន័យ… សូមមេត្តារង់ចាំ</string>
+  <string name="splash_downloading">កំពុងទាញយក និងពន្លាទិន្នន័យ… សូមមេត្តារង់ចាំ</string>
+  <string name="splash_done">កំពុងផ្ទុក… សូមមេត្តារង់ចាំ</string>
 
-    <string name="search_word">ស្វែងរកពាក្យ</string>
+  <string name="splash_error">មានបញ្ហាអំឡុងពេលទាញយកទិន្នន័យ</string>
+  <string name="splash_try_gain">ព្យាយាមម្ដងទៀត</string>
 
-    <string name="home_empty_words">មិនមានពាក្យ</string>
+  <string name="search_word">ស្វែងរកពាក្យ</string>
+
+  <string name="home_empty_words">មិនមានពាក្យ</string>
+
+  <string name="settings_theme">ពណ៌ផ្ទៃ</string>
+
+  <string name="theme_light">ផ្ទៃភ្លឺ</string>
+  <string name="theme_dark">ផ្ទៃងងឹត</string>
+  <string name="theme_system">ផ្ទៃរបស់ប្រព័ន្ធ</string>
+  <string name="confirm">យល់ព្រម</string>
+  <string name="cancel">បោះបង់</string>
+
 </resources>

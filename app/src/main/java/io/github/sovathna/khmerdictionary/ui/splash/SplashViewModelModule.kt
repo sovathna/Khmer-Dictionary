@@ -13,9 +13,9 @@ import io.github.sovathna.khmerdictionary.domain.SplashService
 @InstallIn(ViewModelComponent::class)
 object SplashViewModelModule {
 
-    @Provides
-    @ViewModelScoped
-    fun splashService(initializer: AppInitializer): SplashService =
-        initializer.initializeComponent(SplashServiceInitializer::class.java)
+  @Provides
+  @ViewModelScoped
+  fun splashService(initializer: AppInitializer): SplashService =
+    initializer.initializeComponent(SplashServiceInitializer::class.java)
 
 }

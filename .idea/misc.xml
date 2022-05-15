@@ -29,6 +29,9 @@
         <entry key="app/src/main/res/drawable/round_history_20.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_info_20.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_settings_20.xml" value="0.1745" />
+        <entry key="app/src/main/res/drawable/round_text_decrease_20.xml" value="0.1745" />
+        <entry key="app/src/main/res/drawable/round_text_increase_20.xml" value="0.1745" />
+        <entry key="app/src/main/res/drawable/round_text_increase_24.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/stroke_color_search.xml" value="0.1745" />
         <entry key="app/src/main/res/layout-land/content_main.xml" value="0.2" />
         <entry key="app/src/main/res/layout-land/fragment_about.xml" value="0.40989583333333335" />
@@ -38,12 +41,19 @@
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_detail.xml" value="0.5173010380622838" />
+        <entry key="app/src/main/res/layout/fragment_dialog_choose_theme.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5173010380622838" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.46213292117465227" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.33229166666666665" />
+        <entry key="app/src/main/res/layout/layout_about_buttons.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/layout_about_main.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.33229166666666665" />
+        <entry key="app/src/main/res/layout/view_holder_theme.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/view_holder_word.xml" value="0.4" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.33229166666666665" />
+        <entry key="app/src/main/res/menu/menu_detail.xml" value="0.33229166666666665" />
+        <entry key="app/src/main/res/menu/menu_home.xml" value="0.33229166666666665" />
       </map>
     </option>
   </component>

@@ -8,7 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.sovathna.khmerdictionary.BuildConfig
 import io.github.sovathna.khmerdictionary.R
 import io.github.sovathna.khmerdictionary.databinding.FragmentSplashBinding
-import io.github.sovathna.khmerdictionary.toKmStringNum
+import io.github.sovathna.khmerdictionary.extensions.kmNumString
 import io.github.sovathna.khmerdictionary.ui.viewBinding
 
 @AndroidEntryPoint
@@ -21,7 +21,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     super.onViewCreated(view, savedInstanceState)
     with(binding) {
       tvVersion.text =
-        getString(R.string.splash_version_text, BuildConfig.VERSION_NAME.toKmStringNum())
+        getString(R.string.splash_version_text, BuildConfig.VERSION_NAME.kmNumString())
       btnRetry.setOnClickListener {
         viewModel.downloadDatabase()
       }

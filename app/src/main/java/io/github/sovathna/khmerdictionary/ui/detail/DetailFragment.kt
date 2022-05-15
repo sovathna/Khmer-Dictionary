@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.sovathna.khmerdictionary.R
 import io.github.sovathna.khmerdictionary.databinding.FragmentDetailBinding
+import io.github.sovathna.khmerdictionary.extensions.setSafeClickListener
 import io.github.sovathna.khmerdictionary.ui.main.MainViewModel
 import io.github.sovathna.khmerdictionary.ui.viewBinding
 
@@ -21,6 +22,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     with(binding) {
       tvDefinition.movementMethod = LinkMovementMethod.getInstance()
+      btnBookmark.setSafeClickListener {
+        mainViewModel.current.detail?.let {
+          mainViewModel.updateBookmark(it.id, !it.isBookmark)
+        }
+      }
     }
     mainViewModel.stateLiveData.observe(viewLifecycleOwner) {
       render(it.detail)
@@ -33,7 +39,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
   }
 
   private fun render(state: DetailState?) {
-    binding.tvWord.text = state?.word
-    binding.tvDefinition.text = state?.definition
+    state?.run {
+      with(binding) {
+        tvWord.text = word
+        tvDefinition.text = definition
+        val bookmarkRes =
+          if (isBookmark) R.drawable.round_bookmark_24 else R.drawable.round_bookmark_border_24
+        btnBookmark.setIconResource(bookmarkRes)
+      }
+    }
   }
 }
