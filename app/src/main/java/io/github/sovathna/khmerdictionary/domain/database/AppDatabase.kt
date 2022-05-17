@@ -9,7 +9,7 @@ import io.github.sovathna.khmerdictionary.model.WordEntity
     WordEntity::class
   ],
   version = 3,
-  exportSchema = true
+  exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 

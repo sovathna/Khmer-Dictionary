@@ -1,4 +1,4 @@
-package io.github.sovathna.khmerdictionary.ui.home
+package io.github.sovathna.khmerdictionary.ui.words
 
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView

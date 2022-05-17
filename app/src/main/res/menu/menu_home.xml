@@ -3,7 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
-    android:id="@+id/menu_search"
+    android:id="@+id/action_search"
     android:icon="@drawable/round_search_24"
     android:title="@string/search_word"
     app:iconTint="?attr/colorOnPrimary"

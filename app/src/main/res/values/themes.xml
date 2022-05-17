@@ -39,6 +39,7 @@
   <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.Material3.Dark.ActionBar">
     <item name="tint">?attr/colorOnPrimary</item>
     <item name="android:editTextColor">?attr/colorOnPrimary</item>
+    <item name="android:textColorHint">?attr/colorPrimaryInverse</item>
   </style>
 
   <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.Material3.Light" />

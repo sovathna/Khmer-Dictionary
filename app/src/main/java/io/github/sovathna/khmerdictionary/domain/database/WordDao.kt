@@ -34,4 +34,10 @@ interface WordDao {
   @Query("UPDATE dict SET is_select=:isSelect WHERE id=:id")
   suspend fun updateSelection(id: Long, isSelect: Boolean)
 
+  @Query("UPDATE dict SET is_history=0 WHERE is_history=1")
+  suspend fun clearHistory()
+
+  @Query("UPDATE dict SET is_bookmark=0 WHERE is_bookmark=1")
+  suspend fun clearBookmark()
+
 }

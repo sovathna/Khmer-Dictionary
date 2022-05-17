@@ -1,4 +1,4 @@
-package io.github.sovathna.khmerdictionary.ui.home
+package io.github.sovathna.khmerdictionary.ui.words
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import io.github.sovathna.khmerdictionary.databinding.ViewHolderWordBinding
 import io.github.sovathna.khmerdictionary.model.WordEntity
 
-class HomeAdapter(private val clickListener: (WordEntity, Int) -> Unit) :
+class WordsAdapter(private val clickListener: (WordEntity, Int) -> Unit) :
   PagingDataAdapter<WordEntity, WordViewHolder>(ITEM_CALLBACK) {
 
   companion object {
