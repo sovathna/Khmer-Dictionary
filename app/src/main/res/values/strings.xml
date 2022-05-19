@@ -31,4 +31,7 @@
   <string name="confirm">យល់ព្រម</string>
   <string name="cancel">បោះបង់</string>
 
+  <string name="clear_words">លុបពាក្យទាំងអស់ពី%1$s?</string>
+  <string name="press_again_to_exit">ចុចម្ដងទៀតដើម្បីបិទកម្មវិធី</string>
+
 </resources>

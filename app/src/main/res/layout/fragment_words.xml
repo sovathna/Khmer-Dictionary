@@ -23,16 +23,29 @@
     app:layout_constraintTop_toTopOf="parent"
     tools:listitem="@layout/view_holder_word" />
 
+  <androidx.appcompat.widget.AppCompatImageView
+    android:id="@+id/iv_empty"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_marginBottom="16dp"
+    app:layout_constraintBottom_toTopOf="@id/tv_message"
+    app:layout_constraintDimensionRatio="H,1:1"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintWidth_percent="0.25"
+    app:srcCompat="@drawable/round_menu_book_24"
+    app:tint="?attr/colorSecondary" />
+
   <com.google.android.material.textview.MaterialTextView
     android:id="@+id/tv_message"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="32dp"
+    android:layout_marginHorizontal="16dp"
     android:gravity="center_horizontal"
     android:text="@string/home_empty_words"
     android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-    android:textColor="?attr/colorPrimary"
-    android:visibility="gone"
+    android:textColor="?attr/colorSecondary"
+    android:visibility="visible"
     app:fontFamily="@font/suwannaphum"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintTop_toTopOf="parent" />

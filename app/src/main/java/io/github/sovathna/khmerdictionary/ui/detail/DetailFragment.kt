@@ -44,7 +44,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         tvWord.text = word
         tvDefinition.text = definition
         val bookmarkRes =
-          if (isBookmark) R.drawable.round_bookmark_24 else R.drawable.round_bookmark_border_24
+          if (isBookmark) R.drawable.round_bookmark_added_24 else R.drawable.round_bookmark_border_24
         btnBookmark.setIconResource(bookmarkRes)
       }
     }

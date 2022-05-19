@@ -12,11 +12,11 @@ interface WordDao {
   @Query("SELECT * FROM dict WHERE word LIKE :filter ORDER BY word ASC")
   fun filteredWords(filter: String): PagingSource<Int, WordEntity>
 
-  @Query("SELECT * FROM dict WHERE is_bookmark=:isBookmark AND word LIKE :filter ORDER BY word ASC")
-  fun filteredBookmarks(filter: String, isBookmark: Boolean = true): PagingSource<Int, WordEntity>
+  @Query("SELECT * FROM dict WHERE is_bookmark=1 AND word LIKE :filter ORDER BY word ASC")
+  fun filteredBookmarks(filter: String): PagingSource<Int, WordEntity>
 
-  @Query("SELECT * FROM dict WHERE is_history=:isHistory AND word LIKE :filter ORDER BY timestamp DESC")
-  fun filteredHistories(filter: String, isHistory: Boolean = true): PagingSource<Int, WordEntity>
+  @Query("SELECT * FROM dict WHERE is_history=1 AND word LIKE :filter ORDER BY timestamp DESC")
+  fun filteredHistories(filter: String): PagingSource<Int, WordEntity>
 
   @Query("UPDATE dict SET is_bookmark=:isBookmark WHERE id=:id")
   suspend fun updateBookmark(id: Long, isBookmark: Boolean)

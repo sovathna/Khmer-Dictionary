@@ -21,7 +21,7 @@ class WordViewHolder(private val binding: ViewHolderWordBinding) :
       val colorRes = if (item.isSelect) R.color.color_selected else R.color.color_normal
       tvWord.setTextColor(ContextCompat.getColor(root.context, colorRes))
       val bookmarkRes =
-        if (item.isBookmark) R.drawable.round_bookmark_24 else R.drawable.round_bookmark_border_24
+        if (item.isBookmark) R.drawable.round_bookmark_added_24 else R.drawable.round_bookmark_border_24
       btnBookmark.setIconResource(bookmarkRes)
     }
   }

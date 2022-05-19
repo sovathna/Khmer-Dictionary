@@ -6,5 +6,6 @@
     android:id="@+id/action_clear"
     android:icon="@drawable/round_clear_24"
     android:title="@string/action_clear"
-    app:showAsAction="ifRoom" />
+    app:iconTint="?attr/colorOnPrimary"
+    app:showAsAction="always" />
 </menu>

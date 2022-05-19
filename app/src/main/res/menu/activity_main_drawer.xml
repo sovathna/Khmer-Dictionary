@@ -7,11 +7,15 @@
     android:id="@+id/group_1"
     android:checkableBehavior="single">
     <item
-      android:id="@+id/nav_bookmark"
+      android:id="@id/nav_home"
+      android:icon="@drawable/round_menu_book_24"
+      android:title="@string/app_name_kh" />
+    <item
+      android:id="@id/nav_bookmark"
       android:icon="@drawable/round_book_24"
       android:title="@string/menu_bookmark" />
     <item
-      android:id="@+id/nav_history"
+      android:id="@id/nav_history"
       android:icon="@drawable/round_history_24"
       android:title="@string/menu_history" />
   </group>
@@ -19,11 +23,11 @@
     android:id="@+id/group_2"
     android:checkableBehavior="single">
     <item
-      android:id="@+id/nav_settings"
+      android:id="@id/nav_settings"
       android:icon="@drawable/round_settings_24"
       android:title="@string/menu_settings" />
     <item
-      android:id="@+id/nav_about"
+      android:id="@id/nav_about"
       android:icon="@drawable/round_info_24"
       android:title="@string/menu_about" />
   </group>

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -22,6 +23,7 @@ import io.github.sovathna.khmerdictionary.databinding.FragmentWordsBinding
 import io.github.sovathna.khmerdictionary.extensions.queryTextChangedFlow
 import io.github.sovathna.khmerdictionary.extensions.scrollToTopOnLayoutChanged
 import io.github.sovathna.khmerdictionary.model.WordEntity
+import io.github.sovathna.khmerdictionary.ui.main.MainActivity
 import io.github.sovathna.khmerdictionary.ui.main.MainViewModel
 import io.github.sovathna.khmerdictionary.ui.viewBinding
 import kotlinx.coroutines.FlowPreview
@@ -34,7 +36,7 @@ import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
 abstract class AbstractWordsFragment<VM : AbstractWordsViewModel> :
-  Fragment(R.layout.fragment_words) {
+  Fragment(R.layout.fragment_words), DrawerLayout.DrawerListener {
 
   protected val binding by viewBinding(FragmentWordsBinding::bind)
   private val mainViewModel by activityViewModels<MainViewModel>()
@@ -68,6 +70,7 @@ abstract class AbstractWordsFragment<VM : AbstractWordsViewModel> :
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    (requireActivity() as MainActivity).drawerLayout?.addDrawerListener(this)
     binding.rv.adapter = adapter
     binding.rv.setRecycledViewPool(recycledViewPool)
     viewModel.stateLiveData.observe(viewLifecycleOwner, ::render)
@@ -85,6 +88,7 @@ abstract class AbstractWordsFragment<VM : AbstractWordsViewModel> :
 
   override fun onDestroyView() {
     super.onDestroyView()
+    (requireActivity() as MainActivity).drawerLayout?.removeDrawerListener(this)
     binding.rv.setRecycledViewPool(null)
   }
 
@@ -95,6 +99,7 @@ abstract class AbstractWordsFragment<VM : AbstractWordsViewModel> :
   protected open fun render(state: WordsState) {
     with(state) {
       binding.tvMessage.isVisible = isEmpty == true
+      binding.ivEmpty.isVisible = isEmpty == true
       observeData(paging)
       scrollToTop(scrollToTopEvent)
       restoreSearchView()
@@ -105,6 +110,8 @@ abstract class AbstractWordsFragment<VM : AbstractWordsViewModel> :
     val searchTerm = viewModel.current.searchTerm
     val searchMenu = this.searchMenu
     if (searchMenu != null) {
+      searchMenu.isVisible =
+        searchTerm?.isEmpty() == true && viewModel.current.isEmpty == false || searchTerm?.isEmpty() == false
       if (!searchMenu.isActionViewExpanded && !searchTerm.isNullOrBlank()) {
         searchMenu.expandActionView()
         searchView?.setQuery(searchTerm, false)
@@ -142,5 +149,21 @@ abstract class AbstractWordsFragment<VM : AbstractWordsViewModel> :
       }
     }
     restoreSearchView()
+  }
+
+  override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+
+  }
+
+  override fun onDrawerOpened(drawerView: View) {
+
+  }
+
+  override fun onDrawerClosed(drawerView: View) {
+
+  }
+
+  override fun onDrawerStateChanged(newState: Int) {
+    if (searchMenu?.isActionViewExpanded == true) searchMenu?.collapseActionView()
   }
 }
