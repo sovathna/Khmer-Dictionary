@@ -6,18 +6,34 @@
 <table>
   <tr>
      <td>ទាញយកទិន្នន័យលើកដំបូង</td>
-     <td>បញ្ជីពាក្យ (បញ្ឈរ)</td>
-     <td>ពន្យល់ន័យ (បញ្ឈរ)</td>
+     <td>បញ្ជីពាក្យ</td>
+     <td>ពន្យល់ន័យ</td>
   </tr>
   <tr>
-    <td valign="top"><img src="screenshots/Screenshot_20200430-162820.jpg"></td>
-    <td valign="top"><img src="screenshots/Screenshot_20200430-162832.jpg"></td>
-    <td valign="top"><img src="screenshots/Screenshot_20200430-162840.jpg"></td>
+    <td valign="top"><img src="screenshots/1.png"></td>
+    <td valign="top"><img src="screenshots/2.png"></td>
+    <td valign="top"><img src="screenshots/3.png"></td>
+  </tr>
+  <tr>
+     <td>ស្វែងរកពាក្យ</td>
+     <td>ម៉ឺនុយចំហៀង</td>
+     <td>អំពីកម្មវិធី</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="screenshots/5.png"></td>
+    <td valign="top"><img src="screenshots/6.png"></td>
+    <td valign="top"><img src="screenshots/7.png"></td>
   </tr>
   <tr>
     <td colspan="3">បញ្ជីពាក្យ និងពន្យល់ន័យ (ផ្ដេក)</td>
   </tr>
   <tr>
-  <td colspan="3"><img src="screenshots/Screenshot_20200430-162843.jpg"></td>
+  <td colspan="3"><img src="screenshots/4.png"></td>
+  </tr>
+  <tr>
+    <td colspan="3">ស្វែងរកពាក្យ (ផ្ដេក)</td>
+  </tr>
+  <tr>
+  <td colspan="3"><img src="screenshots/8.png"></td>
   </tr>
  </table>
