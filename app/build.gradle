@@ -24,14 +24,20 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
+        resConfig "en"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -52,6 +58,9 @@ android {
 
     packagingOptions {
         resources.excludes += "DebugProbesKt.bin"
+    }
+    lint {
+        disable 'EnsureInitializerMetadata'
     }
     namespace 'io.github.sovathna.khmerdictionary'
 }
