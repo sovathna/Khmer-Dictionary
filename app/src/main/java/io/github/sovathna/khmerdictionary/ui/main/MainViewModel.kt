@@ -108,11 +108,9 @@ class MainViewModel @Inject constructor(
     if (wordId == current.detail?.id) return
     viewModelScope.launch {
       withContext(ioDispatcher) {
-        current.detail?.id?.let {
-          dao.updateSelection(it, false)
-        }
+        dao.clearSelection()
         dao.updateHistory(wordId)
-        dao.updateSelection(wordId, true)
+        dao.updateSelection(wordId)
       }
     }
   }

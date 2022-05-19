@@ -21,18 +21,17 @@ interface WordDao {
   @Query("UPDATE dict SET is_bookmark=:isBookmark WHERE id=:id")
   suspend fun updateBookmark(id: Long, isBookmark: Boolean)
 
-  @Query("UPDATE dict SET is_history=:isHistory, timestamp=:timestamp WHERE id=:id")
-  suspend fun updateHistory(
-    id: Long,
-    isHistory: Boolean = true,
-    timestamp: Long = System.currentTimeMillis()
-  )
+  @Query("UPDATE dict SET is_history=1, timestamp=:timestamp WHERE id=:id")
+  suspend fun updateHistory(id: Long, timestamp: Long = System.currentTimeMillis())
 
-  @Query("SELECT * FROM dict WHERE is_select=:isSelect")
-  fun observeWord(isSelect: Boolean = true): Flow<WordEntity?>
+  @Query("SELECT * FROM dict WHERE is_select=1")
+  fun observeWord(): Flow<WordEntity?>
 
-  @Query("UPDATE dict SET is_select=:isSelect WHERE id=:id")
-  suspend fun updateSelection(id: Long, isSelect: Boolean)
+  @Query("UPDATE dict SET is_select=1 WHERE id=:id")
+  suspend fun updateSelection(id: Long)
+
+  @Query("UPDATE dict SET is_select=0 WHERE is_select=1")
+  suspend fun clearSelection()
 
   @Query("UPDATE dict SET is_history=0 WHERE is_history=1")
   suspend fun clearHistory()

@@ -20,14 +20,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     with(binding) {
-      tvVersion.text =
-        getString(R.string.splash_version_text, BuildConfig.VERSION_NAME.kmNumString())
       btnRetry.setOnClickListener {
         viewModel.downloadDatabase()
       }
     }
     viewModel.stateLiveData.observe(viewLifecycleOwner, ::render)
   }
-
-
 }

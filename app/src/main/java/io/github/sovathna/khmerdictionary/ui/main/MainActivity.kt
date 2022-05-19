@@ -1,7 +1,6 @@
 package io.github.sovathna.khmerdictionary.ui.main
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -22,10 +21,9 @@ import io.github.sovathna.khmerdictionary.ui.viewBinding
 class MainActivity : AppCompatActivity() {
 
   private val binding by viewBinding(ActivityMainBinding::inflate)
-  private val viewModel by viewModels<MainViewModel>()
   private lateinit var navController: NavController
   private lateinit var appBarConfiguration: AppBarConfiguration
-  var drawerLayout:DrawerLayout? = null
+  var drawerLayout: DrawerLayout? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

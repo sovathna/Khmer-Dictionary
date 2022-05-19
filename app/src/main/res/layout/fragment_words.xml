@@ -28,13 +28,14 @@
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:layout_marginBottom="16dp"
+    android:visibility="gone"
     app:layout_constraintBottom_toTopOf="@id/tv_message"
     app:layout_constraintDimensionRatio="H,1:1"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintWidth_percent="0.25"
+    app:layout_constraintWidth_percent="0.15"
     app:srcCompat="@drawable/round_menu_book_24"
-    app:tint="?attr/colorSecondary" />
+    app:tint="?attr/colorOnBackground" />
 
   <com.google.android.material.textview.MaterialTextView
     android:id="@+id/tv_message"
@@ -44,8 +45,8 @@
     android:gravity="center_horizontal"
     android:text="@string/home_empty_words"
     android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-    android:textColor="?attr/colorSecondary"
-    android:visibility="visible"
+    android:textColor="?attr/colorOnBackground"
+    android:visibility="gone"
     app:fontFamily="@font/suwannaphum"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintTop_toTopOf="parent" />

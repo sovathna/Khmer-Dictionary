@@ -64,7 +64,6 @@ abstract class AbstractWordsFragment<VM : AbstractWordsViewModel> :
     }
     if (savedInstanceState == null) {
       search("")
-      mainViewModel.observeSelectedWord()
     }
   }
 

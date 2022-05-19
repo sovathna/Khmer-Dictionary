@@ -4,6 +4,7 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import io.github.sovathna.khmerdictionary.config.Const
+import io.github.sovathna.khmerdictionary.data.SettingsDataSource
 import io.github.sovathna.khmerdictionary.domain.SplashService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.currentCoroutineContext
@@ -23,6 +24,7 @@ import javax.inject.Inject
 class DownloadInteractor @Inject constructor(
   private val service: SplashService,
   private val ioDispatcher: CoroutineDispatcher,
+  private val settings: SettingsDataSource,
   @ApplicationContext private val context: Context
 ) {
 
@@ -40,49 +42,44 @@ class DownloadInteractor @Inject constructor(
   fun downloadFlow(): Flow<Result> {
 
     val dbFile = context.getDatabasePath("dict.db")
-    if (dbFile.exists()) {
-      return flow<Result> {
-        emit(Result.Done)
-      }.flowOn(ioDispatcher)
-        .catch {
-          Timber.e(it)
-          emit(Result.Error(it))
-        }
-    }
-
     var dbOutStream: FileOutputStream? = null
     var inStream: InputStream? = null
     var zipInStream: ZipInputStream? = null
     return flow {
       try {
-        dbFile?.parentFile?.let { if (!it.exists()) it.mkdirs() }
-        dbOutStream = FileOutputStream(dbFile)
-        inStream = service.downloadDatabase(Const.DB_URL).byteStream()
-        zipInStream = ZipInputStream(inStream)
-        val entry = zipInStream!!.nextEntry
-        val reader = ByteArray(4096)
-        var totalRead = 0L
-        var last = System.currentTimeMillis()
-        val size = entry.compressedSize / BYTES_TO_MB
-        val scale = entry.size.toDouble() / entry.compressedSize
-        while (true) {
-          currentCoroutineContext().ensureActive()
-          val read = zipInStream!!.read(reader)
-          if (read == -1) break
-          dbOutStream!!.write(reader, 0, read)
-          totalRead += read
-          val current = System.currentTimeMillis()
-          if (last + 500 <= current) {
-            val tmp = totalRead / scale / BYTES_TO_MB
-            Timber.d("downloading: $tmp/$size")
-            emit(Result.Downloading(tmp, size))
-            last = current
+        if (dbFile.exists() && settings.isDownloaded()) {
+          emit(Result.Downloading(1.0, 1.0))
+        } else {
+          emit(Result.Downloading(0.0, 0.0))
+          dbFile?.parentFile?.let { if (!it.exists()) it.mkdirs() }
+          dbOutStream = FileOutputStream(dbFile)
+          inStream = service.downloadDatabase(Const.DB_URL).byteStream()
+          zipInStream = ZipInputStream(inStream)
+          val entry = zipInStream!!.nextEntry
+          val reader = ByteArray(4096)
+          var totalRead = 0L
+          var last = System.currentTimeMillis()
+          val size = entry.compressedSize / BYTES_TO_MB
+          val scale = entry.size.toDouble() / entry.compressedSize
+          while (true) {
+            currentCoroutineContext().ensureActive()
+            val read = zipInStream!!.read(reader)
+            if (read == -1) break
+            dbOutStream!!.write(reader, 0, read)
+            totalRead += read
+            val current = System.currentTimeMillis()
+            if (last + 500 <= current) {
+              val tmp = totalRead / scale / BYTES_TO_MB
+              Timber.d("downloading: $tmp/$size")
+              emit(Result.Downloading(tmp, size))
+              last = current
+            }
           }
+          dbOutStream!!.flush()
+          Timber.d("download done: $size")
+          emit(Result.Downloading(size, size))
+          settings.downloaded()
         }
-        dbOutStream!!.flush()
-        Timber.d("download done: $size")
-        emit(Result.Downloading(size, size))
-        delay(1000)
         emit(Result.Done)
       } finally {
         zipInStream?.closeEntry()

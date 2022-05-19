@@ -2,50 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:animateLayoutChanges="true">
+  android:animateLayoutChanges="true"
+  tools:ignore="SpUsage,HardcodedText">
 
-  <TextView
-    android:id="@+id/tv_top_start"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="*"
-    android:textColor="?attr/colorSecondary"
-    android:textSize="64dp"
-    app:fontFamily="@font/tacteing"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="&amp;"
-    android:textColor="?attr/colorSecondary"
-    android:textSize="64dp"
-    app:fontFamily="@font/tacteing"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text=")"
-    android:textColor="?attr/colorSecondary"
-    android:textSize="64dp"
-    app:fontFamily="@font/tacteing"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent" />
-
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="("
-    android:textColor="?attr/colorSecondary"
-    android:textSize="64dp"
-    app:fontFamily="@font/tacteing"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent" />
+  <include layout="@layout/layout_frame" />
 
   <com.google.android.material.textview.MaterialTextView
     android:id="@+id/tv_name"
@@ -62,31 +25,19 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
-  <TextView
+  <androidx.appcompat.widget.AppCompatTextView
     android:id="@+id/tv_name_bottom"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
     android:gravity="center_horizontal"
-    android:text="{Y|"
+    android:text="{|"
     android:textColor="?attr/colorSecondary"
     android:textSize="36dp"
     app:fontFamily="@font/tacteing"
     app:layout_constraintEnd_toEndOf="@id/tv_name"
     app:layout_constraintStart_toStartOf="@id/tv_name"
-    app:layout_constraintTop_toBottomOf="@id/tv_name" />
-
-  <com.google.android.material.textview.MaterialTextView
-    android:id="@+id/tv_version"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginBottom="16dp"
-    android:gravity="center_horizontal"
-    android:text="@string/splash_version_text"
-    app:fontFamily="@font/suwannaphum"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent" />
+    app:layout_constraintTop_toTopOf="@id/tv_name" />
 
   <com.google.android.material.textview.MaterialTextView
     android:id="@+id/tv_title"
@@ -132,7 +83,7 @@
 
   <com.google.android.material.button.MaterialButton
     android:id="@+id/btn_retry"
-    style="@style/Widget.Material3.Button.OutlinedButton"
+    style="@style/Widget.Material3.Button.ElevatedButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"

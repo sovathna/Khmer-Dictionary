@@ -2,9 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/root"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  android:animateLayoutChanges="true"
+  tools:ignore="HardcodedText">
 
   <com.google.android.material.textview.MaterialTextView
     android:id="@+id/tv_word"
@@ -12,7 +15,6 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
     android:layout_marginTop="16dp"
-    android:text="@string/app_name_kh"
     android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
     android:textColor="?attr/colorPrimary"
     app:fontFamily="@font/suwannaphum"
@@ -71,7 +73,6 @@
       android:layout_height="wrap_content"
       android:autoLink="none"
       android:padding="16dp"
-      android:text="@string/app_name_kh"
       android:textColorLink="#000000"
       android:textIsSelectable="true"
       android:textSize="16sp"

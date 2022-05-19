@@ -5,36 +5,20 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
 
-  <com.google.android.material.textview.MaterialTextView
-    android:id="@+id/btn_font"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:fontFamily="@font/suwannaphum"
-    android:gravity="center_horizontal"
-    android:text="ពុម្ពអក្សរប្រើប្រាស់៖ Suwannaphum\nDesigned by Danh Hong"
-    android:textSize="16sp"
-    app:layout_constraintBottom_toTopOf="@id/btn_creator"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_chainStyle="packed" />
-
   <com.google.android.material.button.MaterialButton
     android:id="@+id/btn_creator"
     style="@style/Widget.Material3.Button.ElevatedButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="24dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="16dp"
     android:fontFamily="@font/suwannaphum"
     android:text="អភិវឌ្ឍកម្មវិធី៖ ហុង សុវឌ្ឍនា"
     android:textSize="16sp"
     app:layout_constraintBottom_toTopOf="@id/btn_github"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/btn_font" />
+    app:layout_constraintTop_toTopOf="parent" />
 
   <com.google.android.material.button.MaterialButton
     android:id="@+id/btn_github"
@@ -44,9 +28,9 @@
     android:layout_marginHorizontal="16dp"
     android:text="Source code on GitHub"
     android:textSize="16sp"
-    app:iconPadding="16dp"
     app:icon="@drawable/ic_github_mark"
     app:iconGravity="end"
+    app:iconPadding="16dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"

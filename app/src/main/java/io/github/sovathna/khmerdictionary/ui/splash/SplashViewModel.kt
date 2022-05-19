@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.sovathna.khmerdictionary.BaseViewModel
 import io.github.sovathna.khmerdictionary.Event
 import io.github.sovathna.khmerdictionary.data.interactors.DownloadInteractor
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -20,8 +21,11 @@ class SplashViewModel @Inject constructor(
     downloadDatabase()
   }
 
+  private var job: Job? = null
+
   fun downloadDatabase() {
-    viewModelScope.launch {
+    job?.cancel()
+    job = viewModelScope.launch {
       interactor.downloadFlow()
         .distinctUntilChanged()
         .buffer()
@@ -34,7 +38,7 @@ class SplashViewModel @Inject constructor(
   private fun mapDownloadState(result: DownloadInteractor.Result): SplashState {
     return when (result) {
       is DownloadInteractor.Result.Downloading ->
-        current.copy(read = result.read, size = result.size)
+        current.copy(read = result.read, size = result.size, error = null)
       is DownloadInteractor.Result.Done ->
         current.copy(read = 1.0, size = 1.0, redirectEvent = Event(Unit))
       is DownloadInteractor.Result.Error ->
