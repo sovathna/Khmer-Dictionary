@@ -25,10 +25,13 @@
         <entry key="..\:/Projects/Android/KhmerDictionary/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/color_cursor.xml" value="0.1745" />
+        <entry key="app/src/main/res/drawable/ic_background.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_bg.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/ic_fg.xml" value="0.1745" />
+        <entry key="app/src/main/res/drawable/ic_foreground.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_khmer_dictionary_notification.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1745" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/ic_shadow.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/outline_arrow_back_24.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_book_24.xml" value="0.1695" />

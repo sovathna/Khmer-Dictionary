@@ -41,7 +41,7 @@ class DownloadInteractor @Inject constructor(
   @Suppress("BlockingMethodInNonBlockingContext")
   fun downloadFlow(): Flow<Result> {
 
-    val dbFile = context.getDatabasePath("dict.db")
+    val dbFile = context.getDatabasePath(Const.DB_NAME)
     var dbOutStream: FileOutputStream? = null
     var inStream: InputStream? = null
     var zipInStream: ZipInputStream? = null

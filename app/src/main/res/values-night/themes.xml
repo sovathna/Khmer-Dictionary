@@ -33,7 +33,7 @@
     <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
 
     <item name="android:windowSplashScreenBackground" tools:ignore="NewApi">@color/md_theme_dark_background</item>
-    <item name="android:windowSplashScreenAnimatedIcon" tools:ignore="NewApi">@drawable/ic_fg</item>
-    <item name="android:windowSplashScreenIconBackgroundColor" tools:ignore="NewApi">@color/md_theme_light_primary</item>
+    <item name="android:windowSplashScreenAnimatedIcon" tools:ignore="NewApi">@drawable/ic_foreground</item>
+<!--    <item name="android:windowSplashScreenIconBackgroundColor" tools:ignore="NewApi">@color/md_theme_light_primary</item>-->
   </style>
 </resources>

@@ -3,7 +3,6 @@ package io.github.sovathna.khmerdictionary.ui.detail
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +41,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
   }
 
   private fun render(state: DetailState?) {
-    binding.root.isVisible = state != null
     state?.run {
       with(binding) {
         tvWord.text = word
