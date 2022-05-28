@@ -36,12 +36,15 @@
         <entry key="app/src/main/res/drawable/outline_arrow_back_24.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_book_24.xml" value="0.1695" />
         <entry key="app/src/main/res/drawable/round_bookmark_20.xml" value="0.1745" />
+        <entry key="app/src/main/res/drawable/round_bookmark_24.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/round_bookmark_added_20.xml" value="0.1695" />
+        <entry key="app/src/main/res/drawable/round_bookmark_added_24.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/round_bookmark_border_24.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_clear_20.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_clear_24.xml" value="0.1695" />
         <entry key="app/src/main/res/drawable/round_close_24.xml" value="0.1695" />
         <entry key="app/src/main/res/drawable/round_history_20.xml" value="0.1745" />
+        <entry key="app/src/main/res/drawable/round_history_24.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/round_info_20.xml" value="0.1745" />
         <entry key="app/src/main/res/drawable/round_info_24.xml" value="0.1695" />
         <entry key="app/src/main/res/drawable/round_menu_book_20.xml" value="0.1695" />

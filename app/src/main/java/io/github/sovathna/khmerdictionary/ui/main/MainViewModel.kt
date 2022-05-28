@@ -7,6 +7,7 @@ import android.text.style.URLSpan
 import android.view.View
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.viewModelScope
+import androidx.room.withTransaction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.sovathna.khmerdictionary.BaseViewModel
 import io.github.sovathna.khmerdictionary.domain.database.AppDatabase
@@ -23,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-  appDatabase: AppDatabase,
+  private val appDatabase: AppDatabase,
   private val ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel<MainState>(MainState()) {
 
@@ -108,9 +109,11 @@ class MainViewModel @Inject constructor(
     if (wordId == current.detail?.id) return
     viewModelScope.launch {
       withContext(ioDispatcher) {
-        dao.clearSelection()
-        dao.updateHistory(wordId)
-        dao.updateSelection(wordId)
+        appDatabase.withTransaction {
+          dao.clearSelection()
+          dao.updateHistory(wordId)
+          dao.updateSelection(wordId)
+        }
       }
     }
   }

@@ -15,7 +15,6 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(private val dataSource: SettingsDataSource) :
   BaseViewModel<SettingsState>(SettingsState()) {
 
-
   init {
     collectSettings()
   }

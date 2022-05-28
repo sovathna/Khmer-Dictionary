@@ -33,7 +33,7 @@
     app:layout_constraintDimensionRatio="H,1:1"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintWidth_percent="0.15"
+    app:layout_constraintWidth_percent="0.12"
     app:srcCompat="@drawable/round_menu_book_24"
     app:tint="?attr/colorOnBackground" />
 
