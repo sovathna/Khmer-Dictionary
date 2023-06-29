@@ -107,6 +107,18 @@ dependencies {
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
 
+    implementation platform("com.squareup.okhttp3:okhttp-bom:4.11.0")
+    implementation "com.squareup.okhttp3:okhttp"
+    debugImplementation "com.squareup.okhttp3:logging-interceptor"
+
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+
+    def moshi_version = "1.14.0"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+
     implementation "io.coil-kt:coil:2.4.0"
 
     def utils_version = "3.2.3"

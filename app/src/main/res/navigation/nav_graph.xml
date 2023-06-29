@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="io.github.sovathna.khmerdictionary.FirstFragment"
+        android:name="io.github.sovathna.khmerdictionary.ui.splash.SplashFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_splash">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
