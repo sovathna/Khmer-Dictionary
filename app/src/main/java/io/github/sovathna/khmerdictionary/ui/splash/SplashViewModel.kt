@@ -26,17 +26,17 @@ class SplashViewModel @Inject constructor(
 ) : BaseViewModel<SplashState>(SplashState()) {
 
     init {
-        init()
+        getConfig()
     }
 
-    fun init() {
+    private fun getConfig() {
         viewModelScope.launch {
             try {
-                setState(current.copy(isDownloading = null, error = null))
+                setState(current.copy(type = SplashState.Type.GET_CONFIG, error = null))
                 delay(1000)
                 val config = apiService.getConfig(Const.CONFIG_URL)
                 Const.config = config
-                check()
+                checkDatabase()
             } catch (e: Exception) {
                 Timber.e(e)
                 setState(current.copy(error = "error"))
@@ -44,7 +44,14 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    private fun check() {
+    fun retry() {
+        when (current.type) {
+            SplashState.Type.GET_CONFIG -> getConfig()
+            else -> checkDatabase()
+        }
+    }
+
+    private fun checkDatabase() {
         viewModelScope.launch {
             if (repository.shouldDownloadDb()) {
                 download()
@@ -64,7 +71,7 @@ class SplashViewModel @Inject constructor(
                         is DownloadInteractor.Result.Downloading -> {
                             setState(
                                 current.copy(
-                                    isDownloading = true,
+                                    type = SplashState.Type.DOWNLOADING,
                                     size = it.size,
                                     read = it.read,
                                     error = null,
@@ -73,12 +80,7 @@ class SplashViewModel @Inject constructor(
                         }
 
                         is DownloadInteractor.Result.Error -> {
-                            setState(
-                                current.copy(
-                                    isDownloading = true,
-                                    error = "error",
-                                )
-                            )
+                            setState(current.copy(error = "error"))
                         }
                     }
                 }
@@ -99,7 +101,7 @@ class SplashViewModel @Inject constructor(
                         is ExtractZipInteractor.Result.Extracting -> {
                             setState(
                                 current.copy(
-                                    isDownloading = false,
+                                    type = SplashState.Type.EXTRACTING,
                                     size = it.size,
                                     read = it.read,
                                     error = null,
@@ -108,12 +110,7 @@ class SplashViewModel @Inject constructor(
                         }
 
                         is ExtractZipInteractor.Result.Error -> {
-                            setState(
-                                current.copy(
-                                    isDownloading = false,
-                                    error = "error",
-                                )
-                            )
+                            setState(current.copy(error = "error"))
                         }
                     }
                 }

@@ -29,9 +29,8 @@ object OkHttpModule {
         .apply {
             if (BuildConfig.DEBUG) {
                 addInterceptor(
-                    HttpLoggingInterceptor(logger = { Timber.d(it) }).apply {
-                        level = HttpLoggingInterceptor.Level.BASIC
-                    }
+                    HttpLoggingInterceptor(logger = { Timber.d(it) })
+                        .apply { level = HttpLoggingInterceptor.Level.BASIC }
                 )
             }
         }
@@ -45,9 +44,8 @@ object OkHttpModule {
         .apply {
             if (BuildConfig.DEBUG) {
                 addInterceptor(
-                    HttpLoggingInterceptor(logger = { Timber.d(it) }).apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    }
+                    HttpLoggingInterceptor(logger = { Timber.d(it) })
+                        .apply { level = HttpLoggingInterceptor.Level.BODY }
                 )
             }
         }

@@ -22,11 +22,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             btnRetry.setOnClickListener {
-                viewModel.init()
+                viewModel.retry()
             }
         }
         viewModel.stateLiveData.observe(viewLifecycleOwner, ::render)
-
     }
 
     private fun render(state: SplashState) {
@@ -37,20 +36,17 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                 btnRetry.isVisible = isError
 
                 val title = if (isError) {
-                    "An error has occurred!"
-                }else if(isDownloading==null) {
-                    "Loading...!"
-                }else if (isDeterminate && isDownloading) {
-                    "Prepare downloading...!"
+                    R.string.an_error_has_occurred
                 } else if (isDeterminate) {
-                    "Prepare extracting...!"
-                } else if (isDownloading) {
-                    "Downloading...!"
+                    R.string.loading
+                } else if (type == SplashState.Type.DOWNLOADING) {
+                    R.string.downloading
+                } else if (type == SplashState.Type.EXTRACTING) {
+                    R.string.extracting
                 } else {
-                    "Extracting...!"
+                    R.string.loading
                 }
-
-                tvTitle.text = title
+                tvTitle.setText(title)
 
                 if (isNotError) {
                     progressBar.isIndeterminate = isDeterminate

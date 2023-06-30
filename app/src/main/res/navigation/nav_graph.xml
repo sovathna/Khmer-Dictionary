@@ -17,9 +17,9 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="io.github.sovathna.khmerdictionary.SecondFragment"
+        android:name="io.github.sovathna.khmerdictionary.ui.main.MainFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_main">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
