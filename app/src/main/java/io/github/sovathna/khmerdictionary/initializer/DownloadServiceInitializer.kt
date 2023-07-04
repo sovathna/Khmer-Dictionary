@@ -4,16 +4,18 @@ import android.content.Context
 import androidx.startup.AppInitializer
 import androidx.startup.Initializer
 import io.github.sovathna.khmerdictionary.BuildConfig
-import io.github.sovathna.khmerdictionary.data.ApiService
+import io.github.sovathna.khmerdictionary.data.DownloadService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class DownloadServiceInitializer : Initializer<ApiService> {
-    override fun create(context: Context): ApiService {
-        TODO("Not yet implemented")
+class DownloadServiceInitializer : Initializer<DownloadService> {
+    override fun create(context: Context): DownloadService {
+        val retrofit = AppInitializer.getInstance(context)
+            .initializeComponent(DownloadRetrofitInitializer::class.java)
+        return retrofit.create(DownloadService::class.java)
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> =

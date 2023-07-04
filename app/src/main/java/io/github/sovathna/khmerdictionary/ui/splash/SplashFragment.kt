@@ -59,7 +59,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                 }
 
                 doneEvent?.getContentIfNotHandled()?.let {
-                    findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+                    findNavController().navigate(R.id.to_main_fragment)
                 }
             }
         }

@@ -4,11 +4,15 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.startup.AppInitializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.github.sovathna.khmerdictionary.data.db.DictDb
+import io.github.sovathna.khmerdictionary.initializer.DictDbInitializer
+import io.github.sovathna.khmerdictionary.initializer.StoreInitializer
 import javax.inject.Singleton
 
 @Module
@@ -17,7 +21,18 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun store(@ApplicationContext context: Context): DataStore<Preferences> = context.store
+    fun dictDb(initializer: AppInitializer): DictDb =
+        initializer.initializeComponent(DictDbInitializer::class.java)
+
+    @Provides
+    @Singleton
+    fun store(initializer: AppInitializer): DataStore<Preferences> =
+        initializer.initializeComponent(StoreInitializer::class.java)
+
+    @Provides
+    @Singleton
+    fun initializer(@ApplicationContext context: Context): AppInitializer =
+        AppInitializer.getInstance(context)
 
 }
 

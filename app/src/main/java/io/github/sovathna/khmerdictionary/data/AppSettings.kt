@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppStore @Inject constructor(private val store: DataStore<Preferences>) {
+class AppSettings @Inject constructor(private val store: DataStore<Preferences>) {
 
     companion object {
         private val KEY_DB_VERSION = intPreferencesKey("db_version")

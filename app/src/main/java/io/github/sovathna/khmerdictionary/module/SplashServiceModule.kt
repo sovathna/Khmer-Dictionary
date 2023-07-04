@@ -1,5 +1,6 @@
 package io.github.sovathna.khmerdictionary.module
 
+import androidx.startup.AppInitializer
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -9,7 +10,8 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import io.github.sovathna.khmerdictionary.data.ApiService
 import io.github.sovathna.khmerdictionary.data.DownloadService
 import io.github.sovathna.khmerdictionary.di.qualifier.Api
-import io.github.sovathna.khmerdictionary.di.qualifier.Download
+import io.github.sovathna.khmerdictionary.initializer.ApiServiceInitializer
+import io.github.sovathna.khmerdictionary.initializer.DownloadServiceInitializer
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -21,13 +23,13 @@ object SplashServiceModule {
 
     @Provides
     @ViewModelScoped
-    fun downloadService(@Download retrofit: Retrofit): DownloadService =
-        retrofit.create()
+    fun downloadService(initializer: AppInitializer): DownloadService =
+        initializer.initializeComponent(DownloadServiceInitializer::class.java)
 
     @Provides
     @ViewModelScoped
-    fun apiService(@Api retrofit: Retrofit): ApiService =
-        retrofit.create()
+    fun apiService(initializer: AppInitializer): ApiService =
+        initializer.initializeComponent(ApiServiceInitializer::class.java)
 
     @Provides
     @ViewModelScoped

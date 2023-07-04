@@ -10,21 +10,20 @@ import javax.inject.Singleton
 
 @Singleton
 class Repository @Inject constructor(
-    private val appStore: AppStore,
+    private val appSettings: AppSettings,
     @ApplicationContext private val context: Context
 ) {
-
 
     suspend fun isDbExists(): Boolean =
         withContext(Dispatchers.IO) { context.getDatabasePath(Const.DB_NAME).exists() }
 
     suspend fun shouldDownloadDb(): Boolean = withContext(Dispatchers.IO) {
-        val localVersion = appStore.getDbVersion()
+        val localVersion = appSettings.getDbVersion()
         val remoteVersion = Const.config.version
         val isExists = isDbExists()
         localVersion != remoteVersion || !isExists
     }
 
-    suspend fun setDbVersion(version: Int) = appStore.setDbVersion(version)
+    suspend fun setDbVersion(version: Int) = appSettings.setDbVersion(version)
 
 }
