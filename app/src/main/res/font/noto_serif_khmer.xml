@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="400"
+        app:font="@font/noto_serif_khmer_regular" />
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="300"
+        app:font="@font/noto_serif_khmer_light" />
+
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="700"
+        app:font="@font/noto_serif_khmer_bold" />
+</font-family>

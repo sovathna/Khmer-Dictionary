@@ -36,6 +36,7 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="fontFamily">@font/noto_serif_khmer</item>
     </style>
 
 </resources>

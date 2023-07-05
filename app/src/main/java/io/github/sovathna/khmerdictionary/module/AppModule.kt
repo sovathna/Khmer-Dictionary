@@ -10,8 +10,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.github.sovathna.khmerdictionary.data.db.DictDao
 import io.github.sovathna.khmerdictionary.data.db.DictDb
+import io.github.sovathna.khmerdictionary.data.db.LocalDao
+import io.github.sovathna.khmerdictionary.data.db.LocalDb
 import io.github.sovathna.khmerdictionary.initializer.DictDbInitializer
+import io.github.sovathna.khmerdictionary.initializer.LocalDbInitializer
 import io.github.sovathna.khmerdictionary.initializer.StoreInitializer
 import javax.inject.Singleton
 
@@ -23,6 +27,19 @@ object AppModule {
     @Singleton
     fun dictDb(initializer: AppInitializer): DictDb =
         initializer.initializeComponent(DictDbInitializer::class.java)
+
+    @Provides
+    @Singleton
+    fun dictDao(db: DictDb): DictDao = db.dao()
+
+    @Provides
+    @Singleton
+    fun localDb(initializer: AppInitializer): LocalDb =
+        initializer.initializeComponent(LocalDbInitializer::class.java)
+
+    @Provides
+    @Singleton
+    fun localDao(db: LocalDb): LocalDao = db.dao()
 
     @Provides
     @Singleton

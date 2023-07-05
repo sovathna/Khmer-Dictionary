@@ -10,7 +10,7 @@ data class DictEntity(
     val word: String,
     @ColumnInfo(name = "definition")
     val definition: String,
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Long
+    val id: Long = 0L
 )

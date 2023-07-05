@@ -1,55 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".ui.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.search.SearchBar
-            android:id="@+id/search_bar"
+        <fragment
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:name="io.github.sovathna.khmerdictionary.ui.words.home.WordsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="96dp"
+            android:contentDescription="@string/search"
+            android:visibility="gone"
+            app:icon="@drawable/round_search_24" />
+
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search"
-            app:forceDefaultNavigationOnClickListener="true" />
+            android:fitsSystemWindows="true">
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <com.google.android.material.search.SearchBar
+                android:id="@+id/search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search"
+                app:forceDefaultNavigationOnClickListener="true" />
 
-    <com.google.android.material.search.SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="Search"
-        app:layout_anchor="@id/search_bar">
-        <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
-    </com.google.android.material.search.SearchView>
+        </com.google.android.material.appbar.AppBarLayout>
 
+        <com.google.android.material.search.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/search"
+            app:layout_anchor="@id/search_bar">
 
-    <include layout="@layout/content_main" />
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <include layout="@layout/view_holder_word"/>
+                    <include layout="@layout/view_holder_word"/>
+                    <include layout="@layout/view_holder_word"/>
+                    <include layout="@layout/view_holder_word"/>
+                    <include layout="@layout/view_holder_word"/>
+                    <include layout="@layout/view_holder_word"/>
+                    <include layout="@layout/view_holder_word"/>
+                    <include layout="@layout/view_holder_word"/>
+                    <include layout="@layout/view_holder_word"/>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </com.google.android.material.search.SearchView>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="96dp"
-        android:layout_marginEnd="16dp"
-        android:layout_gravity="bottom|end"
-        android:contentDescription="@string/search"
-        app:icon="@drawable/round_search_24" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_bottom" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

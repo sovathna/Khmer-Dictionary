@@ -33,7 +33,7 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 setState(current.copy(type = SplashState.Type.GET_CONFIG, error = null))
-                delay(1000)
+//                delay(1000)
                 val config = apiService.getConfig(Const.CONFIG_URL)
                 Const.config = config
                 checkDatabase()
