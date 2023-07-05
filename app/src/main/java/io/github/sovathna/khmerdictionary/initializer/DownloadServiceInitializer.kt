@@ -12,44 +12,44 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class DownloadServiceInitializer : Initializer<DownloadService> {
-    override fun create(context: Context): DownloadService {
-        val retrofit = AppInitializer.getInstance(context)
-            .initializeComponent(DownloadRetrofitInitializer::class.java)
-        return retrofit.create(DownloadService::class.java)
-    }
+  override fun create(context: Context): DownloadService {
+    val retrofit = AppInitializer.getInstance(context)
+      .initializeComponent(DownloadRetrofitInitializer::class.java)
+    return retrofit.create(DownloadService::class.java)
+  }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> =
-        listOf(DownloadRetrofitInitializer::class.java)
+  override fun dependencies(): List<Class<out Initializer<*>>> =
+    listOf(DownloadRetrofitInitializer::class.java)
 }
 
 class DownloadRetrofitInitializer : Initializer<Retrofit> {
-    override fun create(context: Context): Retrofit {
-        val client = AppInitializer.getInstance(context)
-            .initializeComponent(DownloadClientInitializer::class.java)
-        return Retrofit.Builder()
-            .baseUrl("https://example.com/")
-            .client(client)
-            .build()
-    }
+  override fun create(context: Context): Retrofit {
+    val client = AppInitializer.getInstance(context)
+      .initializeComponent(DownloadClientInitializer::class.java)
+    return Retrofit.Builder()
+      .baseUrl("https://example.com/")
+      .client(client)
+      .build()
+  }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> =
-        listOf(DownloadClientInitializer::class.java)
+  override fun dependencies(): List<Class<out Initializer<*>>> =
+    listOf(DownloadClientInitializer::class.java)
 }
 
 class DownloadClientInitializer : Initializer<OkHttpClient> {
-    override fun create(context: Context): OkHttpClient {
-        return OkHttpClient.Builder()
-            .readTimeout(0L, TimeUnit.MILLISECONDS)
-            .apply {
-                if (BuildConfig.DEBUG) {
-                    addInterceptor(
-                        HttpLoggingInterceptor(logger = { Timber.d(it) })
-                            .apply { level = HttpLoggingInterceptor.Level.BASIC }
-                    )
-                }
-            }
-            .build()
-    }
+  override fun create(context: Context): OkHttpClient {
+    return OkHttpClient.Builder()
+      .readTimeout(0L, TimeUnit.MILLISECONDS)
+      .apply {
+        if (BuildConfig.DEBUG) {
+          addInterceptor(
+            HttpLoggingInterceptor(logger = { Timber.d(it) })
+              .apply { level = HttpLoggingInterceptor.Level.BASIC }
+          )
+        }
+      }
+      .build()
+  }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+  override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 }

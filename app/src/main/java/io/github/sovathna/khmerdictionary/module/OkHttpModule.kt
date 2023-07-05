@@ -21,39 +21,39 @@ import java.util.concurrent.TimeUnit
 @InstallIn(ViewModelComponent::class)
 object OkHttpModule {
 
-    @Provides
-    @ViewModelScoped
-    @Download
-    fun downloadClient(): OkHttpClient = OkHttpClient.Builder()
-        .readTimeout(0L, TimeUnit.MILLISECONDS)
-        .apply {
-            if (BuildConfig.DEBUG) {
-                addInterceptor(
-                    HttpLoggingInterceptor(logger = { Timber.d(it) })
-                        .apply { level = HttpLoggingInterceptor.Level.BASIC }
-                )
-            }
-        }
-        .build()
+  @Provides
+  @ViewModelScoped
+  @Download
+  fun downloadClient(): OkHttpClient = OkHttpClient.Builder()
+    .readTimeout(0L, TimeUnit.MILLISECONDS)
+    .apply {
+      if (BuildConfig.DEBUG) {
+        addInterceptor(
+          HttpLoggingInterceptor(logger = { Timber.d(it) })
+            .apply { level = HttpLoggingInterceptor.Level.BASIC }
+        )
+      }
+    }
+    .build()
 
-    @Provides
-    @ViewModelScoped
-    @Api
-    fun apiClient(@Api cache: Cache): OkHttpClient = OkHttpClient.Builder()
-        .cache(cache)
-        .apply {
-            if (BuildConfig.DEBUG) {
-                addInterceptor(
-                    HttpLoggingInterceptor(logger = { Timber.d(it) })
-                        .apply { level = HttpLoggingInterceptor.Level.BODY }
-                )
-            }
-        }
-        .build()
+  @Provides
+  @ViewModelScoped
+  @Api
+  fun apiClient(@Api cache: Cache): OkHttpClient = OkHttpClient.Builder()
+    .cache(cache)
+    .apply {
+      if (BuildConfig.DEBUG) {
+        addInterceptor(
+          HttpLoggingInterceptor(logger = { Timber.d(it) })
+            .apply { level = HttpLoggingInterceptor.Level.BODY }
+        )
+      }
+    }
+    .build()
 
-    @Provides
-    @ViewModelScoped
-    @Api
-    fun apiCache(@ApplicationContext context: Context): Cache =
-        Cache(File(context.cacheDir, "okhttp_api_cache"), 5 * 1024 * 1024L)
+  @Provides
+  @ViewModelScoped
+  @Api
+  fun apiCache(@ApplicationContext context: Context): Cache =
+    Cache(File(context.cacheDir, "okhttp_api_cache"), 5 * 1024 * 1024L)
 }

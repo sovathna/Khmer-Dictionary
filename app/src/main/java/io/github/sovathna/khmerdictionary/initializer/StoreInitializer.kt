@@ -7,9 +7,9 @@ import androidx.startup.Initializer
 import io.github.sovathna.khmerdictionary.module.store
 
 class StoreInitializer : Initializer<DataStore<Preferences>> {
-    override fun create(context: Context): DataStore<Preferences> {
-        return context.store
-    }
+  override fun create(context: Context): DataStore<Preferences> {
+    return context.store
+  }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+  override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 }

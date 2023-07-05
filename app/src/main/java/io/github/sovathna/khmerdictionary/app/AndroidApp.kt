@@ -8,14 +8,14 @@ import timber.log.Timber
 @HiltAndroidApp
 class AndroidApp : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
+  override fun onCreate() {
+    super.onCreate()
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }else{
-            TODO("implement Timber release tree")
-        }
+    if (BuildConfig.DEBUG) {
+      Timber.plant(Timber.DebugTree())
+    } else {
+      TODO("implement Timber release tree")
     }
+  }
 
 }

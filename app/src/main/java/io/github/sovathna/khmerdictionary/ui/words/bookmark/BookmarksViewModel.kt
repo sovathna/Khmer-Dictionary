@@ -10,12 +10,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookmarksViewModel @Inject constructor(
-    private val localDao: LocalDao
+  private val localDao: LocalDao
 ) : AbstractWordsViewModel() {
-    init {
-        getWords(WordsType.Bookmarks)
-    }
+  init {
+    getWords(WordsType.Bookmarks)
+  }
 
-    override suspend fun getData(): List<WordUi> =
-        localDao.getBookmarks((current.page - 1) * Const.PAGE_SIZE)
+  override suspend fun getData(): List<WordUi> =
+    localDao.getBookmarks((current.page - 1) * Const.PAGE_SIZE)
 }

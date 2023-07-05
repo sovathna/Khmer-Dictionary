@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/SplashFragment">
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/nav_graph"
+  app:startDestination="@id/SplashFragment">
 
-    <fragment
-        android:id="@+id/SplashFragment"
-        android:name="io.github.sovathna.khmerdictionary.ui.splash.SplashFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_splash">
+  <fragment
+    android:id="@+id/SplashFragment"
+    android:name="io.github.sovathna.khmerdictionary.ui.splash.SplashFragment"
+    android:label="@string/first_fragment_label"
+    tools:layout="@layout/fragment_splash">
 
-        <action
-            android:id="@+id/to_main_fragment"
-            app:destination="@id/MainFragment"
-            app:popUpTo="@id/SplashFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/MainFragment"
-        android:name="io.github.sovathna.khmerdictionary.ui.main.MainFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_main">
+    <action
+      android:id="@+id/to_main_fragment"
+      app:destination="@id/MainFragment"
+      app:popUpTo="@id/SplashFragment"
+      app:popUpToInclusive="true" />
+  </fragment>
+  <fragment
+    android:id="@+id/MainFragment"
+    android:name="io.github.sovathna.khmerdictionary.ui.main.MainFragment"
+    android:label="@string/second_fragment_label"
+    tools:layout="@layout/fragment_main">
 
-    </fragment>
+  </fragment>
 </navigation>

@@ -1,27 +1,27 @@
 <menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="io.github.sovathna.khmerdictionary.ui.MainActivity"
-    tools:ignore="AlwaysShowAction">
-    <item
-        android:id="@+id/action_home"
-        android:icon="@drawable/round_home_24"
-        android:title="@string/menu_home"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_histories"
-        android:icon="@drawable/round_history_24"
-        android:title="@string/menu_histories"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_bookmarks"
-        android:icon="@drawable/round_bookmarks_24"
-        android:title="@string/menu_bookmarks"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/round_settings_24"
-        android:title="@string/menu_settings"
-        app:showAsAction="always" />
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context="io.github.sovathna.khmerdictionary.ui.MainActivity"
+  tools:ignore="AlwaysShowAction">
+  <item
+    android:id="@+id/action_home"
+    android:icon="@drawable/round_menu_book_24"
+    android:title="@string/menu_home"
+    app:showAsAction="always" />
+  <item
+    android:id="@+id/action_histories"
+    android:icon="@drawable/round_history_24"
+    android:title="@string/menu_histories"
+    app:showAsAction="always" />
+  <item
+    android:id="@+id/action_bookmarks"
+    android:icon="@drawable/round_bookmarks_24"
+    android:title="@string/menu_bookmarks"
+    app:showAsAction="always" />
+  <item
+    android:id="@+id/action_settings"
+    android:icon="@drawable/round_settings_24"
+    android:title="@string/menu_settings"
+    app:showAsAction="always" />
 </menu>

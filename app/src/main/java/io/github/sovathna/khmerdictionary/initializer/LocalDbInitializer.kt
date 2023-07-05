@@ -7,9 +7,9 @@ import io.github.sovathna.khmerdictionary.Const
 import io.github.sovathna.khmerdictionary.data.db.LocalDb
 
 class LocalDbInitializer : Initializer<LocalDb> {
-    override fun create(context: Context): LocalDb {
-        return Room.databaseBuilder(context, LocalDb::class.java, Const.LOCAL_DB_NAME).build()
-    }
+  override fun create(context: Context): LocalDb {
+    return Room.databaseBuilder(context, LocalDb::class.java, Const.LOCAL_DB_NAME).build()
+  }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+  override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 }

@@ -1,27 +1,27 @@
 <resources>
-    <string name="app_name">Khmer Dictionary</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+  <string name="app_name">Khmer Dictionary</string>
+  <string name="action_settings">Settings</string>
+  <!-- Strings used for fragments for navigation -->
+  <string name="first_fragment_label">First Fragment</string>
+  <string name="second_fragment_label">Second Fragment</string>
+  <string name="next">Next</string>
+  <string name="previous">Previous</string>
 
-    <string name="loading">កំពុងដំណើរការ…!</string>
-    <string name="an_error_has_occurred">មានបញ្ហា!</string>
-    <string name="preparing_to_download">កំពុងរៀបចំទាញយកទិន្នន័យ…!</string>
-    <string name="preparing_to_extract">កំពុងរៀបចំពន្លាទិន្នន័យ…!</string>
-    <string name="downloading">កំពុងទាញយកទិន្នន័យ…!</string>
-    <string name="extracting">កំពុងពន្លាទិន្នន័យ…!</string>
+  <string name="loading">កំពុងដំណើរការ…!</string>
+  <string name="an_error_has_occurred">មានបញ្ហា!</string>
+  <string name="preparing_to_download">កំពុងរៀបចំទាញយកទិន្នន័យ…!</string>
+  <string name="preparing_to_extract">កំពុងរៀបចំពន្លាទិន្នន័យ…!</string>
+  <string name="downloading">កំពុងទាញយកទិន្នន័យ…!</string>
+  <string name="extracting">កំពុងពន្លាទិន្នន័យ…!</string>
 
-    <string name="empty">មិនមានពាក្យ!</string>
+  <string name="empty">មិនមានពាក្យ!</string>
 
-    <string name="search">ស្វែងរកពាក្យ</string>
-    <string name="search_message">សូមវាយបញ្ចូលពាក្យ\nដែលចង់ស្វែងរក!</string>
+  <string name="search">ស្វែងរកពាក្យ</string>
+  <string name="search_message">សូមវាយបញ្ចូលពាក្យដែលចង់ស្វែងរក!</string>
 
-    <string name="menu_home">វចនានុក្រមខ្មែរ</string>
-    <string name="menu_histories">ប្រវត្តិពាក្យ</string>
-    <string name="menu_bookmarks">ពាក្យចំណាំ</string>
-    <string name="menu_settings">ការកំណត់</string>
+  <string name="menu_home">វចនានុក្រម</string>
+  <string name="menu_histories">ប្រវត្តិពាក្យ</string>
+  <string name="menu_bookmarks">ពាក្យចំណាំ</string>
+  <string name="menu_settings">ការកំណត់</string>
 
 </resources>

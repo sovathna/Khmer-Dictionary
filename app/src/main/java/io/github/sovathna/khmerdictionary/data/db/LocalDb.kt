@@ -6,13 +6,13 @@ import io.github.sovathna.khmerdictionary.model.entity.BookmarkEntity
 import io.github.sovathna.khmerdictionary.model.entity.HistoryEntity
 
 @Database(
-    entities = [
-        BookmarkEntity::class,
-        HistoryEntity::class
-    ],
-    version = 1,
-    exportSchema = false
+  entities = [
+    BookmarkEntity::class,
+    HistoryEntity::class
+  ],
+  version = 1,
+  exportSchema = false
 )
 abstract class LocalDb : RoomDatabase() {
-    abstract fun dao(): LocalDao
+  abstract fun dao(): LocalDao
 }

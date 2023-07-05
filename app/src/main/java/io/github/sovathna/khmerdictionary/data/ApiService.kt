@@ -6,7 +6,7 @@ import retrofit2.http.Url
 
 interface ApiService {
 
-    @GET
-    suspend fun getConfig(@Url url: String): Config
+  @GET
+  suspend fun getConfig(@Url url: String): Config
 
 }

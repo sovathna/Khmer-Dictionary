@@ -10,12 +10,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoriesViewModel @Inject constructor(
-    private val localDao: LocalDao
+  private val localDao: LocalDao
 ) : AbstractWordsViewModel() {
-    init {
-        getWords(WordsType.Histories)
-    }
+  init {
+    getWords(WordsType.Histories)
+  }
 
-    override suspend fun getData(): List<WordUi> =
-        localDao.getHistories((current.page - 1) * Const.PAGE_SIZE)
+  override suspend fun getData(): List<WordUi> =
+    localDao.getHistories((current.page - 1) * Const.PAGE_SIZE)
 }

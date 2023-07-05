@@ -23,33 +23,33 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
-    @Singleton
-    fun dictDb(initializer: AppInitializer): DictDb =
-        initializer.initializeComponent(DictDbInitializer::class.java)
+  @Provides
+  @Singleton
+  fun dictDb(initializer: AppInitializer): DictDb =
+    initializer.initializeComponent(DictDbInitializer::class.java)
 
-    @Provides
-    @Singleton
-    fun dictDao(db: DictDb): DictDao = db.dao()
+  @Provides
+  @Singleton
+  fun dictDao(db: DictDb): DictDao = db.dao()
 
-    @Provides
-    @Singleton
-    fun localDb(initializer: AppInitializer): LocalDb =
-        initializer.initializeComponent(LocalDbInitializer::class.java)
+  @Provides
+  @Singleton
+  fun localDb(initializer: AppInitializer): LocalDb =
+    initializer.initializeComponent(LocalDbInitializer::class.java)
 
-    @Provides
-    @Singleton
-    fun localDao(db: LocalDb): LocalDao = db.dao()
+  @Provides
+  @Singleton
+  fun localDao(db: LocalDb): LocalDao = db.dao()
 
-    @Provides
-    @Singleton
-    fun store(initializer: AppInitializer): DataStore<Preferences> =
-        initializer.initializeComponent(StoreInitializer::class.java)
+  @Provides
+  @Singleton
+  fun store(initializer: AppInitializer): DataStore<Preferences> =
+    initializer.initializeComponent(StoreInitializer::class.java)
 
-    @Provides
-    @Singleton
-    fun initializer(@ApplicationContext context: Context): AppInitializer =
-        AppInitializer.getInstance(context)
+  @Provides
+  @Singleton
+  fun initializer(@ApplicationContext context: Context): AppInitializer =
+    AppInitializer.getInstance(context)
 
 }
 

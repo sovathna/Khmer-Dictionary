@@ -7,6 +7,6 @@ import io.github.sovathna.khmerdictionary.ui.words.AbstractWordsFragment
 @AndroidEntryPoint
 class BookmarksFragment : AbstractWordsFragment() {
 
-    override val viewModel by viewModels<BookmarksViewModel>()
+  override val viewModel by viewModels<BookmarksViewModel>()
 
 }

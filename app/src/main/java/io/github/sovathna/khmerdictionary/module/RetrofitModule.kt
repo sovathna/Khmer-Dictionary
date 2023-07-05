@@ -15,23 +15,23 @@ import retrofit2.Retrofit
 @InstallIn(ViewModelComponent::class)
 object RetrofitModule {
 
-    @Provides
-    @ViewModelScoped
-    @Download
-    fun retrofit(@Download client: OkHttpClient): Retrofit =
-        Retrofit.Builder()
-            .baseUrl("https://example.com/")
-            .client(client)
-            .build()
+  @Provides
+  @ViewModelScoped
+  @Download
+  fun retrofit(@Download client: OkHttpClient): Retrofit =
+    Retrofit.Builder()
+      .baseUrl("https://example.com/")
+      .client(client)
+      .build()
 
 
-    @Provides
-    @ViewModelScoped
-    @Api
-    fun apiRetrofit(@Api client: OkHttpClient, converter: Converter.Factory): Retrofit =
-        Retrofit.Builder()
-            .baseUrl("https://example.com/")
-            .addConverterFactory(converter)
-            .client(client)
-            .build()
+  @Provides
+  @ViewModelScoped
+  @Api
+  fun apiRetrofit(@Api client: OkHttpClient, converter: Converter.Factory): Retrofit =
+    Retrofit.Builder()
+      .baseUrl("https://example.com/")
+      .addConverterFactory(converter)
+      .client(client)
+      .build()
 }

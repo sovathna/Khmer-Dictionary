@@ -6,5 +6,5 @@ import io.github.sovathna.khmerdictionary.model.entity.DictEntity
 
 @Database(entities = [DictEntity::class], version = 2, exportSchema = false)
 abstract class DictDb : RoomDatabase() {
-    abstract fun dao(): DictDao
+  abstract fun dao(): DictDao
 }

@@ -9,33 +9,30 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import io.github.sovathna.khmerdictionary.data.ApiService
 import io.github.sovathna.khmerdictionary.data.DownloadService
-import io.github.sovathna.khmerdictionary.di.qualifier.Api
 import io.github.sovathna.khmerdictionary.initializer.ApiServiceInitializer
 import io.github.sovathna.khmerdictionary.initializer.DownloadServiceInitializer
 import retrofit2.Converter
-import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object SplashServiceModule {
 
-    @Provides
-    @ViewModelScoped
-    fun downloadService(initializer: AppInitializer): DownloadService =
-        initializer.initializeComponent(DownloadServiceInitializer::class.java)
+  @Provides
+  @ViewModelScoped
+  fun downloadService(initializer: AppInitializer): DownloadService =
+    initializer.initializeComponent(DownloadServiceInitializer::class.java)
 
-    @Provides
-    @ViewModelScoped
-    fun apiService(initializer: AppInitializer): ApiService =
-        initializer.initializeComponent(ApiServiceInitializer::class.java)
+  @Provides
+  @ViewModelScoped
+  fun apiService(initializer: AppInitializer): ApiService =
+    initializer.initializeComponent(ApiServiceInitializer::class.java)
 
-    @Provides
-    @ViewModelScoped
-    fun moshi(): Moshi = Moshi.Builder().build()
+  @Provides
+  @ViewModelScoped
+  fun moshi(): Moshi = Moshi.Builder().build()
 
-    @Provides
-    @ViewModelScoped
-    fun converter(moshi: Moshi): Converter.Factory = MoshiConverterFactory.create(moshi)
+  @Provides
+  @ViewModelScoped
+  fun converter(moshi: Moshi): Converter.Factory = MoshiConverterFactory.create(moshi)
 }

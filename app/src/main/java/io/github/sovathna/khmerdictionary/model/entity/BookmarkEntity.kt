@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "bookmarks", indices = [Index("id", unique = true)])
 data class BookmarkEntity(
-    @ColumnInfo("id")
-    val id: Long,
-    @ColumnInfo("word")
-    val word: String,
-    @PrimaryKey(autoGenerate = true)
-    val uid: Long = 0L
+  @ColumnInfo("id")
+  val id: Long,
+  @ColumnInfo("word")
+  val word: String,
+  @PrimaryKey(autoGenerate = true)
+  val uid: Long = 0L
 )

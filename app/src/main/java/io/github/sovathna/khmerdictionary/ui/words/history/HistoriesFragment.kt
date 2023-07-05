@@ -7,6 +7,6 @@ import io.github.sovathna.khmerdictionary.ui.words.AbstractWordsFragment
 @AndroidEntryPoint
 class HistoriesFragment : AbstractWordsFragment() {
 
-    override val viewModel by viewModels<HistoriesViewModel>()
+  override val viewModel by viewModels<HistoriesViewModel>()
 
 }

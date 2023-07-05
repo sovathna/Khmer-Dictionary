@@ -7,9 +7,9 @@ import io.github.sovathna.khmerdictionary.Const
 import io.github.sovathna.khmerdictionary.data.db.DictDb
 
 class DictDbInitializer : Initializer<DictDb> {
-    override fun create(context: Context): DictDb {
-        return Room.databaseBuilder(context, DictDb::class.java, Const.DB_NAME).build()
-    }
+  override fun create(context: Context): DictDb {
+    return Room.databaseBuilder(context, DictDb::class.java, Const.DB_NAME).build()
+  }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+  override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 }

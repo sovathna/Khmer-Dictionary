@@ -10,13 +10,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WordsViewModel @Inject constructor(
-    private val dictDao: DictDao
+  private val dictDao: DictDao
 ) : AbstractWordsViewModel() {
 
-    init {
-        getWords(WordsType.Words)
-    }
+  init {
+    getWords(WordsType.Words)
+  }
 
-    override suspend fun getData(): List<WordUi> = dictDao.get((current.page - 1) * Const.PAGE_SIZE)
+  override suspend fun getData(): List<WordUi> = dictDao.get((current.page - 1) * Const.PAGE_SIZE)
 
 }

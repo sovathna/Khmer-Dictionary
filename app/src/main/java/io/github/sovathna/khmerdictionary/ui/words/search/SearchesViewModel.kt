@@ -10,14 +10,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchesViewModel @Inject constructor(
-    private val dictDao: DictDao
+  private val dictDao: DictDao
 ) : AbstractWordsViewModel() {
 
-    override suspend fun getData(): List<WordUi>? {
-        val type = current.type
-        if (type !is WordsType.Searches) return null
-        if (type.searchTerm.isBlank()) return null
-        return dictDao.filter("${type.searchTerm}%", (current.page - 1) * Const.PAGE_SIZE)
-    }
+  override suspend fun getData(): List<WordUi>? {
+    val type = current.type
+    if (type !is WordsType.Searches) return null
+    if (type.searchTerm.isBlank()) return null
+    return dictDao.filter("${type.searchTerm}%", (current.page - 1) * Const.PAGE_SIZE)
+  }
 
 }

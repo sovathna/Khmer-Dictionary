@@ -8,14 +8,14 @@ import io.github.sovathna.khmerdictionary.ui.words.WordsType
 @AndroidEntryPoint
 class SearchesFragment : AbstractWordsFragment() {
 
-    companion object {
-        const val TAG = "searches_fragment"
-    }
+  companion object {
+    const val TAG = "searches_fragment"
+  }
 
-    override val viewModel by viewModels<SearchesViewModel>()
+  override val viewModel by viewModels<SearchesViewModel>()
 
-    fun search(searchTerm: String) {
-        viewModel.getWords(WordsType.Searches(searchTerm))
-    }
+  fun search(searchTerm: String) {
+    viewModel.getWords(WordsType.Searches(searchTerm))
+  }
 
 }

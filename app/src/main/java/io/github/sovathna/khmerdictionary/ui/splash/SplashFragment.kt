@@ -15,54 +15,54 @@ import io.github.sovathna.khmerdictionary.databinding.FragmentSplashBinding
 @AndroidEntryPoint
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
-    private val binding by viewBinding(FragmentSplashBinding::bind)
-    private val viewModel by viewModels<SplashViewModel>()
+  private val binding by viewBinding(FragmentSplashBinding::bind)
+  private val viewModel by viewModels<SplashViewModel>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        with(binding) {
-            btnRetry.setOnClickListener {
-                viewModel.retry()
-            }
-        }
-        viewModel.stateLiveData.observe(viewLifecycleOwner, ::render)
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    with(binding) {
+      btnRetry.setOnClickListener {
+        viewModel.retry()
+      }
     }
+    viewModel.stateLiveData.observe(viewLifecycleOwner, ::render)
+  }
 
-    private fun render(state: SplashState) {
-        with(state) {
-            with(binding) {
-                progressBar.isVisible = isNotError
-                tvSubTitle.isVisible = isNotError
-                btnRetry.isVisible = isError
+  private fun render(state: SplashState) {
+    with(state) {
+      with(binding) {
+        progressBar.isVisible = isNotError
+        tvSubTitle.isVisible = isNotError
+        btnRetry.isVisible = isError
 
-                val title = if (isError) {
-                    R.string.an_error_has_occurred
-                } else if (isDeterminate) {
-                    R.string.loading
-                } else if (type == SplashState.Type.DOWNLOADING) {
-                    R.string.downloading
-                } else if (type == SplashState.Type.EXTRACTING) {
-                    R.string.extracting
-                } else {
-                    R.string.loading
-                }
-                tvTitle.setText(title)
-
-                if (isNotError) {
-                    progressBar.isIndeterminate = isDeterminate
-                    progressBar.max = (size * 100).toInt()
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        progressBar.setProgress((read * 100).toInt(), true)
-                    } else {
-                        progressBar.progress = (read * 100).toInt()
-                    }
-                }
-
-                doneEvent?.getContentIfNotHandled()?.let {
-                    findNavController().navigate(R.id.to_main_fragment)
-                }
-            }
+        val title = if (isError) {
+          R.string.an_error_has_occurred
+        } else if (isDeterminate) {
+          R.string.loading
+        } else if (type == SplashState.Type.DOWNLOADING) {
+          R.string.downloading
+        } else if (type == SplashState.Type.EXTRACTING) {
+          R.string.extracting
+        } else {
+          R.string.loading
         }
+        tvTitle.setText(title)
+
+        if (isNotError) {
+          progressBar.isIndeterminate = isDeterminate
+          progressBar.max = (size * 100).toInt()
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            progressBar.setProgress((read * 100).toInt(), true)
+          } else {
+            progressBar.progress = (read * 100).toInt()
+          }
+        }
+
+        doneEvent?.getContentIfNotHandled()?.let {
+          findNavController().navigate(R.id.to_main_fragment)
+        }
+      }
     }
+  }
 
 }
