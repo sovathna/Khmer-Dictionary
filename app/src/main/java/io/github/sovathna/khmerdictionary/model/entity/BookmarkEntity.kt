@@ -12,5 +12,6 @@ data class BookmarkEntity(
   @ColumnInfo("word")
   val word: String,
   @PrimaryKey(autoGenerate = true)
+  @ColumnInfo("uid")
   val uid: Long = 0L
 )

@@ -46,7 +46,17 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         true
       }
       viewPager.adapter = adapter
+//      requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+//        if (viewPager.currentItem != 0) {
+//          viewPager.currentItem = 0
+//        }
+//      }
     }
+  }
+
+  override fun onDestroyView() {
+    super.onDestroyView()
+    binding.viewPager.adapter = null
   }
 
 }

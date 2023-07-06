@@ -9,4 +9,9 @@ class HistoriesFragment : AbstractWordsFragment() {
 
   override val viewModel by viewModels<HistoriesViewModel>()
 
+  override fun onResume() {
+    super.onResume()
+    viewModel.getWords()
+  }
+
 }

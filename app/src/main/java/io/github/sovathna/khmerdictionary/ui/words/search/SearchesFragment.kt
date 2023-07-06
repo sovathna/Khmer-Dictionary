@@ -15,7 +15,7 @@ class SearchesFragment : AbstractWordsFragment() {
   override val viewModel by viewModels<SearchesViewModel>()
 
   fun search(searchTerm: String) {
-    viewModel.getWords(WordsType.Searches(searchTerm))
+    viewModel.getWords(WordsType.Searches(searchTerm), 1)
   }
 
 }

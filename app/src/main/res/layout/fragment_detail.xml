@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/root"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tv_word"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp"
+    android:text="@string/settings_notification"
+    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <androidx.core.widget.NestedScrollView
+    android:id="@+id/nsv"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/tv_word">
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/tv_definition"
+      android:layout_width="match_parent"
+      android:lineSpacingExtra="6sp"
+      android:layout_height="wrap_content"
+      android:autoLink="none"
+      android:padding="16dp"
+      android:textColorLink="#000000"
+      android:textIsSelectable="true"
+      android:textSize="24sp" />
+  </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

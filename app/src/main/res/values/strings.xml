@@ -24,4 +24,10 @@
   <string name="menu_bookmarks">ពាក្យចំណាំ</string>
   <string name="menu_settings">ការកំណត់</string>
 
+  <string name="settings_dark_mode">ផ្ទៃងងឹត</string>
+  <string name="settings_font_size">ទំហំអក្សរ</string>
+  <string name="settings_notification">ការជូនដំណឹង</string>
+  <string name="settings_privacy_policy">លក្ខខណ្ឌឯកជនភាព</string>
+  <string name="settings_rate_review">វាយតម្លៃកម្មវិធី</string>
+
 </resources>

@@ -9,7 +9,6 @@
   <fragment
     android:id="@+id/SplashFragment"
     android:name="io.github.sovathna.khmerdictionary.ui.splash.SplashFragment"
-    android:label="@string/first_fragment_label"
     tools:layout="@layout/fragment_splash">
 
     <action
@@ -21,8 +20,18 @@
   <fragment
     android:id="@+id/MainFragment"
     android:name="io.github.sovathna.khmerdictionary.ui.main.MainFragment"
-    android:label="@string/second_fragment_label"
     tools:layout="@layout/fragment_main">
 
   </fragment>
+
+  <fragment
+    android:id="@+id/DetailFragment"
+    android:name="io.github.sovathna.khmerdictionary.ui.detail.DetailFragment"
+    tools:layout="@layout/fragment_detail">
+
+  </fragment>
+  <action
+    android:id="@+id/to_detail_fragment"
+    app:destination="@id/DetailFragment"
+    app:launchSingleTop="true" />
 </navigation>

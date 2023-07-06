@@ -34,6 +34,19 @@
     app:lineHeight="42sp" />
 
   <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tv_search_empty"
+    android:layout_marginTop="24dp"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:gravity="center_horizontal"
+    android:text="@string/empty"
+    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <com.google.android.material.textview.MaterialTextView
     android:id="@+id/tv_empty"
     android:layout_width="0dp"
     android:layout_height="wrap_content"

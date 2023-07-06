@@ -1,7 +1,7 @@
 package io.github.sovathna.khmerdictionary.ui.words.bookmark
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.sovathna.khmerdictionary.Const
+import io.github.sovathna.khmerdictionary.data.AppSettings
 import io.github.sovathna.khmerdictionary.data.db.LocalDao
 import io.github.sovathna.khmerdictionary.model.ui.WordUi
 import io.github.sovathna.khmerdictionary.ui.words.AbstractWordsViewModel
@@ -10,12 +10,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookmarksViewModel @Inject constructor(
-  private val localDao: LocalDao
-) : AbstractWordsViewModel() {
+  private val localDao: LocalDao,
+  settings: AppSettings
+) : AbstractWordsViewModel(settings) {
+
   init {
-    getWords(WordsType.Bookmarks)
+    getWords()
+  }
+
+  fun getWords() {
+    getWords(WordsType.Bookmarks, 1)
   }
 
   override suspend fun getData(): List<WordUi> =
-    localDao.getBookmarks((current.page - 1) * Const.PAGE_SIZE)
+    localDao.getBookmarks()
 }

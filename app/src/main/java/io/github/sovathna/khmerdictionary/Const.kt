@@ -11,7 +11,7 @@ object Const {
   const val PAGE_SIZE = 100
   const val LOAD_MORE_OFFSET = 20
   const val DB_NAME = "dict.db"
-  const val LOCAL_DB_NAME = "local.db"
+  const val LOCAL_DB_NAME = "app_local.db"
 
   var config = Config()
 }

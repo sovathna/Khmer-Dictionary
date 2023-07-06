@@ -8,5 +8,8 @@ import io.github.sovathna.khmerdictionary.ui.words.AbstractWordsFragment
 class BookmarksFragment : AbstractWordsFragment() {
 
   override val viewModel by viewModels<BookmarksViewModel>()
-
+  override fun onResume() {
+    super.onResume()
+    viewModel.getWords()
+  }
 }

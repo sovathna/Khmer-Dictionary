@@ -2,6 +2,7 @@ package io.github.sovathna.khmerdictionary.ui.words.search
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.sovathna.khmerdictionary.Const
+import io.github.sovathna.khmerdictionary.data.AppSettings
 import io.github.sovathna.khmerdictionary.data.db.DictDao
 import io.github.sovathna.khmerdictionary.model.ui.WordUi
 import io.github.sovathna.khmerdictionary.ui.words.AbstractWordsViewModel
@@ -10,8 +11,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchesViewModel @Inject constructor(
-  private val dictDao: DictDao
-) : AbstractWordsViewModel() {
+  private val dictDao: DictDao,
+  settings: AppSettings
+) : AbstractWordsViewModel(settings) {
 
   override suspend fun getData(): List<WordUi>? {
     val type = current.type

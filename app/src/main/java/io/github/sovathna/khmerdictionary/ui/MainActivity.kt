@@ -2,6 +2,7 @@ package io.github.sovathna.khmerdictionary.ui
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.widget.addTextChangedListener
@@ -9,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.sovathna.khmerdictionary.R
 import io.github.sovathna.khmerdictionary.databinding.ActivityMainBinding
@@ -62,12 +62,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     with(binding) {
-
-//            fab.setOnClickListener { view ->
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAnchorView(R.id.fab)
-//                    .setAction("Action", null).show()
-//            }
       searchView
         .editText
         .addTextChangedListener {
@@ -77,7 +71,24 @@ class MainActivity : AppCompatActivity() {
           Timber.tag("debug").d(it.toString())
         }
     }
+
+
+    onBackPressedDispatcher.addCallback(this) {
+      with(binding) {
+        val text = searchView.editText.text
+        if (searchView.isShowing) {
+          if (text.isBlank()) {
+            searchView.hide()
+          } else {
+            searchView.editText.text = null
+          }
+        }else{
+          onSupportNavigateUp()
+        }
+      }
+    }
   }
+
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //        // Inflate the menu; this adds items to the action bar if it is present.
