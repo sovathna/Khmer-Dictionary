@@ -17,6 +17,7 @@ import io.github.sovathna.khmerdictionary.ui.BaseViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -25,7 +26,7 @@ class DetailViewModel @Inject constructor(
   private val settings: AppSettings,
   private val dictDao: DictDao,
   private val localDao: LocalDao
-) : BaseViewModel<DetailState>(DetailState()) {
+) : BaseViewModel<DetailState>(DetailState(fontSize = runBlocking { settings.getFontSize() })) {
 
   init {
     init()
@@ -37,7 +38,6 @@ class DetailViewModel @Inject constructor(
         .distinctUntilChanged()
         .collectLatest {
           getDetail(it)
-
         }
     }
   }
@@ -49,7 +49,8 @@ class DetailViewModel @Inject constructor(
           current.copy(
             id = dict.id,
             word = dict.word,
-            definition = generate(dict.definition)
+            definition = generate(dict.definition),
+            fontSize = settings.getFontSize()
           )
         )
         addHistory(dict)

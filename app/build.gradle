@@ -68,6 +68,10 @@ android {
             excludes += "DebugProbesKt.bin"
         }
     }
+
+    lintOptions {
+        disable 'EnsureInitializerMetadata'
+    }
 }
 
 dependencies {
@@ -109,7 +113,7 @@ dependencies {
 
     implementation platform("com.squareup.okhttp3:okhttp-bom:4.11.0")
     implementation "com.squareup.okhttp3:okhttp"
-    debugImplementation "com.squareup.okhttp3:logging-interceptor"
+    implementation "com.squareup.okhttp3:logging-interceptor"
 
     def retrofit_version = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

@@ -14,6 +14,10 @@
     <action
       android:id="@+id/to_main_fragment"
       app:destination="@id/MainFragment"
+      app:enterAnim="@anim/from_right"
+      app:exitAnim="@anim/to_left"
+      app:popEnterAnim="@anim/from_left"
+      app:popExitAnim="@anim/to_right"
       app:popUpTo="@id/SplashFragment"
       app:popUpToInclusive="true" />
   </fragment>
@@ -21,6 +25,27 @@
     android:id="@+id/MainFragment"
     android:name="io.github.sovathna.khmerdictionary.ui.main.MainFragment"
     tools:layout="@layout/fragment_main">
+    <action
+      android:id="@+id/to_settings_fragment"
+      app:destination="@id/SettingsFragment"
+      app:enterAnim="@anim/from_right"
+      app:exitAnim="@anim/to_left"
+      app:popEnterAnim="@anim/from_left"
+      app:popExitAnim="@anim/to_right" />
+    <action
+      android:id="@+id/to_detail_fragment"
+      app:destination="@id/DetailFragment"
+      app:enterAnim="@anim/from_right"
+      app:exitAnim="@anim/to_left"
+      app:launchSingleTop="true"
+      app:popEnterAnim="@anim/from_left"
+      app:popExitAnim="@anim/to_right" />
+  </fragment>
+
+  <fragment
+    android:id="@+id/SettingsFragment"
+    android:name="io.github.sovathna.khmerdictionary.ui.settings.SettingsFragment"
+    tools:layout="@layout/fragment_settings">
 
   </fragment>
 
@@ -30,8 +55,4 @@
     tools:layout="@layout/fragment_detail">
 
   </fragment>
-  <action
-    android:id="@+id/to_detail_fragment"
-    app:destination="@id/DetailFragment"
-    app:launchSingleTop="true" />
 </navigation>

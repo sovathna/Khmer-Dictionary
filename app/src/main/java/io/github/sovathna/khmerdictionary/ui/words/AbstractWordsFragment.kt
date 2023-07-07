@@ -40,6 +40,7 @@ abstract class AbstractWordsFragment : Fragment(R.layout.fragment_words) {
 
   override fun onDestroyView() {
     super.onDestroyView()
+    binding.recycler.adapter = null
     binding.recycler.setRecycledViewPool(null)
   }
 

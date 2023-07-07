@@ -14,7 +14,7 @@ class AndroidApp : Application() {
     if (BuildConfig.DEBUG) {
       Timber.plant(Timber.DebugTree())
     } else {
-      TODO("implement Timber release tree")
+
     }
   }
 

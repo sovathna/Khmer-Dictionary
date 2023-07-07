@@ -9,6 +9,7 @@ import io.github.sovathna.khmerdictionary.domain.DownloadInteractor
 import io.github.sovathna.khmerdictionary.domain.ExtractZipInteractor
 import io.github.sovathna.khmerdictionary.ui.BaseViewModel
 import io.github.sovathna.khmerdictionary.ui.Event
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -55,6 +56,7 @@ class SplashViewModel @Inject constructor(
       if (repository.shouldDownloadDb()) {
         download()
       } else {
+        delay(250L)
         setState(current.copy(doneEvent = Event(Unit)))
       }
     }
@@ -94,6 +96,7 @@ class SplashViewModel @Inject constructor(
           when (it) {
             is ExtractZipInteractor.Result.Done -> {
               repository.setDbVersion(Const.config.version)
+              delay(250L)
               setState(current.copy(read = current.size, doneEvent = Event(Unit)))
             }
 

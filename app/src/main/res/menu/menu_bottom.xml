@@ -19,9 +19,4 @@
     android:icon="@drawable/round_bookmarks_24"
     android:title="@string/menu_bookmarks"
     app:showAsAction="always" />
-  <item
-    android:id="@+id/action_settings"
-    android:icon="@drawable/round_settings_24"
-    android:title="@string/menu_settings"
-    app:showAsAction="always" />
 </menu>
