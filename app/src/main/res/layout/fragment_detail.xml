@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/root"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
@@ -20,8 +21,7 @@
       android:layout_height="wrap_content"
       android:backgroundTint="@android:color/transparent"
       app:navigationIcon="?attr/homeAsUpIndicator"
-      app:title="@string/def_title"
-      app:titleCentered="true" />
+      app:title="@string/def_title" />
   </com.google.android.material.appbar.AppBarLayout>
 
   <com.google.android.material.textview.MaterialTextView
@@ -29,12 +29,31 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="16dp"
-    android:text="@string/settings_notification"
     android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toBottomOf="@id/btn_bookmark"
+    app:layout_constraintEnd_toStartOf="@id/btn_bookmark"
     app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@id/btn_bookmark"
+    tools:text="@string/def_title" />
+
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/btn_bookmark"
+    style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="16dp"
+    android:contentDescription="@string/menu_bookmarks"
+    app:icon="@drawable/round_bookmark_border_24"
+    app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="@id/abl" />
+
+  <androidx.constraintlayout.widget.Barrier
+    android:id="@+id/barrier"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:barrierDirection="bottom"
+    app:constraint_referenced_ids="tv_word,btn_bookmark" />
 
   <androidx.core.widget.NestedScrollView
     android:id="@+id/nsv"
@@ -42,14 +61,14 @@
     android:layout_height="0dp"
     android:orientation="vertical"
     app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/tv_word">
+    app:layout_constraintTop_toBottomOf="@id/barrier">
 
     <com.google.android.material.textview.MaterialTextView
       android:id="@+id/tv_definition"
       android:layout_width="match_parent"
-      android:lineSpacingExtra="6sp"
       android:layout_height="wrap_content"
       android:autoLink="none"
+      android:lineSpacingExtra="6sp"
       android:padding="16dp"
       android:textColorLink="#000000"
       android:textIsSelectable="true"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +14,9 @@ import com.crazylegend.viewbinding.viewBinding
 import com.google.android.material.search.SearchView
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.sovathna.khmerdictionary.R
+import io.github.sovathna.khmerdictionary.data.AppSettings
 import io.github.sovathna.khmerdictionary.databinding.FragmentMainBinding
+import io.github.sovathna.khmerdictionary.ui.detail.DetailFragment
 import io.github.sovathna.khmerdictionary.ui.words.bookmark.BookmarksFragment
 import io.github.sovathna.khmerdictionary.ui.words.history.HistoriesFragment
 import io.github.sovathna.khmerdictionary.ui.words.home.WordsFragment
@@ -24,7 +27,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import javax.inject.Inject
 
 @FlowPreview
 @AndroidEntryPoint
@@ -34,9 +37,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
   private lateinit var searchFragment: SearchesFragment
   private val searchFlow = MutableSharedFlow<String>()
   private lateinit var menuIds: List<Int>
+  private var isSplit = false
+
+  @Inject
+  lateinit var settings: AppSettings
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    isSplit = resources.getBoolean(R.bool.is_split)
     menuIds =
       listOf(
         R.id.action_home,
@@ -76,13 +84,24 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     val adapter = MainPagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle, fragments)
 
     with(binding) {
+
+      viewLifecycleOwner.lifecycleScope.launch {
+        settings.detailIdFlow.distinctUntilChanged().collectLatest {
+          if (isSplit && searchView.isShowing) {
+            searchView.hide()
+          }
+        }
+      }
+
+      navigationView.isVisible = !isSplit
+      navigationRail.isVisible = isSplit
+
       searchView
         .editText
         .addTextChangedListener {
           viewLifecycleOwner.lifecycleScope.launch {
             searchFlow.emit(it?.toString() ?: "")
           }
-          Timber.tag("debug").d(it.toString())
         }
 
       searchView.addTransitionListener { _, _, newState ->
@@ -103,14 +122,33 @@ class MainFragment : Fragment(R.layout.fragment_main) {
       }
       viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
-          navView.selectedItemId = menuIds[position]
+          if (!isSplit) {
+            navigationView.selectedItemId = menuIds[position]
+          } else {
+            navigationRail.selectedItemId = menuIds[position]
+          }
         }
       })
-      navView.setOnItemSelectedListener {
-        viewPager.currentItem = menuIds.indexOf(it.itemId)
-        true
+      if (!isSplit) {
+        navigationView.setOnItemSelectedListener {
+          viewPager.currentItem = menuIds.indexOf(it.itemId)
+          true
+        }
+      } else {
+        navigationRail.setOnItemSelectedListener {
+          viewPager.setCurrentItem(menuIds.indexOf(it.itemId), false)
+          true
+        }
       }
+      viewPager.isUserInputEnabled = !isSplit
       viewPager.adapter = adapter
+
+      if (savedInstanceState == null) {
+        childFragmentManager
+          .beginTransaction()
+          .replace(detailContainer.id, DetailFragment(), DetailFragment.TAG)
+          .commit()
+      }
     }
   }
 

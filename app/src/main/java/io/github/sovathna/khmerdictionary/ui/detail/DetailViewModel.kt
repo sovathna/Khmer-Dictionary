@@ -11,13 +11,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.sovathna.khmerdictionary.data.AppSettings
 import io.github.sovathna.khmerdictionary.data.db.DictDao
 import io.github.sovathna.khmerdictionary.data.db.LocalDao
+import io.github.sovathna.khmerdictionary.model.entity.BookmarkEntity
 import io.github.sovathna.khmerdictionary.model.entity.DictEntity
 import io.github.sovathna.khmerdictionary.model.entity.HistoryEntity
 import io.github.sovathna.khmerdictionary.ui.BaseViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -26,7 +26,7 @@ class DetailViewModel @Inject constructor(
   private val settings: AppSettings,
   private val dictDao: DictDao,
   private val localDao: LocalDao
-) : BaseViewModel<DetailState>(DetailState(fontSize = runBlocking { settings.getFontSize() })) {
+) : BaseViewModel<DetailState>(DetailState()) {
 
   init {
     init()
@@ -45,16 +45,30 @@ class DetailViewModel @Inject constructor(
   private fun getDetail(id: Long) {
     viewModelScope.launch {
       dictDao.get(id)?.let { dict ->
+        val isBookmark = localDao.getBookmark(dict.id) != null
         setState(
           current.copy(
             id = dict.id,
             word = dict.word,
             definition = generate(dict.definition),
-            fontSize = settings.getFontSize()
+            fontSize = settings.getFontSize(),
+            isBookmark = isBookmark
           )
         )
         addHistory(dict)
       }
+    }
+  }
+
+  fun toggleBookmark() {
+    val isBookmark = current.isBookmark ?: return
+    viewModelScope.launch {
+      if (isBookmark) {
+        localDao.deleteBookmark(current.id)
+      } else {
+        localDao.addBookmark(BookmarkEntity(current.id, current.word!!))
+      }
+      setState(current.copy(isBookmark = !isBookmark))
     }
   }
 

@@ -2,11 +2,17 @@
   <string name="app_name">Khmer Dictionary</string>
 
   <string name="loading">កំពុងដំណើរការ…!</string>
-  <string name="an_error_has_occurred">មានបញ្ហា!</string>
+  <string name="an_error_has_occurred">មានបញ្ហាក្នុងការភ្ជាប់ទៅប្រព័ន្ធ!</string>
   <string name="preparing_to_download">កំពុងរៀបចំទាញយកទិន្នន័យ…!</string>
   <string name="preparing_to_extract">កំពុងរៀបចំពន្លាទិន្នន័យ…!</string>
   <string name="downloading">កំពុងទាញយកទិន្នន័យ…!</string>
   <string name="extracting">កំពុងពន្លាទិន្នន័យ…!</string>
+  <string name="downloading_subtitle">%1$.02fMB នៃ %2$.02fMB</string>
+  <string name="retry">ព្យាយាមម្ដងទៀត</string>
+
+  <string name="confirm">យល់ព្រម</string>
+  <string name="cancel">បោះបង់</string>
+  <string name="exit">បិទ</string>
 
   <string name="empty">មិនមានពាក្យ!</string>
 
@@ -14,17 +20,22 @@
   <string name="search_message">សូមវាយបញ្ចូលពាក្យដែលចង់ស្វែងរក!</string>
 
   <string name="menu_home">វចនានុក្រម</string>
-  <string name="menu_histories">ប្រវត្តិពាក្យ</string>
-  <string name="menu_bookmarks">ពាក្យចំណាំ</string>
+  <string name="menu_histories">ប្រវត្តិ</string>
+  <string name="menu_bookmarks">ចំណាំ</string>
   <string name="menu_settings">ការកំណត់</string>
 
-  <string name="def_title">ពន្យល់ន័យ</string>
+  <string name="def_title">ពន្យល់ពាក្យ</string>
 
-  <string name="settings_dark_mode">ផ្ទៃងងឹត</string>
-  <string name="settings_font_size">ទំហំអក្សរពន្យល់ន័យ</string>
+  <string name="settings_night_mode">ពណ៌ផ្ទៃ</string>
+  <string name="settings_font_size">ទំហំអក្សរពន្យល់ពាក្យ</string>
   <string name="settings_notification">ការជូនដំណឹង</string>
   <string name="settings_privacy_policy">លក្ខខណ្ឌឯកជនភាព</string>
   <string name="settings_rate_review">វាយតម្លៃកម្មវិធី</string>
   <string name="settings_font_size_sample">ភាសាខ្មែរ</string>
 
+  <string-array name="themes">
+    <item>ប្រព័ន្ធ</item>
+    <item>ភ្លឺ</item>
+    <item>ងងឹត</item>
+  </string-array>
 </resources>

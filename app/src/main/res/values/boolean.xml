@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <bool name="is_split">false</bool>
+  <fraction name="words_container_percent">1.0</fraction>
+</resources>

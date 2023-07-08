@@ -41,8 +41,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
           R.string.loading
         } else if (type == SplashState.Type.DOWNLOADING) {
           R.string.downloading
-        } else if (type == SplashState.Type.EXTRACTING) {
-          R.string.extracting
         } else {
           R.string.loading
         }
@@ -56,6 +54,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
           } else {
             progressBar.progress = (read * 100).toInt()
           }
+          tvSubTitle.isVisible =!isDeterminate
+          tvSubTitle.text = getString(R.string.downloading_subtitle,read, size)
         }
 
         doneEvent?.getContentIfNotHandled()?.let {

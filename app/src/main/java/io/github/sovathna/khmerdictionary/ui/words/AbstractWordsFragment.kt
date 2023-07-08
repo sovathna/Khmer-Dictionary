@@ -65,7 +65,9 @@ abstract class AbstractWordsFragment : Fragment(R.layout.fragment_words) {
 //        }
 
         detailEvent?.getContentIfNotHandled()?.let {
-          findNavController().navigate(R.id.to_detail_fragment)
+          if (!resources.getBoolean(R.bool.is_split)) {
+            findNavController().navigate(R.id.to_detail_fragment)
+          }
         }
       }
 

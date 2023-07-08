@@ -22,6 +22,15 @@ class SettingsViewModel @Inject constructor(
           setState(current.copy(fontSize = it))
         }
     }
+
+    viewModelScope.launch {
+      settings.nightModeFlow
+        .distinctUntilChanged()
+        .collectLatest {
+          settings.setNightMode()
+          setState(current.copy(nightMode = if (it == -1) 0 else it))
+        }
+    }
   }
 
   fun setFontSize(fontSize: Float) {
@@ -29,4 +38,11 @@ class SettingsViewModel @Inject constructor(
       settings.setFontSize(fontSize)
     }
   }
+
+  fun setNightMode(nightMode: Int) {
+    viewModelScope.launch {
+      settings.setNightMode(nightMode)
+    }
+  }
+
 }

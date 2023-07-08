@@ -19,9 +19,8 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:backgroundTint="@android:color/transparent"
-      app:title="@string/menu_settings"
       app:navigationIcon="?attr/homeAsUpIndicator"
-      app:titleCentered="true" />
+      app:title="@string/menu_settings" />
   </com.google.android.material.appbar.AppBarLayout>
 
   <androidx.core.widget.NestedScrollView
@@ -43,11 +42,11 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
+        app:cardElevation="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeWidth="1dp">
+        app:strokeWidth="0dp">
 
         <LinearLayout
           android:id="@+id/layout_theme"
@@ -64,13 +63,17 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:text="@string/settings_dark_mode"
+            android:text="@string/settings_night_mode"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
-          <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/switch_theme"
+          <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_theme_value"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="?attr/colorPrimary"
+            android:textStyle="bold"
+            tools:text="@string/settings_night_mode" />
         </LinearLayout>
       </com.google.android.material.card.MaterialCardView>
 
@@ -79,13 +82,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="36dp"
+        android:visibility="gone"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
+        app:cardElevation="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_theme"
-        app:strokeWidth="1dp">
+        app:layout_constraintTop_toBottomOf="@id/card_font_size"
+        app:strokeWidth="0dp">
 
         <LinearLayout
           android:id="@+id/layout_notification"
@@ -117,13 +121,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
+        app:cardElevation="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_notification"
-        app:strokeWidth="1dp">
+        app:layout_constraintTop_toBottomOf="@id/card_theme"
+        app:strokeWidth="0dp">
 
         <LinearLayout
           android:id="@+id/layout_font_size"
@@ -147,8 +151,10 @@
             android:id="@+id/tv_font_size_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="១៦"
-            android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="?attr/colorPrimary"
+            android:textStyle="bold"
+            tools:text="១៦" />
         </LinearLayout>
       </com.google.android.material.card.MaterialCardView>
 
@@ -157,7 +163,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="card_font_size" />
+        app:constraint_referenced_ids="card_notification" />
 
       <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_privacy_policy"
@@ -165,21 +171,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="@string/settings_privacy_policy"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_bottom" />
 
       <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_rate_review"
+        style="@style/Widget.Material3.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="16dp"
+        android:gravity="center_vertical"
         android:text="@string/settings_rate_review"
+        app:icon="@drawable/round_star_rate_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_privacy_policy" />
+        app:layout_constraintTop_toBottomOf="@id/btn_privacy_policy"
+        app:layout_goneMarginTop="36dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.core.widget.NestedScrollView>

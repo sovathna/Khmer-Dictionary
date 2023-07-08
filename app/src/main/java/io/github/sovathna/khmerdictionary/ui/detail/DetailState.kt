@@ -7,5 +7,5 @@ data class DetailState(
   val word: String? = null,
   val definition: SpannableStringBuilder? = null,
   val fontSize: Float = 16.0f,
-  val isBookmark: Boolean = false,
+  val isBookmark: Boolean? = null,
 )

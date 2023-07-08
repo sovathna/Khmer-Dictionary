@@ -5,6 +5,7 @@ import android.util.TypedValue
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.fragment.findNavController
 import com.crazylegend.viewbinding.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -12,12 +13,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.sovathna.khmerdictionary.R
 import io.github.sovathna.khmerdictionary.databinding.DialogFontSizeBinding
 import io.github.sovathna.khmerdictionary.databinding.FragmentSettingsBinding
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
   private val binding by viewBinding(FragmentSettingsBinding::bind)
   private val viewModel by viewModels<SettingsViewModel>()
+  private lateinit var themes: Array<String>
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    themes = resources.getStringArray(R.array.themes)
+  }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     with(binding) {
@@ -25,19 +34,25 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         findNavController().popBackStack()
       }
 
+      cardTheme.setOnClickListener {
+        showThemeDialog()
+      }
+
       cardFontSize.setOnClickListener {
         showFontSizeDialog()
       }
     }
 
-    viewModel.stateLiveData.observe(viewLifecycleOwner, ::render)
+    viewModel.stateLiveData.distinctUntilChanged().observe(viewLifecycleOwner, ::render)
   }
 
   private fun render(state: SettingsState) {
+    Timber.tag("debug").d("$state")
     with(state) {
       with(binding) {
-        tvFontSizeValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize)
         tvFontSizeValue.text = toKmString(fontSize)
+
+        tvThemeValue.text = themes[nightMode]
       }
     }
   }
@@ -75,11 +90,22 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
     MaterialAlertDialogBuilder(requireContext())
       .setTitle(R.string.settings_font_size)
-      .setPositiveButton("យល់ព្រម") { _, _ ->
+      .setPositiveButton(R.string.confirm) { _, _ ->
         viewModel.setFontSize(tmpBinding.slider.value)
       }
-      .setNegativeButton("បោះបង់", null)
+      .setNegativeButton(R.string.cancel, null)
       .setView(tmpBinding.root)
+      .show()
+  }
+
+  private fun showThemeDialog() {
+    MaterialAlertDialogBuilder(requireContext())
+      .setTitle(R.string.settings_night_mode)
+      .setSingleChoiceItems(themes, viewModel.stateLiveData.value!!.nightMode) { dialog, which ->
+        dialog.dismiss()
+        viewModel.setNightMode(if (which == 0) -1 else which)
+      }
+      .setNegativeButton(R.string.exit, null)
       .show()
   }
 }

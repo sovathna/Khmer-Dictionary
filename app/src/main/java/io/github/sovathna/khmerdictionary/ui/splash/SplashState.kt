@@ -18,5 +18,5 @@ data class SplashState(
 
   val isNotError = error.isNullOrBlank()
   val isError = !isNotError
-  val isDeterminate = size == 0.0 && size == read
+  val isDeterminate = size == 0.0 && size == read || type != Type.DOWNLOADING
 }

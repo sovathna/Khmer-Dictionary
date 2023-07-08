@@ -21,4 +21,10 @@ interface LocalDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun addHistory(entity: HistoryEntity)
+
+  @Query("SELECT * FROM bookmarks WHERE id = :id")
+  suspend fun getBookmark(id: Long): BookmarkEntity?
+
+  @Query("DELETE FROM bookmarks WHERE id = :id")
+  suspend fun deleteBookmark(id: Long)
 }
