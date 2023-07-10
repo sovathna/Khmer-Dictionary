@@ -63,7 +63,7 @@ class AppSettings @Inject constructor(
     if (nightMode != systemNightMode) {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val uiManager = context.getSystemService(Context.UI_MODE_SERVICE) as? UiModeManager
-        uiManager?.setApplicationNightMode(if(nightMode==-1) UiModeManager.MODE_NIGHT_AUTO else nightMode)
+        uiManager?.setApplicationNightMode(if (nightMode == -1) UiModeManager.MODE_NIGHT_AUTO else nightMode)
       } else {
         AppCompatDelegate.setDefaultNightMode(nightMode)
       }

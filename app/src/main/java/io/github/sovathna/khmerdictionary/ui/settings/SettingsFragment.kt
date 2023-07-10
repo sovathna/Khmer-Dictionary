@@ -1,5 +1,7 @@
 package io.github.sovathna.khmerdictionary.ui.settings
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
@@ -10,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.crazylegend.viewbinding.viewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.sovathna.khmerdictionary.BuildConfig
 import io.github.sovathna.khmerdictionary.R
 import io.github.sovathna.khmerdictionary.databinding.DialogFontSizeBinding
 import io.github.sovathna.khmerdictionary.databinding.FragmentSettingsBinding
@@ -40,6 +43,38 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
       cardFontSize.setOnClickListener {
         showFontSizeDialog()
+      }
+
+      btnPrivacyPolicy.setOnClickListener {
+        try {
+          val privacyUrl = "https://sovathna.github.io/khdict/privacy/"
+          val intent =
+            Intent(Intent.ACTION_VIEW, Uri.parse(privacyUrl))
+          startActivity(intent)
+        } catch (e: Exception) {
+          Timber.tag("debug").e(e)
+        }
+      }
+
+      btnRateReview.setOnClickListener {
+        try {
+          val intent =
+            Intent(
+              Intent.ACTION_VIEW,
+              Uri.parse("market://details?id=${BuildConfig.APPLICATION_ID}")
+            )
+          startActivity(intent)
+        } catch (e: Exception) {
+          Timber.tag("debug").e(e)
+          try {
+            val marketUrl = "https://play.google.com/store/apps/details?id="
+            val intent =
+              Intent(Intent.ACTION_VIEW, Uri.parse("$marketUrl${BuildConfig.APPLICATION_ID}"))
+            startActivity(intent)
+          } catch (e: Exception) {
+            Timber.tag("debug").e(e)
+          }
+        }
       }
     }
 

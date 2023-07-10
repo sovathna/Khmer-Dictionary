@@ -35,6 +35,9 @@ class ExtractZipInteractor @Inject constructor(
     var zipInStream: ZipInputStream? = null
     var outStream: OutputStream? = null
     val tempFile = context.getDatabasePath(Const.DB_NAME)
+    if (tempFile.parentFile?.exists() != true) {
+      tempFile.parentFile?.mkdirs()
+    }
     try {
       emit(Result.Extracting(0.0, 0.0))
       delay(1000)
@@ -57,7 +60,7 @@ class ExtractZipInteractor @Inject constructor(
         if (last + 500 <= current) {
           val tmp = totalRead / scale / BYTES_TO_MB
           last = current
-          Timber.d("extracting: $tmp/$size")
+          Timber.tag("debug").d("extracting: $tmp/$size")
           emit(Result.Extracting(tmp, size))
         }
       }

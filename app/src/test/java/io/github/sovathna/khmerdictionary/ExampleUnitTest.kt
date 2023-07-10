@@ -12,7 +12,8 @@ import org.mockito.Mock
  */
 class ExampleUnitTest {
   @Mock
-  private lateinit var mockContext:Context
+  private lateinit var mockContext: Context
+
   @Test
   fun addition_isCorrect() {
     assertEquals(4, 2 + 2)

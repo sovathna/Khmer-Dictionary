@@ -54,8 +54,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
           } else {
             progressBar.progress = (read * 100).toInt()
           }
-          tvSubTitle.isVisible =!isDeterminate
-          tvSubTitle.text = getString(R.string.downloading_subtitle,read, size)
+          tvSubTitle.isVisible = !isDeterminate
+          tvSubTitle.text = getString(R.string.downloading_subtitle, read, size)
         }
 
         doneEvent?.getContentIfNotHandled()?.let {

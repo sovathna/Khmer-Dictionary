@@ -57,7 +57,7 @@ class DownloadInteractor @Inject constructor(
         if (last + 500 <= current) {
           val tmp = totalRead / BYTES_TO_MB
           last = current
-          Timber.d("downloading: $tmp/$size")
+          Timber.tag("debug").d("downloading: $tmp/$size")
           emit(Result.Downloading(tmp, size))
         }
       }

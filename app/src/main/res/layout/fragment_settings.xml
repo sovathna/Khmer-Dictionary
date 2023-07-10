@@ -53,7 +53,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="16dp"
-          android:layout_marginVertical="6dp"
+          android:layout_marginVertical="10dp"
           android:gravity="center_vertical"
           android:orientation="horizontal">
 
@@ -134,7 +134,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginHorizontal="16dp"
-          android:layout_marginVertical="6dp"
+          android:layout_marginVertical="10dp"
           android:gravity="center_vertical"
           android:orientation="horizontal">
 
@@ -169,9 +169,10 @@
         android:id="@+id/btn_privacy_policy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center_vertical"
         android:text="@string/settings_privacy_policy"
-        android:visibility="gone"
+        app:icon="@drawable/round_privacy_tip_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_bottom" />
@@ -181,7 +182,7 @@
         style="@style/Widget.Material3.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:gravity="center_vertical"
         android:text="@string/settings_rate_review"
@@ -190,7 +191,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_privacy_policy"
-        app:layout_goneMarginTop="36dp" />
+        app:layout_goneMarginTop="32dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.core.widget.NestedScrollView>

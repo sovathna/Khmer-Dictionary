@@ -3,7 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
   <item
     android:bottom="18dp"
-    android:drawable="@drawable/ic_khmer_dictionary"
+    android:drawable="@drawable/ic_app_icon"
     android:left="18dp"
     android:right="18dp"
     android:top="18dp" />
