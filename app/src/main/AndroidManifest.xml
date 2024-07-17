@@ -21,12 +21,32 @@
       android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|colorMode"
       android:exported="true"
       android:launchMode="singleTop"
-      android:theme="@style/AppTheme.NoActionBar"
-      android:windowSoftInputMode="adjustNothing">
+      android:screenOrientation="fullUser"
+      android:windowSoftInputMode="adjustResize"
+      tools:ignore="DiscouragedApi">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
         <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data android:scheme="http" />
+        <data android:scheme="https" />
+        <data android:host="sovathna.github.io" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data android:scheme="app" />
+        <data android:host="sovathna.github.io" />
       </intent-filter>
     </activity>
 

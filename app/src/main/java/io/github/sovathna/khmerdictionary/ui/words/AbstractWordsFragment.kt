@@ -20,7 +20,7 @@ abstract class AbstractWordsFragment : Fragment(R.layout.fragment_words) {
   private lateinit var adapter: WordsAdapter
 
   @Inject
-  protected lateinit var recycledViewPool: RecyclerView.RecycledViewPool
+  lateinit var recycledViewPool: RecyclerView.RecycledViewPool
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
